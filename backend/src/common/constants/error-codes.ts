@@ -39,10 +39,17 @@ export const ERROR_CODES: ResponseDto[] = [
     httpStatus: 403,
   },
   {
-    successful: false,
     errorCode: ErrorCode.TOKEN_EXPIRED,
     message: 'Token expired',
+    successful: false,
     display: 'Token หมดอายุ',
+    httpStatus: 401,
+  },
+  {
+    errorCode: ErrorCode.JWT_INVALID_SIGNATURE,
+    message: 'JsonWebTokenError: invalid signature',
+    successful: false,
+    display: 'JsonWebTokenError: invalid signature',
     httpStatus: 401,
   },
 ];

@@ -20,10 +20,10 @@ export abstract class BaseEntity {
   deletedAt?: Date;
 
   @Column({ name: 'created_by', type: 'varchar' })
-  createdBy?: string;
+  createdBy: string;
 
   @Column({ name: 'updated_by', type: 'varchar' })
-  updatedBy?: string;
+  updatedBy: string;
 
   @Column({ name: 'deleted_by', type: 'varchar', nullable: true })
   deletedBy?: string;

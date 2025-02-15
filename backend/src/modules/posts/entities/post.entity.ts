@@ -13,6 +13,9 @@ export class Post extends BaseEntity {
   })
   topic: Topic;
 
+  @Column('varchar')
+  title: string;
+
   @Column('text')
   content: string;
 

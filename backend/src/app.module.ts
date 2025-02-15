@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './modules/auth/auth.module';
 import { Comment } from './modules/comments/entities';
 import { Post } from './modules/posts/entities';
+import { PostsModule } from './modules/posts/posts.module';
 import { User } from './modules/users/entities';
 import { UsersModule } from './modules/users/users.module';
 
@@ -18,6 +19,7 @@ import { UsersModule } from './modules/users/users.module';
       synchronize: true,
     }),
     AuthModule,
+    PostsModule,
     UsersModule,
   ],
 })

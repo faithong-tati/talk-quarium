@@ -1,6 +1,7 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ErrorCode } from 'src/common/constants';
+import { ErrorException } from 'src/utils/exceptions';
 
 import { User } from '../users/entities';
 import { UsersService } from '../users/users.service';
@@ -15,7 +16,7 @@ export class AuthService {
 
   public async signIn(username: string): Promise<SignInResponseDto> {
     try {
-      const user = await this.validateUser(username);
+      const user = await this.validateAuth(username);
       const payload = { username: user.username, sub: user.id };
 
       return {
@@ -24,13 +25,13 @@ export class AuthService {
         username: user.username,
       };
     } catch (error) {
-      console.error('[AuthService][signIn] - error: ', error);
+      console.error('[AuthService][signIn] Unexpected error: ', error);
 
-      throw new InternalServerErrorException(ErrorCode.UNAUTHORIZED);
+      throw new ErrorException(ErrorCode.UNAUTHORIZED);
     }
   }
 
-  private async validateUser(username: string): Promise<User> {
+  private async validateAuth(username: string): Promise<User> {
     try {
       const user = await this.usersService.findOne({ username });
 
@@ -46,9 +47,9 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      console.error('[AuthService][validateUser] - error: ', error);
+      console.error('[AuthService][validateAuth] Unexpected error: ', error);
 
-      throw new InternalServerErrorException(ErrorCode.UNAUTHORIZED);
+      throw new ErrorException(ErrorCode.UNAUTHORIZED);
     }
   }
 }

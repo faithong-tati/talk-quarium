@@ -5,19 +5,19 @@ import { SignInResponseExample } from '../examples';
 
 export class SignInResponseDto {
   @ApiProperty({
-    example: SignInResponseExample.accessToken,
+    example: SignInResponseExample.ACCESS_TOKEN,
     description: 'Access Token',
   })
   accessToken: string;
 
   @ApiProperty({
-    example: SignInResponseExample.userId,
+    example: SignInResponseExample.USER_ID,
     description: 'User ID',
   })
   userId: number;
 
   @ApiProperty({
-    example: SignInResponseExample.username,
+    example: SignInResponseExample.USERNAME,
     description: 'Username',
   })
   username: string;

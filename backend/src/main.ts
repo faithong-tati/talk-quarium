@@ -7,6 +7,7 @@ import { Environment } from './common/constants/environment';
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
+    .addBearerAuth()
     .setTitle('TalkQuarium API')
     .setDescription('API documentation for the Talkquarium backend')
     .setVersion('1.0')

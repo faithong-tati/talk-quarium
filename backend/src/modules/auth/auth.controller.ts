@@ -1,12 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import {
-  ApiBadRequestResponse,
-  ApiDefaultResponse,
-  ApiInternalServerErrorResponse,
-  ApiOkResponse,
-  ApiOperation,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiDefaultResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ErrorCode } from 'src/common/constants';
 import { ResponseDto, ResponseError } from 'src/common/dtos';
 import { getResponseStatus } from 'src/utils/helpers';
@@ -19,8 +12,6 @@ import { SignInResponseDto, SignInResponseSuccessDto } from './dtos/sign-in.resp
 @Controller({
   version: ['1'],
 })
-@ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
-@ApiBadRequestResponse({ description: 'Invalid Input' })
 export class AuthController {
   constructor(private authService: AuthService) {}
 

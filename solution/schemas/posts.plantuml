@@ -5,6 +5,7 @@ entity posts {
   * user_id: int4(32) <<FK>>
   --
   * topic: enum(food,pets,health,fashion,exercise,others)
+  * title: varchar(255)
   * content: text
   --
   * created_at: datetime(6)

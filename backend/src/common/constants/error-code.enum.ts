@@ -5,4 +5,7 @@ export enum ErrorCode {
   SUCCESS = '00',
   TOKEN_EXPIRED = '27',
   UNAUTHORIZED = '10',
+
+  // * JWT
+  JWT_INVALID_SIGNATURE = 'JWT_01',
 }
