@@ -1,9 +1,9 @@
 import {
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  DeleteDateColumn,
   Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
 export abstract class BaseEntity {
@@ -19,12 +19,12 @@ export abstract class BaseEntity {
   @DeleteDateColumn({ name: 'deleted_at', nullable: true })
   deletedAt?: Date;
 
-  @Column({ name: 'created_by', type: 'int' })
-  createdBy?: number;
+  @Column({ name: 'created_by', type: 'varchar' })
+  createdBy?: string;
 
-  @Column({ name: 'updated_by', type: 'int' })
-  updatedBy?: number;
+  @Column({ name: 'updated_by', type: 'varchar' })
+  updatedBy?: string;
 
-  @Column({ name: 'deleted_by', type: 'int', nullable: true })
-  deletedBy?: number;
+  @Column({ name: 'deleted_by', type: 'varchar', nullable: true })
+  deletedBy?: string;
 }
