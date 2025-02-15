@@ -1,0 +1,12 @@
+@startuml talk-quarium schemas
+skinparam linetype ortho
+
+!include users.plantuml
+!include posts.plantuml
+!include comments.plantuml
+
+users ||..|{ posts
+users ||..|{ comments
+posts ||..|{ comments
+
+@enduml

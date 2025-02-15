@@ -1,0 +1,17 @@
+@startuml comments
+entity comments {
+  * id: int4(32) <<PK>>
+  --
+  * user_id: int4(32) <<FK>>
+  * post_id: int4(32) <<FK>>
+  --
+  * content: text
+  --
+  * created_at: datetime(6)
+  * updated_at: datetime(6)
+  deleted_at: datetime(6)
+  * created_by: varchar(255)
+  * updated_by: varchar(255)
+  deleted_by: varchar(255)
+}
+@enduml

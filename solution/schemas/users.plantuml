@@ -1,0 +1,14 @@
+@startuml users
+entity users {
+  * id: int4(32) <<PK>>
+  --
+  * username: varchar(255)
+  --
+  * created_at: datetime(6)
+  * updated_at: datetime(6)
+  deleted_at: datetime(6)
+  * created_by: varchar(255)
+  * updated_by: varchar(255)
+  deleted_by: varchar(255)
+}
+@enduml
