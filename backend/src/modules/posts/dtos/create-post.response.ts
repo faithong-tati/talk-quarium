@@ -22,6 +22,12 @@ export class CreatePostResponseDto extends BaseDto {
     description: 'Content of the post',
   })
   content: string;
+
+  @ApiProperty({
+    example: CreatePostResponseExample.USER_ID,
+    description: 'User ID of the post',
+  })
+  userId: number;
 }
 
 export class CreatePostResponseSuccessDto extends ResponseSuccess {

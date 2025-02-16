@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorCode } from 'src/common/constants';
 import { UserDto } from 'src/common/dtos';
 import { ErrorException } from 'src/utils/exceptions';
-import { FindOneOptions, Repository } from 'typeorm';
+import { DataSource, FindOneOptions, Repository } from 'typeorm';
 
 import { PostsDecorator } from './decorators';
 import {
@@ -16,14 +16,13 @@ import {
   UpdatePostResponseDto,
 } from './dtos';
 import { Post } from './entities';
-import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class PostsService {
   constructor(
     @InjectRepository(Post)
     private postsRepository: Repository<Post>,
-    private usersService: UsersService,
+    private dataSource: DataSource,
   ) {}
 
   async createPost(
@@ -39,16 +38,18 @@ export class PostsService {
 
       const { content, title, topic } = createPostDto;
       const author = username;
-      const createdPost = this.create({
-        topic,
-        title,
-        content,
-        createdBy: author,
-        updatedBy: author,
-        userId,
-      });
+      const savedPost = await this.dataSource.transaction(async manager => {
+        const createdPost = manager.create(Post, {
+          topic,
+          title,
+          content,
+          createdBy: author,
+          updatedBy: author,
+          userId,
+        });
 
-      const savedPost = await this.save(createdPost);
+        return await manager.save(createdPost);
+      });
 
       return PostsDecorator.createPostResponse(savedPost);
     } catch (error) {
@@ -181,6 +182,36 @@ export class PostsService {
     }
   }
 
+  async deletePostById(id: number, ctxUser: UserDto): Promise<void> {
+    try {
+      const { userId, username } = ctxUser;
+      const post = await this.findOne({ where: { id } });
+
+      if (!post) {
+        throw new ErrorException(ErrorCode.POST_NOT_FOUND);
+      }
+
+      if (post.userId !== userId) {
+        throw new ErrorException(ErrorCode.FORBIDDEN);
+      }
+
+      await this.dataSource.transaction(async manager => {
+        await manager.update(Post, id, { deletedBy: username });
+        await manager.softDelete(Post, id);
+      });
+    } catch (error) {
+      if (error instanceof ErrorException) {
+        console.error('[PostsService][deletePostById] Expected error:', error);
+
+        throw error;
+      }
+
+      console.error('[PostsService][deletePostById] Unexpected error: ', error);
+
+      throw new ErrorException(ErrorCode.SERVER_ERROR, `delete post id: ${id} failed`);
+    }
+  }
+
   create(data: Partial<Post>): Post {
     return this.postsRepository.create(data);
   }
@@ -192,8 +223,4 @@ export class PostsService {
   async findOne(options: FindOneOptions<Post>): Promise<Post | null> {
     return this.postsRepository.findOne(options);
   }
-
-  // async delete(id: number): Promise<void> {
-  //   await this.postsRepository.delete(id);
-  // }
 }

@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './modules/auth/auth.module';
+import { CommentsModule } from './modules/comments/comments.module';
 import { Comment } from './modules/comments/entities';
 import { Post } from './modules/posts/entities';
 import { PostsModule } from './modules/posts/posts.module';
@@ -19,6 +20,7 @@ import { UsersModule } from './modules/users/users.module';
       synchronize: true,
     }),
     AuthModule,
+    CommentsModule,
     PostsModule,
     UsersModule,
   ],

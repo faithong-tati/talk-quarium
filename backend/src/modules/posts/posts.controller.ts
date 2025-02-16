@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Post as HttpPost,
   Param,
@@ -17,7 +18,7 @@ import {
 } from '@nestjs/swagger';
 import { ErrorCode } from 'src/common/constants';
 import { User } from 'src/common/decorators';
-import { ResponseDto, ResponseError, UserDto } from 'src/common/dtos';
+import { ResponseDto, ResponseError, ResponseSuccess, UserDto } from 'src/common/dtos';
 import { JwtAuthGuard } from 'src/utils/guards';
 import { getResponseStatus } from 'src/utils/helpers';
 
@@ -140,5 +141,23 @@ export class PostsController {
     const response = await this.postsService.updatePostById(id, updatePostRequestDto, userCtx);
 
     return getResponseStatus(ErrorCode.SUCCESS, response);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Delete('posts/:id')
+  @ApiOperation({ summary: 'Delete post by id in TalkQuarium' })
+  @ApiOkResponse({
+    description: 'Delete post by id successfully',
+    type: ResponseSuccess,
+  })
+  @ApiDefaultResponse({
+    description: 'Delete post by id failed',
+    type: ResponseError,
+  })
+  async deletePostById(@User() userCtx: UserDto, @Param('id') id: number): Promise<ResponseDto> {
+    await this.postsService.deletePostById(id, userCtx);
+
+    return getResponseStatus(ErrorCode.SUCCESS, undefined);
   }
 }
