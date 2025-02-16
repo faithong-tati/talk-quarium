@@ -1,4 +1,4 @@
-import { CreateCommentResponseDto } from '../dtos';
+import { CreateCommentResponseDto, GetCommentsResponseData, GetCommentsResponseDto } from '../dtos';
 import { Comment } from '../entities';
 
 export class CommentsDecorator {
@@ -12,5 +12,27 @@ export class CommentsDecorator {
     } = comment;
 
     return { ...otherCommentData };
+  }
+
+  public static getCommentsResponse(
+    comments: Comment[],
+    totalItems: number,
+  ): GetCommentsResponseDto {
+    const items: GetCommentsResponseData[] = comments.map(comment => {
+      const {
+        deletedAt: _deletedAt,
+        deletedBy: _deletedBy,
+        user,
+        post: _post,
+        ...otherCommentData
+      } = comment;
+
+      return {
+        ...otherCommentData,
+        username: user.username,
+      };
+    });
+
+    return { items, totalItems };
   }
 }

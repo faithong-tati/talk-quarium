@@ -6,12 +6,15 @@ export const GetPostsResponseExample = {
   TITLE: 'Why does my cat ignore me?',
   TOPIC: Topic.PETS,
   USERNAME: BaseResponseExample.USERNAME,
+  USER_ID: 1,
+  COMMENTS_COUNT: 1,
 };
 
 export const GetPostsResponseSuccessExample = {
   items: [
     {
       id: 1,
+      commentsCount: 1,
       content: GetPostsResponseExample.CONTENT,
       createdAt: BaseResponseExample.ISSUED_AT,
       createdBy: BaseResponseExample.USERNAME,

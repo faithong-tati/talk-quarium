@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiDefaultResponse,
@@ -17,6 +17,9 @@ import {
   CreateCommentRequestDto,
   CreateCommentResponseDto,
   CreateCommentResponseSuccessDto,
+  GetCommentsRequestDto,
+  GetCommentsResponseDto,
+  GetCommentsResponseSuccessDto,
 } from './dtos';
 
 @ApiTags('comments')
@@ -48,6 +51,25 @@ export class CommentsController {
       createCommentRequestDto,
       userCtx,
     );
+
+    return getResponseStatus(ErrorCode.SUCCESS, response);
+  }
+
+  @Get('comments/:postId')
+  @ApiOperation({ summary: 'Get comments by post in TalkQuarium' })
+  @ApiOkResponse({
+    description: 'Get comments by post successfully',
+    type: GetCommentsResponseSuccessDto,
+  })
+  @ApiDefaultResponse({
+    description: 'Get comments by post failed',
+    type: ResponseError,
+  })
+  async getComments(
+    @Param('postId') postId: number,
+    @Query() getCommentsRequestDto: GetCommentsRequestDto,
+  ): Promise<ResponseDto<GetCommentsResponseDto>> {
+    const response = await this.commentsService.getComments(Number(postId), getCommentsRequestDto);
 
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }

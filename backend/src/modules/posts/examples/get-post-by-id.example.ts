@@ -4,6 +4,7 @@ import { GetPostsResponseExample } from './get-posts.example';
 
 export const GetPostByIdResponseSuccessExample = {
   id: 1,
+  commentsCount: 1,
   content: GetPostsResponseExample.CONTENT,
   createdAt: BaseResponseExample.ISSUED_AT,
   createdBy: BaseResponseExample.USERNAME,

@@ -16,11 +16,18 @@ export class PostsDecorator {
 
   public static getPostsResponse(posts: Post[], totalItems: number): GetPostsResponseDto {
     const items: GetPostResponseData[] = posts.map(post => {
-      const { deletedAt: _deletedAt, deletedBy: _deletedBy, user, ...otherPostData } = post;
+      const {
+        deletedAt: _deletedAt,
+        deletedBy: _deletedBy,
+        user,
+        comments,
+        ...otherPostData
+      } = post;
 
       return {
         ...otherPostData,
         username: user.username,
+        commentsCount: comments.length,
       };
     });
 
@@ -28,11 +35,12 @@ export class PostsDecorator {
   }
 
   public static getPostByIdResponse(post: Post): GetPostByIdResponseDto {
-    const { deletedAt: _deletedAt, deletedBy: _deletedBy, user, ...otherPostData } = post;
+    const { deletedAt: _deletedAt, deletedBy: _deletedBy, user, comments, ...otherPostData } = post;
 
     return {
       ...otherPostData,
       username: user.username,
+      commentsCount: comments.length,
     };
   }
 

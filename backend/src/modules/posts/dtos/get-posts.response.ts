@@ -28,6 +28,18 @@ export class GetPostResponseData extends BaseDto {
     description: 'Author of the post',
   })
   username: string;
+
+  @ApiProperty({
+    example: GetPostsResponseExample.USER_ID,
+    description: 'User ID of the post',
+  })
+  userId: number;
+
+  @ApiProperty({
+    example: GetPostsResponseExample.COMMENTS_COUNT,
+    description: 'Comments count of the post',
+  })
+  commentsCount: number;
 }
 
 export class GetPostsResponseDto {

@@ -65,7 +65,6 @@ export class PostsService {
     }
   }
 
-  // TODO: must join with comments later
   async getPosts(
     args: GetPostsPassportRequestDto,
     userCtx?: UserDto,
@@ -75,7 +74,8 @@ export class PostsService {
       const qb = this.postsRepository
         .createQueryBuilder('post')
         .leftJoinAndSelect('post.user', 'user')
-        .select(['post', 'user.id', 'user.username']);
+        .leftJoinAndSelect('post.comments', 'comment')
+        .select(['post', 'user.id', 'user.username', 'comment']);
 
       if (args?.topic) {
         qb.andWhere('post.topic = :topic', { topic: args.topic });
@@ -119,10 +119,9 @@ export class PostsService {
     }
   }
 
-  // TODO: must join with comments later
   async getPostById(id: number): Promise<GetPostByIdResponseDto> {
     try {
-      const post = await this.findOne({ where: { id } });
+      const post = await this.findOne({ where: { id }, relations: ['user', 'comments'] });
 
       if (!post) {
         throw new ErrorException(ErrorCode.POST_NOT_FOUND);
@@ -138,7 +137,7 @@ export class PostsService {
 
       console.error('[PostsService][getPostById] Unexpected error: ', error);
 
-      throw new ErrorException(ErrorCode.SERVER_ERROR, 'get post failed');
+      throw new ErrorException(ErrorCode.SERVER_ERROR, `get post id: ${id} failed`);
     }
   }
 
