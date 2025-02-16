@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorCode } from 'src/common/constants';
+import { UserDto } from 'src/common/dtos';
 import { ErrorException } from 'src/utils/exceptions';
 import { Repository } from 'typeorm';
 
 import { PostsDecorator } from './decorators';
-import { CreatePostRequestDto, CreatePostResponseDto } from './dtos';
+import {
+  CreatePostRequestDto,
+  CreatePostResponseDto,
+  GetPostsPassportRequestDto,
+  GetPostsResponseDto,
+} from './dtos';
 import { Post } from './entities';
 import { UsersService } from '../users/users.service';
 
@@ -18,38 +24,109 @@ export class PostsService {
   ) {}
 
   async createPost(
-    userId: number,
+    userCtx: UserDto,
     createPostDto: CreatePostRequestDto,
   ): Promise<CreatePostResponseDto> {
     try {
+      const { userId, username } = userCtx;
+
+      if (!userId) {
+        throw new ErrorException(ErrorCode.USER_NOT_FOUND);
+      }
+
       const { content, title, topic } = createPostDto;
-      const user = await this.usersService.findOne({ id: userId });
-      const author = user?.username;
-      const response = await this.create({
+      const author = username;
+      const createdPost = this.create({
         topic,
         title,
         content,
         createdBy: author,
         updatedBy: author,
+        userId,
       });
 
-      return PostsDecorator.createPostResponse(response);
+      const savedPost = await this.save(createdPost);
+
+      return PostsDecorator.createPostResponse(savedPost);
     } catch (error) {
       if (error instanceof ErrorException) {
-        console.error('[PostsService][create] Expected error:', error);
+        console.error('[PostsService][createPost] Expected error:', error);
 
         throw error;
       }
 
-      console.error('[PostsService][create] Unexpected error: ', error);
+      console.error('[PostsService][createPost] Unexpected error: ', error);
 
       throw new ErrorException(ErrorCode.SERVER_ERROR, 'create post failed');
     }
   }
 
-  async create(data: Partial<Post>): Promise<Post> {
-    const posts = this.postsRepository.create(data);
+  async getPosts(
+    args: GetPostsPassportRequestDto,
+    userCtx?: UserDto,
+  ): Promise<GetPostsResponseDto> {
+    try {
+      const userIdCtx = userCtx?.userId;
+      const qb = this.postsRepository
+        .createQueryBuilder('post')
+        .leftJoinAndSelect('post.user', 'user')
+        .select(['post', 'user.id', 'user.username']);
 
-    return this.postsRepository.save(posts);
+      if (args?.topic) {
+        qb.andWhere('post.topic = :topic', { topic: args.topic });
+      }
+
+      if (args?.title) {
+        qb.andWhere('post.title LIKE :title', { title: `%${args.title}%` });
+      }
+
+      if (args?.username) {
+        qb.andWhere('user.username LIKE :username', { username: `%${args.username}%` });
+      }
+
+      if (args?.userId) {
+        const argUserId = Number(args.userId);
+
+        if (userIdCtx && argUserId !== userIdCtx) {
+          throw new ErrorException(ErrorCode.FORBIDDEN);
+        } else {
+          qb.andWhere('user.id = :userId', { userId: argUserId });
+        }
+      }
+
+      qb.orderBy('post.createdAt', 'DESC');
+      qb.skip(args.offset).take(args.limit);
+
+      const response = await qb.getMany();
+      const totalItems = await qb.getCount();
+
+      return PostsDecorator.getPostsResponse(response, totalItems);
+    } catch (error) {
+      if (error instanceof ErrorException) {
+        console.error('[PostsService][getPosts] Expected error:', error);
+
+        throw error;
+      }
+
+      console.error('[PostsService][getPosts] Unexpected error: ', error);
+
+      throw new ErrorException(ErrorCode.SERVER_ERROR, 'get posts failed');
+    }
   }
+
+  create(data: Partial<Post>): Post {
+    return this.postsRepository.create(data);
+  }
+
+  async save(data: Post): Promise<Post> {
+    return this.postsRepository.save(data);
+  }
+
+  // async findOne(options: FindOneOptions<Post>): Promise<Post | null> {
+  //   return this.postsRepository.findOne(options);
+  // }
+
+  // async delete(id: number): Promise<void> {
+  //   await this.postsRepository.delete(id);
+  // }
 }

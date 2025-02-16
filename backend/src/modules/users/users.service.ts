@@ -11,10 +11,12 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  async create(data: Partial<User>): Promise<User> {
-    const user = this.usersRepository.create(data);
+  create(data: Partial<User>): User {
+    return this.usersRepository.create(data);
+  }
 
-    return this.usersRepository.save(user);
+  async save(data: User): Promise<User> {
+    return this.usersRepository.save(data);
   }
 
   async findOne(where: FindOptionsWhere<User>): Promise<User | null> {

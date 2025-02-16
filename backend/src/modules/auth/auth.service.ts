@@ -37,12 +37,13 @@ export class AuthService {
 
       if (!user) {
         const author = 'system';
-
-        return await this.usersService.create({
+        const createdUser = this.usersService.create({
           username,
           createdBy: author,
           updatedBy: author,
         });
+
+        return await this.usersService.save(createdUser);
       }
 
       return user;

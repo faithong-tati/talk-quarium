@@ -8,4 +8,7 @@ export enum ErrorCode {
 
   // * JWT
   JWT_INVALID_SIGNATURE = 'JWT_01',
+
+  // * TQ
+  USER_NOT_FOUND = 'TQ01',
 }

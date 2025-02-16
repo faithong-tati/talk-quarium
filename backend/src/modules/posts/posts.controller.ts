@@ -1,4 +1,4 @@
-import { Body, Controller, Post as HttpPost, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post as HttpPost, Query, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiDefaultResponse,
@@ -12,7 +12,15 @@ import { ResponseDto, ResponseError, UserDto } from 'src/common/dtos';
 import { JwtAuthGuard } from 'src/utils/guards';
 import { getResponseStatus } from 'src/utils/helpers';
 
-import { CreatePostRequestDto, CreatePostResponseDto, CreatePostResponseSuccessDto } from './dtos';
+import {
+  CreatePostRequestDto,
+  CreatePostResponseDto,
+  CreatePostResponseSuccessDto,
+  GetPostsPassportRequestDto,
+  GetPostsPublicRequestDto,
+  GetPostsResponseDto,
+  GetPostsResponseSuccessDto,
+} from './dtos';
 import { PostsService } from './posts.service';
 
 @ApiTags('posts')
@@ -35,10 +43,49 @@ export class PostsController {
     type: ResponseError,
   })
   public async create(
-    @User() user: UserDto,
+    @User() userCtx: UserDto,
     @Body() createPostRequestDto: CreatePostRequestDto,
   ): Promise<ResponseDto<CreatePostResponseDto>> {
-    const response = await this.postsService.createPost(user.userId, createPostRequestDto);
+    const response = await this.postsService.createPost(userCtx, createPostRequestDto);
+
+    return getResponseStatus(ErrorCode.SUCCESS, response);
+  }
+
+  @Get('posts/public')
+  @ApiOperation({ summary: 'Get posts in TalkQuarium' })
+  @ApiOkResponse({
+    description: 'Get public posts successfully',
+    type: GetPostsResponseSuccessDto,
+  })
+  @ApiDefaultResponse({
+    description: 'Get public posts failed',
+    type: ResponseError,
+  })
+  async getPostsPublic(
+    @Query() getPostsPublicRequestDto: GetPostsPublicRequestDto,
+  ): Promise<ResponseDto<GetPostsResponseDto>> {
+    const response = await this.postsService.getPosts(getPostsPublicRequestDto);
+
+    return getResponseStatus(ErrorCode.SUCCESS, response);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('posts/passport')
+  @ApiOperation({ summary: 'Get posts in TalkQuarium' })
+  @ApiOkResponse({
+    description: 'Get personalized posts successfully',
+    type: GetPostsResponseSuccessDto,
+  })
+  @ApiDefaultResponse({
+    description: 'Get personalized posts failed',
+    type: ResponseError,
+  })
+  async getPostsPassport(
+    @User() userCtx: UserDto,
+    @Query() getPostsPassportRequestDto: GetPostsPassportRequestDto,
+  ): Promise<ResponseDto<GetPostsResponseDto>> {
+    const response = await this.postsService.getPosts(getPostsPassportRequestDto, userCtx);
 
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }

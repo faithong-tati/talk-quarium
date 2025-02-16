@@ -52,4 +52,11 @@ export const ERROR_CODES: ResponseDto[] = [
     display: 'JsonWebTokenError: invalid signature',
     httpStatus: 401,
   },
+  {
+    errorCode: ErrorCode.USER_NOT_FOUND,
+    message: 'User not found',
+    successful: false,
+    display: 'User not found',
+    httpStatus: 404,
+  },
 ];
