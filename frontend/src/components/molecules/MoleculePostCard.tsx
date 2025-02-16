@@ -1,4 +1,4 @@
-import { Topic } from '@/constants/enums'
+import { PostCardMode } from '@/constants/enums'
 import { Box, styled, SxProps } from '@mui/material'
 import React from 'react'
 import AtomImage from '../atoms/AtomImage'
@@ -6,15 +6,21 @@ import AtomTypography from '../atoms/AtomTypography'
 import AtomChip from '../atoms/AtomChip'
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import { PostCardProps } from '@/constants/types/components'
+import { formatIssuedDate } from '@/utils/helpers'
 
 interface MoleculePostCardProps extends PostCardProps {
   sx?: SxProps
+  mode?: PostCardMode
 }
 
 const StyledMainBox = styled(Box)`
   padding: 20px;
   background-color: var(--white);
   width: 100%;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
 `
 
 const StyledImage = styled(AtomImage)`
@@ -22,51 +28,67 @@ const StyledImage = styled(AtomImage)`
 `
 
 export default function MoleculePostCard(props: MoleculePostCardProps) {
-  const { author, commentsCount, content, imageUrl, sx, title, topic } = props
+  const {
+    author,
+    commentsCount,
+    content,
+    imageUrl,
+    mode = PostCardMode.FULL,
+    sx,
+    title,
+    topic,
+    updatedAt,
+  } = props
+
+  const isFullMode = mode === PostCardMode.FULL
 
   return (
-    <StyledMainBox sx={{ ...sx, padding: '20px' }}>
+    <StyledMainBox gap={isFullMode ? '16px' : '8px'} sx={{ ...sx }}>
       <Box display={'flex'} gap={'10px'} alignItems={'center'}>
-        <StyledImage src={imageUrl} width={30} height={30} />
+        <StyledImage
+          src={imageUrl}
+          width={isFullMode ? 48 : 30}
+          height={isFullMode ? 48 : 30}
+        />
         <AtomTypography
-          sx={{ color: 'var(--grey-300)' }}
+          color={isFullMode ? '--text' : '--grey-300'}
           labelVariant="content-4"
         >
           {author}
         </AtomTypography>
+        {isFullMode && (
+          <AtomTypography color="--grey-300" labelVariant="content-1">
+            {formatIssuedDate(updatedAt)}
+          </AtomTypography>
+        )}
       </Box>
 
-      <AtomChip sx={{ mt: '15px' }} label={topic} />
+      <AtomChip sx={{ width: 'fit-content', height: '24px' }} label={topic} />
 
       <AtomTypography
-        sx={{ color: 'var(--blue-gray-900)', mt: '5px' }}
-        labelVariant="title-2"
+        color="--blue-gray-900"
+        labelVariant={isFullMode ? 'title-1' : 'title-2'}
       >
         {title}
       </AtomTypography>
       <AtomTypography
         sx={{
-          color: 'var(--blue-gray-900)',
           display: '-webkit-box',
-          WebkitLineClamp: 2,
+          WebkitLineClamp: isFullMode ? undefined : 2,
           WebkitBoxOrient: 'vertical',
           overflow: 'hidden',
         }}
+        color={isFullMode ? '--text' : '--blue-gray-900'}
         labelVariant="content-1"
       >
         {content}
       </AtomTypography>
 
-      <Box display={'flex'} alignItems={'center'} mt={'5px'} gap={'5px'}>
+      <Box display={'flex'} alignItems={'center'} gap={'5px'}>
         <ChatBubbleOutlineIcon
           sx={{ color: 'var(--grey-300)', width: '12px', height: '12px' }}
         />
-        <AtomTypography
-          sx={{
-            color: 'var(--grey-300)',
-          }}
-          labelVariant="content-1"
-        >
+        <AtomTypography color="--grey-300" labelVariant="content-1">
           {commentsCount} Comments
         </AtomTypography>
       </Box>

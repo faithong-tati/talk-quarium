@@ -14,5 +14,7 @@ const StyledChip = styled(Chip)`
 export default function AtomChip(props: AtomChipProps) {
   const { className, labelVariant = 'content-1', ...otherProps } = props
 
-  return <StyledChip className={`${labelVariant} ${className}`} {...props} />
+  return (
+    <StyledChip className={`${labelVariant} ${className}`} {...otherProps} />
+  )
 }

@@ -2,23 +2,30 @@ import { PostCardProps } from '@/constants/types/components'
 import { Box, Divider } from '@mui/material'
 import React from 'react'
 import MoleculePostCard from '../molecules/MoleculePostCard'
-import { Topic } from '@mui/icons-material'
+import { PostCardMode } from '@/constants/enums'
+import { useRouter } from 'next/navigation'
 
 interface OrganismPostCardsProps {
   postCards: PostCardProps[]
+  mode?: PostCardMode
 }
 
 export default function OrganismPostCards(props: OrganismPostCardsProps) {
-  // call api here
+  const { postCards, mode = PostCardMode.FULL } = props
+  const router = useRouter()
 
   return (
     <>
-      {props.postCards.map((card, index) => {
+      {postCards.map((card, index) => {
         const isFirst = index === 0
-        const isLast = index === props.postCards.length - 1
+        const isLast = index === postCards.length - 1
 
         return (
-          <React.Fragment key={index}>
+          <Box
+            sx={{ cursor: 'pointer' }}
+            key={index}
+            onClick={() => router.push(`/posts/${card.id}`)}
+          >
             <MoleculePostCard
               sx={{
                 ...(isFirst && {
@@ -30,16 +37,19 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
                   borderBottomRightRadius: '8px',
                 }),
               }}
+              id={card.id}
               author={card.author}
               commentsCount={card.commentsCount}
               content={card.content}
               title={card.title}
               topic={card.topic}
               imageUrl={card.imageUrl}
+              updatedAt={card.updatedAt}
+              mode={mode}
             />
 
-            {index !== props.postCards.length - 1 && <Divider />}
-          </React.Fragment>
+            {index !== postCards.length - 1 && <Divider />}
+          </Box>
         )
       })}
     </>

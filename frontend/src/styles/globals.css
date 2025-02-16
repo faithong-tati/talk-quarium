@@ -1,7 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root {
   --black: #000000;
@@ -18,10 +18,10 @@
   --text: #191919;
   --white: #ffffff;
 
-  --font-inter: "Inter", sans-serif;
-  --font-ibm: "IBM Plex Sans", sans-serif;
-  --font-castoro: "Castoro", serif;
-  --font-castoro: "Castoro", serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-ibm: 'IBM Plex Sans', sans-serif;
+  --font-castoro: 'Castoro', serif;
+  --font-castoro: 'Castoro', serif;
 }
 
 html,

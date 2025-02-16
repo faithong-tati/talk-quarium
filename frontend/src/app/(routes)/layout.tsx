@@ -90,7 +90,9 @@ export default function RootLayout({
       <AppBar>
         <StyledToolbar>
           <StyledBox isMobile={isMobile}>
-            <AtomTypography labelVariant="brand-2">TalkQuarium</AtomTypography>
+            <AtomTypography color="--white" labelVariant="brand-2">
+              TalkQuarium
+            </AtomTypography>
 
             {isMobile ? (
               <>
@@ -106,7 +108,7 @@ export default function RootLayout({
                 </MoleculeDrawer>
               </>
             ) : (
-              <AtomButton className="button-1">Sign In</AtomButton>
+              <AtomButton>Sign In</AtomButton>
             )}
           </StyledBox>
         </StyledToolbar>

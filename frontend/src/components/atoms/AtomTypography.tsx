@@ -2,14 +2,26 @@ import { Typography, TypographyProps } from '@mui/material'
 import React from 'react'
 
 interface AtomTypographyProps extends TypographyProps {
+  color?: string
   labelVariant?: string
 }
 
 export default function AtomTypography(props: AtomTypographyProps) {
-  const { className, labelVariant, children, ...otherProps } = props
+  const {
+    children,
+    className,
+    color = '--black',
+    labelVariant,
+    sx,
+    ...otherProps
+  } = props
 
   return (
-    <Typography className={`${labelVariant} ${className}`} {...otherProps}>
+    <Typography
+      className={`${labelVariant} ${className}`}
+      sx={{ color: `var(${color})`, ...sx }}
+      {...otherProps}
+    >
       {children}
     </Typography>
   )

@@ -1,8 +1,7 @@
-import { Button, ButtonProps, styled } from '@mui/material'
+import { Button, ButtonProps, styled, SxProps } from '@mui/material'
 import React from 'react'
 
 const StyledButton = styled(Button)`
-  background-color: var(--success);
   border-radius: 8px;
   height: 40px;
   padding: 0 30px;
@@ -11,10 +10,28 @@ const StyledButton = styled(Button)`
 `
 
 export default function AtomButton(props: ButtonProps) {
-  const { variant = 'contained', children, ...otherProps } = props
+  const { className, variant = 'contained', children, ...otherProps } = props
+  const sxProps = (): SxProps<any> => {
+    if (variant === 'contained') {
+      return {
+        backgroundColor: 'var(--success)',
+      }
+    }
+
+    return {
+      backgroundColor: 'none !important',
+      borderColor: 'var(--success) !important',
+      color: 'var(--success) !important',
+    }
+  }
 
   return (
-    <StyledButton variant={variant} {...otherProps}>
+    <StyledButton
+      className={`button-1 ${className}`}
+      sx={{ width: 'fit-content', ...sxProps() }}
+      variant={variant}
+      {...otherProps}
+    >
       {children}
     </StyledButton>
   )

@@ -1,13 +1,10 @@
 import { Topic } from '@/constants/enums'
 import { SxProps } from '@mui/material'
 
-export interface PostCardProps {
+export interface CommentCardProps {
   id: number
   author: string
-  commentsCount: number
   content: string
+  createdAt: Date
   imageUrl: string
-  title: string
-  topic: Topic
-  updatedAt: Date
 }

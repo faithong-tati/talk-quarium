@@ -2,7 +2,7 @@ import { Theme } from '@/constants/enums'
 import { Box, styled } from '@mui/material'
 import React, { ReactNode } from 'react'
 import AtomTypography from '../atoms/AtomTypography'
-import { redirect, usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface MoleculeListItemsProps {
   items: {
@@ -33,6 +33,7 @@ const StyledItemBox = styled(Box)`
 export default function MoleculeListItems(props: MoleculeListItemsProps) {
   const { items, theme = Theme.LIGHT } = props
   const pathname = usePathname()
+  const router = useRouter()
   const isLightTheme = theme === Theme.LIGHT
   const sxColor = isLightTheme ? 'var(--green-100)' : 'var(--green-500)'
 
@@ -42,7 +43,7 @@ export default function MoleculeListItems(props: MoleculeListItemsProps) {
         const isActive = pathname === item.path
 
         return (
-          <StyledItemBox key={index} onClick={() => redirect(item.path)}>
+          <StyledItemBox key={index} onClick={() => router.push(item.path)}>
             <Box
               sx={{
                 color: sxColor,

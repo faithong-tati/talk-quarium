@@ -6,14 +6,17 @@ import React, { useState } from 'react'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import AtomSelect from '@/components/atoms/AtomSelect'
 import OrganismPostCards from '../OrganismPostCards'
-import { Topic } from '@/constants/enums'
+import { PostCardMode, Topic } from '@/constants/enums'
 import { TOPIC_OPTIONS } from '@/constants'
 import AtomButton from '@/components/atoms/AtomButton'
 import AddIcon from '@mui/icons-material/Add'
 import { useDevice } from '@/contexts'
+import { PostCardProps } from '@/constants/types/components'
+import { usePathname } from 'next/navigation'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
+  const pathname = usePathname()
   const [searchText, setSearchText] = useState<string>('')
   const [focusSearchText, setFocusSearchText] = useState<boolean>(false)
   const [selectValue, setSelectValue] = useState<number | string>('')
@@ -33,26 +36,28 @@ export default function FormSearchPosts() {
     return !focusSearchText
   }
 
-  const postCards = [
+  const postCards: PostCardProps[] = [
     {
+      id: 1,
       author: 'faithong',
       commentsCount: 8,
       content:
         'hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hehello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello llo hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ',
       title: 'random title',
       topic: Topic.EXERCISE,
-      imageUrl:
-        'https://www.shutterstock.com/image-vector/cute-cat-concept-adorable-domestic-600nw-2480967273.jpg',
+      imageUrl: 'https://media.tenor.com/HmFcGkSu58QAAAAM/silly.gif',
+      updatedAt: new Date(),
     },
     {
+      id: 2,
       author: 'faithong',
       commentsCount: 8,
       content:
         'hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hehello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello llo hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ',
       title: 'random title',
       topic: Topic.EXERCISE,
-      imageUrl:
-        'https://www.shutterstock.com/image-vector/cute-cat-concept-adorable-domestic-600nw-2480967273.jpg',
+      imageUrl: 'https://media.tenor.com/HmFcGkSu58QAAAAM/silly.gif',
+      updatedAt: new Date(),
     },
   ]
 
@@ -101,16 +106,11 @@ export default function FormSearchPosts() {
         )}
 
         {rightComponentDisplayCondition() && (
-          <AtomButton
-            sx={{ minWidth: '105px', maxWidth: '105px' }}
-            endIcon={<AddIcon />}
-          >
-            Create
-          </AtomButton>
+          <AtomButton endIcon={<AddIcon />}>Create</AtomButton>
         )}
       </Box>
 
-      <OrganismPostCards postCards={postCards} />
+      <OrganismPostCards postCards={postCards} mode={PostCardMode.PREVIEW} />
     </>
   )
 }
