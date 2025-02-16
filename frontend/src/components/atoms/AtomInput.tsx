@@ -1,0 +1,35 @@
+import {
+  InputAdornment,
+  styled,
+  TextField,
+  TextFieldProps,
+} from '@mui/material'
+import React from 'react'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
+
+const StyledTextField = styled(TextField)`
+  width: 100%;
+
+  & .MuiInputBase-root {
+    border-radius: 8px;
+    background-color: transparent;
+    height: 44px;
+  }
+`
+
+export default function AtomInput(props: TextFieldProps) {
+  return (
+    <StyledTextField
+      slotProps={{
+        input: {
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchOutlinedIcon sx={{ height: '20px', width: '20px' }} />
+            </InputAdornment>
+          ),
+        },
+      }}
+      {...props}
+    />
+  )
+}

@@ -67,7 +67,8 @@ const StyledChildLgBox = styled(Box)`
 `
 
 const StyledSideBarBox = styled(Box)`
-  width: ${DRAWER_WIDTH}px;
+  min-width: ${DRAWER_WIDTH}px;
+  max-width: ${DRAWER_WIDTH}px;
 
   display: flex;
   gap: 40px;

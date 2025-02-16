@@ -1,10 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=IBM+Plex+Sans:ital,wght@0,100..700;1,100..700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
   --black: #000000;
+  --blue-gray-900: #101828;
   --golden: #c5a365;
   --green-100: #d8e9e4;
   --green-300: #2b5f44;
@@ -12,12 +13,15 @@
   --grey-100: #bbc2c0;
   --grey-300: #939494;
   --success: #49a569;
+  --surface-default-hovered: #f3f3f3;
+  --text-brand-grey: #4a4a4a;
   --text: #191919;
   --white: #ffffff;
 
-  --font-inter: 'Inter', sans-serif;
-  --font-ibm: 'IBM Plex Sans', sans-serif;
-  --font-castoro: 'Castoro', serif;
+  --font-inter: "Inter", sans-serif;
+  --font-ibm: "IBM Plex Sans", sans-serif;
+  --font-castoro: "Castoro", serif;
+  --font-castoro: "Castoro", serif;
 }
 
 html,
@@ -46,6 +50,15 @@ body {
   letter-spacing: 0%;
 }
 
+.title-2 {
+  font-family: var(--font-inter);
+
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  letter-spacing: 0%;
+}
+
 .content-1 {
   font-family: var(--font-inter);
   font-weight: 400;
@@ -67,6 +80,13 @@ body {
   font-weight: 800;
   font-size: 16px;
   line-height: 24px;
+  letter-spacing: 0%;
+}
+
+.content-4 {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  font-size: 14px;
   letter-spacing: 0%;
 }
 

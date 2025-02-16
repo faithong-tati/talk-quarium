@@ -7,6 +7,7 @@ const StyledButton = styled(Button)`
   height: 40px;
   padding: 0 30px;
   text-transform: none;
+  box-shadow: none;
 `
 
 export default function AtomButton(props: ButtonProps) {
