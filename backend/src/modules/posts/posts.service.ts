@@ -3,12 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ErrorCode } from 'src/common/constants';
 import { UserDto } from 'src/common/dtos';
 import { ErrorException } from 'src/utils/exceptions';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 import { PostsDecorator } from './decorators';
 import {
   CreatePostRequestDto,
   CreatePostResponseDto,
+  GetPostByIdResponseDto,
   GetPostsPassportRequestDto,
   GetPostsResponseDto,
 } from './dtos';
@@ -61,6 +62,7 @@ export class PostsService {
     }
   }
 
+  // TODO: must join with comments later
   async getPosts(
     args: GetPostsPassportRequestDto,
     userCtx?: UserDto,
@@ -114,6 +116,29 @@ export class PostsService {
     }
   }
 
+  // TODO: must join with comments later
+  async getPostById(id: number): Promise<GetPostByIdResponseDto> {
+    try {
+      const post = await this.findOne({ where: { id } });
+
+      if (!post) {
+        throw new ErrorException(ErrorCode.POST_NOT_FOUND);
+      }
+
+      return PostsDecorator.getPostByIdResponse(post);
+    } catch (error) {
+      if (error instanceof ErrorException) {
+        console.error('[PostsService][getPostById] Expected error:', error);
+
+        throw error;
+      }
+
+      console.error('[PostsService][getPostById] Unexpected error: ', error);
+
+      throw new ErrorException(ErrorCode.SERVER_ERROR, 'get post failed');
+    }
+  }
+
   create(data: Partial<Post>): Post {
     return this.postsRepository.create(data);
   }
@@ -122,9 +147,9 @@ export class PostsService {
     return this.postsRepository.save(data);
   }
 
-  // async findOne(options: FindOneOptions<Post>): Promise<Post | null> {
-  //   return this.postsRepository.findOne(options);
-  // }
+  async findOne(options: FindOneOptions<Post>): Promise<Post | null> {
+    return this.postsRepository.findOne(options);
+  }
 
   // async delete(id: number): Promise<void> {
   //   await this.postsRepository.delete(id);

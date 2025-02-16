@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post as HttpPost, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post as HttpPost, Param, Query, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiDefaultResponse,
@@ -16,6 +16,8 @@ import {
   CreatePostRequestDto,
   CreatePostResponseDto,
   CreatePostResponseSuccessDto,
+  GetPostByIdResponseDto,
+  GetPostByIdResponseSuccessDto,
   GetPostsPassportRequestDto,
   GetPostsPublicRequestDto,
   GetPostsResponseDto,
@@ -86,6 +88,22 @@ export class PostsController {
     @Query() getPostsPassportRequestDto: GetPostsPassportRequestDto,
   ): Promise<ResponseDto<GetPostsResponseDto>> {
     const response = await this.postsService.getPosts(getPostsPassportRequestDto, userCtx);
+
+    return getResponseStatus(ErrorCode.SUCCESS, response);
+  }
+
+  @Get('posts/:id')
+  @ApiOperation({ summary: 'Get post by id in TalkQuarium' })
+  @ApiOkResponse({
+    description: 'Get post by id successfully',
+    type: GetPostByIdResponseSuccessDto,
+  })
+  @ApiDefaultResponse({
+    description: 'Get post by id failed',
+    type: ResponseError,
+  })
+  async getPostById(@Param('id') id: number): Promise<ResponseDto<GetPostByIdResponseDto>> {
+    const response = await this.postsService.getPostById(id);
 
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }

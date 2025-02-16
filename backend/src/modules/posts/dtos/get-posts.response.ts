@@ -4,7 +4,7 @@ import { BaseDto, ResponseSuccess } from 'src/common/dtos';
 
 import { CreatePostResponseExample } from '../examples';
 
-class GetPostsResponseData extends BaseDto {
+export class GetPostResponseData extends BaseDto {
   @ApiProperty({
     example: CreatePostResponseExample.TOPIC,
     description: 'Topic of the post',
@@ -22,17 +22,23 @@ class GetPostsResponseData extends BaseDto {
     description: 'Content of the post',
   })
   content: string;
+
+  @ApiProperty({
+    example: 'faithong',
+    description: 'Author of the post',
+  })
+  username: string;
 }
 
 export class GetPostsResponseDto {
-  items: GetPostsResponseData[];
+  items: GetPostResponseData[];
   totalItems: number;
 }
 
 export class GetPostsResponseSuccessDto extends ResponseSuccess {
   @ApiProperty({
     type: GetPostsResponseDto,
-    description: 'Post creation response success',
+    description: 'Get posts response success',
   })
   data: GetPostsResponseDto;
 }

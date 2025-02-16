@@ -1,4 +1,9 @@
-import { CreatePostResponseDto, GetPostsResponseDto } from '../dtos';
+import {
+  CreatePostResponseDto,
+  GetPostByIdResponseDto,
+  GetPostResponseData,
+  GetPostsResponseDto,
+} from '../dtos';
 import { Post } from '../entities';
 
 export class PostsDecorator {
@@ -9,12 +14,24 @@ export class PostsDecorator {
   }
 
   public static getPostsResponse(posts: Post[], totalItems: number): GetPostsResponseDto {
-    const items = posts.map(post => {
-      const { deletedAt: _deletedAt, deletedBy: _deletedBy, user: _user, ...otherPostData } = post;
+    const items: GetPostResponseData[] = posts.map(post => {
+      const { deletedAt: _deletedAt, deletedBy: _deletedBy, user, ...otherPostData } = post;
 
-      return otherPostData;
+      return {
+        ...otherPostData,
+        username: user.username,
+      };
     });
 
     return { items, totalItems };
+  }
+
+  public static getPostByIdResponse(post: Post): GetPostByIdResponseDto {
+    const { deletedAt: _deletedAt, deletedBy: _deletedBy, user, ...otherPostData } = post;
+
+    return {
+      ...otherPostData,
+      username: user.username,
+    };
   }
 }

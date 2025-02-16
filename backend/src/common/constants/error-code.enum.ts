@@ -11,4 +11,5 @@ export enum ErrorCode {
 
   // * TQ
   USER_NOT_FOUND = 'TQ01',
+  POST_NOT_FOUND = 'TQ02',
 }

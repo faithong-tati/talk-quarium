@@ -59,4 +59,11 @@ export const ERROR_CODES: ResponseDto[] = [
     display: 'User not found',
     httpStatus: 404,
   },
+  {
+    errorCode: ErrorCode.POST_NOT_FOUND,
+    message: 'Post not found',
+    successful: false,
+    display: 'Post not found',
+    httpStatus: 404,
+  },
 ];
