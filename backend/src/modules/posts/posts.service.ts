@@ -12,6 +12,8 @@ import {
   GetPostByIdResponseDto,
   GetPostsPassportRequestDto,
   GetPostsResponseDto,
+  UpdatePostRequestDto,
+  UpdatePostResponseDto,
 } from './dtos';
 import { Post } from './entities';
 import { UsersService } from '../users/users.service';
@@ -136,6 +138,46 @@ export class PostsService {
       console.error('[PostsService][getPostById] Unexpected error: ', error);
 
       throw new ErrorException(ErrorCode.SERVER_ERROR, 'get post failed');
+    }
+  }
+
+  async updatePostById(
+    id: number,
+    args: UpdatePostRequestDto,
+    ctxUser: UserDto,
+  ): Promise<UpdatePostResponseDto> {
+    try {
+      const { topic, title, content } = args;
+      const { userId, username } = ctxUser;
+      const post = await this.findOne({ where: { id } });
+
+      if (!post) {
+        throw new ErrorException(ErrorCode.POST_NOT_FOUND);
+      }
+
+      if (post.userId !== userId) {
+        throw new ErrorException(ErrorCode.FORBIDDEN);
+      }
+
+      const response = await this.postsRepository.save({
+        ...post,
+        topic,
+        title,
+        content,
+        updatedBy: username,
+      });
+
+      return PostsDecorator.updatePostResponse(response);
+    } catch (error) {
+      if (error instanceof ErrorException) {
+        console.error('[PostsService][updatePostById] Expected error:', error);
+
+        throw error;
+      }
+
+      console.error('[PostsService][updatePostById] Unexpected error: ', error);
+
+      throw new ErrorException(ErrorCode.SERVER_ERROR, `update post id: ${id} failed`);
     }
   }
 

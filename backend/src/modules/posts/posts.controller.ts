@@ -1,4 +1,13 @@
-import { Body, Controller, Get, Post as HttpPost, Param, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post as HttpPost,
+  Param,
+  Put,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiDefaultResponse,
@@ -22,6 +31,9 @@ import {
   GetPostsPublicRequestDto,
   GetPostsResponseDto,
   GetPostsResponseSuccessDto,
+  UpdatePostRequestDto,
+  UpdatePostResponseDto,
+  UpdatePostResponseSuccessDto,
 } from './dtos';
 import { PostsService } from './posts.service';
 
@@ -54,7 +66,7 @@ export class PostsController {
   }
 
   @Get('posts/public')
-  @ApiOperation({ summary: 'Get posts in TalkQuarium' })
+  @ApiOperation({ summary: 'Get public posts in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get public posts successfully',
     type: GetPostsResponseSuccessDto,
@@ -74,7 +86,7 @@ export class PostsController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Get('posts/passport')
-  @ApiOperation({ summary: 'Get posts in TalkQuarium' })
+  @ApiOperation({ summary: 'Get personalized posts in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get personalized posts successfully',
     type: GetPostsResponseSuccessDto,
@@ -104,6 +116,28 @@ export class PostsController {
   })
   async getPostById(@Param('id') id: number): Promise<ResponseDto<GetPostByIdResponseDto>> {
     const response = await this.postsService.getPostById(id);
+
+    return getResponseStatus(ErrorCode.SUCCESS, response);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Put('posts/:id')
+  @ApiOperation({ summary: 'Update post by id in TalkQuarium' })
+  @ApiOkResponse({
+    description: 'Update post by id successfully',
+    type: UpdatePostResponseSuccessDto,
+  })
+  @ApiDefaultResponse({
+    description: 'Update post by id failed',
+    type: ResponseError,
+  })
+  async updatePostById(
+    @User() userCtx: UserDto,
+    @Param('id') id: number,
+    @Body() updatePostRequestDto: UpdatePostRequestDto,
+  ): Promise<ResponseDto<UpdatePostResponseDto>> {
+    const response = await this.postsService.updatePostById(id, updatePostRequestDto, userCtx);
 
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }

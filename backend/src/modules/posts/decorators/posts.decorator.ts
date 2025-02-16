@@ -3,6 +3,7 @@ import {
   GetPostByIdResponseDto,
   GetPostResponseData,
   GetPostsResponseDto,
+  UpdatePostResponseDto,
 } from '../dtos';
 import { Post } from '../entities';
 
@@ -33,5 +34,11 @@ export class PostsDecorator {
       ...otherPostData,
       username: user.username,
     };
+  }
+
+  public static updatePostResponse(post: Post): UpdatePostResponseDto {
+    const { deletedAt: _deletedAt, deletedBy: _deletedBy, user: _user, ...otherPostData } = post;
+
+    return otherPostData;
   }
 }
