@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Topic } from 'src/common/constants';
 import { BaseDto, ResponseSuccess } from 'src/common/dtos';
 
-import { CreatePostResponseExample } from '../examples';
+import { CreatePostResponseExample, CreatePostResponseSuccessExample } from '../examples';
 
 export class CreatePostResponseDto extends BaseDto {
   @ApiProperty({
@@ -27,6 +27,7 @@ export class CreatePostResponseDto extends BaseDto {
 export class CreatePostResponseSuccessDto extends ResponseSuccess {
   @ApiProperty({
     type: CreatePostResponseDto,
+    example: CreatePostResponseSuccessExample,
     description: 'Post creation response success',
   })
   data: CreatePostResponseDto;
