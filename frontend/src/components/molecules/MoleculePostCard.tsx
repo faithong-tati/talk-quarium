@@ -4,7 +4,6 @@ import React from 'react'
 import AtomImage from '../atoms/AtomImage'
 import AtomTypography from '../atoms/AtomTypography'
 import AtomChip from '../atoms/AtomChip'
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
 import { PostCardProps } from '@/constants/types/components'
 import { formatIssuedDate } from '@/utils/helpers'
 
@@ -47,6 +46,7 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
       <Box display={'flex'} gap={'10px'} alignItems={'center'}>
         <StyledImage
           src={imageUrl}
+          alt='author image'
           width={isFullMode ? 48 : 30}
           height={isFullMode ? 48 : 30}
         />
@@ -85,9 +85,7 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
       </AtomTypography>
 
       <Box display={'flex'} alignItems={'center'} gap={'5px'}>
-        <ChatBubbleOutlineIcon
-          sx={{ color: 'var(--grey-300)', width: '12px', height: '12px' }}
-        />
+        <AtomImage src='/icons/comment.svg' alt='comment icon' width={12} height={12} />
         <AtomTypography color="--grey-300" labelVariant="content-1">
           {commentsCount} Comments
         </AtomTypography>

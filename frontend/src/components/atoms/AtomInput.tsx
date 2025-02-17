@@ -22,11 +22,14 @@ export default function AtomInput(props: TextFieldProps) {
     <StyledTextField
       slotProps={{
         input: {
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchOutlinedIcon sx={{ height: '20px', width: '20px' }} />
-            </InputAdornment>
-          ),
+          ...(props.type === 'search' && {
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchOutlinedIcon sx={{ height: '20px', width: '20px' }} />
+              </InputAdornment>
+            ),
+          }),
+          ...props.slotProps?.input,
         },
       }}
       {...props}

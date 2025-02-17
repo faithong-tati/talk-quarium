@@ -11,14 +11,11 @@ import { TOPIC_OPTIONS } from '@/constants'
 import AtomButton from '@/components/atoms/AtomButton'
 import AddIcon from '@mui/icons-material/Add'
 import { useDevice } from '@/contexts'
-import { PostCardProps } from '@/constants/types/components'
-import { usePathname } from 'next/navigation'
 import { useGetPublicPosts } from '@/services/api/posts'
 import postsDecorator from '@/decorators/posts.decorator'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
-  const pathname = usePathname()
   const [searchText, setSearchText] = useState<string>('')
   const [focusSearchText, setFocusSearchText] = useState<boolean>(false)
   const [selectValue, setSelectValue] = useState<number | string>('')
@@ -59,6 +56,7 @@ export default function FormSearchPosts() {
             sx={{ '& .MuiInputBase-root': { height: '40px' } }}
             autoFocus={isMobile}
             placeholder="Search"
+            type="search"
             slotProps={{
               input: {
                 value: searchText,

@@ -1,20 +1,12 @@
+import Image, { ImageProps } from 'next/image'
 import React from 'react'
 
-interface AtomImage {
-  src: string
-
-  alt?: string
-  className?: string
-  height?: number
-  width?: number
-}
-
-export default function AtomImage(props: AtomImage) {
+export default function AtomImage(props: ImageProps) {
   return (
-    <img
+    <Image
       className={props?.className || ''}
       src={props.src}
-      alt={props?.alt || ''}
+      alt={props?.alt || 'image'}
       width={props?.width || props?.height}
       height={props?.height || props?.width}
     />

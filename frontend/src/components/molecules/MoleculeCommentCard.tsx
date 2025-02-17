@@ -15,7 +15,7 @@ export default function MoleculeCommentCard(props: CommentCardProps) {
   return (
     <Box display={'flex'} flexDirection={'column'} gap={'8px'}>
       <Box display={'flex'} alignItems={'center'} gap={'10px'}>
-        <StyledImage src={imageUrl} width={40} height={40} />
+        <StyledImage src={imageUrl} alt='author image' width={40} height={40} />
         <AtomTypography color="--text" labelVariant="content-4">
           {author}
         </AtomTypography>

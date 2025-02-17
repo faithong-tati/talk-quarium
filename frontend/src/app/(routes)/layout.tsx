@@ -11,6 +11,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import MoleculeListItems from '@/components/molecules/MoleculeListItems'
 import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
 import { Theme } from '@/constants/enums'
+import { useRouter } from 'next/navigation'
 
 const StyledToolbar = styled(Toolbar)`
   background-color: var(--green-500);
@@ -80,6 +81,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const { isMobile } = useDevice()
+  const router = useRouter()
   const [open, setOpen] = useState<boolean>(false)
   const toggleDrawer = (newOpen: boolean) => (): void => {
     setOpen(newOpen)
@@ -108,7 +110,9 @@ export default function RootLayout({
                 </MoleculeDrawer>
               </>
             ) : (
-              <AtomButton>Sign In</AtomButton>
+              <AtomButton onClick={() => router.push('/sign-in')}>
+                Sign In
+              </AtomButton>
             )}
           </StyledBox>
         </StyledToolbar>

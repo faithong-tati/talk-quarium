@@ -1,6 +1,10 @@
 import { Button, ButtonProps, styled, SxProps } from '@mui/material'
 import React from 'react'
 
+interface AtomButtonProps extends ButtonProps {
+  fullWidth?: boolean
+}
+
 const StyledButton = styled(Button)`
   border-radius: 8px;
   height: 40px;
@@ -9,8 +13,14 @@ const StyledButton = styled(Button)`
   box-shadow: none;
 `
 
-export default function AtomButton(props: ButtonProps) {
-  const { className, variant = 'contained', children, ...otherProps } = props
+export default function AtomButton(props: AtomButtonProps) {
+  const {
+    className,
+    variant = 'contained',
+    children,
+    fullWidth = false,
+    ...otherProps
+  } = props
   const sxProps = (): SxProps<any> => {
     if (variant === 'contained') {
       return {
@@ -28,7 +38,11 @@ export default function AtomButton(props: ButtonProps) {
   return (
     <StyledButton
       className={`button-1 ${className}`}
-      sx={{ width: 'fit-content', ...sxProps() }}
+      sx={{
+        width: fullWidth ? '100%' : 'fit-content',
+        color: props.disabled ? 'var(--grey-300) !important' : '',
+        ...sxProps(),
+      }}
       variant={variant}
       {...otherProps}
     >
