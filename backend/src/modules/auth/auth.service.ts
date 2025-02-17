@@ -43,7 +43,12 @@ export class AuthService {
           updatedBy: author,
         });
 
-        return await this.usersService.save(createdUser);
+        const randomId = Math.floor(Math.random() * 1000);
+
+        return await this.usersService.save({
+          ...createdUser,
+          userImageUrl: `https://picsum.photos/seed/${randomId}/300/300`,
+        });
       }
 
       return user;

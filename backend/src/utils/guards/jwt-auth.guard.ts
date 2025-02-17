@@ -8,6 +8,12 @@ import { ErrorException } from '../exceptions';
 export class JwtAuthGuard extends AuthGuard('jwt') {
   handleRequest(err: unknown, user: unknown, info: Error): any {
     if (err || !user) {
+      if (info && info.name === 'TokenExpiredError') {
+        console.error('[JwtAuthGuard][handleRequest] Expected error: ', info);
+
+        throw new ErrorException(ErrorCode.TOKEN_EXPIRED);
+      }
+
       if (info.name === 'JsonWebTokenError' && info.message === 'invalid signature') {
         console.error('[JwtAuthGuard][handleRequest] Expected error: ', info);
 
