@@ -13,6 +13,8 @@ import AddIcon from '@mui/icons-material/Add'
 import { useDevice } from '@/contexts'
 import { PostCardProps } from '@/constants/types/components'
 import { usePathname } from 'next/navigation'
+import { useGetPublicPosts } from '@/services/api/posts'
+import postsDecorator from '@/decorators/posts.decorator'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
@@ -36,30 +38,10 @@ export default function FormSearchPosts() {
     return !focusSearchText
   }
 
-  const postCards: PostCardProps[] = [
-    {
-      id: 1,
-      author: 'faithong',
-      commentsCount: 8,
-      content:
-        'hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hehello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello llo hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ',
-      title: 'random title',
-      topic: Topic.EXERCISE,
-      imageUrl: 'https://media.tenor.com/HmFcGkSu58QAAAAM/silly.gif',
-      updatedAt: new Date(),
-    },
-    {
-      id: 2,
-      author: 'faithong',
-      commentsCount: 8,
-      content:
-        'hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hehello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello llo hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ',
-      title: 'random title',
-      topic: Topic.EXERCISE,
-      imageUrl: 'https://media.tenor.com/HmFcGkSu58QAAAAM/silly.gif',
-      updatedAt: new Date(),
-    },
-  ]
+  // * ================================ API ================================
+  const { data: getPublicPostsResponse, isLoading: isLoadingGetPublicPosts } =
+    useGetPublicPosts({ title: searchText, topic: selectValue as Topic })
+  // * ================================ API ================================
 
   return (
     <>
@@ -110,7 +92,14 @@ export default function FormSearchPosts() {
         )}
       </Box>
 
-      <OrganismPostCards postCards={postCards} mode={PostCardMode.PREVIEW} />
+      {!isLoadingGetPublicPosts && (
+        <OrganismPostCards
+          postCards={postsDecorator.getPostsResponse(
+            getPublicPostsResponse?.data,
+          )}
+          mode={PostCardMode.PREVIEW}
+        />
+      )}
     </>
   )
 }

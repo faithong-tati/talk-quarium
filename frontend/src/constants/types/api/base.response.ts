@@ -6,3 +6,11 @@ export interface ResponseDto<T = unknown> {
   data?: T
   httpStatus?: number
 }
+
+export interface BaseResponse {
+  id: number
+  createdAt: Date
+  createdBy: string
+  updatedAt: Date
+  updatedBy: string
+}

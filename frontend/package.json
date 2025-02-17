@@ -19,15 +19,19 @@
     "@mui/icons-material": "~6.4.4",
     "@mui/material": "~6.4.4",
     "@tanstack/react-query": "~5.66.0",
+    "axios": "~1.7.9",
+    "dayjs": "~1.11.13",
+    "jwt-decode": "~4.0.0",
+    "lodash": "~4.17.21",
     "next": "15.1.7",
     "react": "~19.0.0",
     "react-dom": "~19.0.0",
-    "sass": "~1.85.0",
-    "twin.macro": "^3.4.1"
+    "sass": "~1.85.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "~3.2.0",
     "@tanstack/eslint-plugin-query": "~5.66.1",
+    "@types/lodash": "~4.17.15",
     "@types/node": "~20",
     "@types/react": "~19",
     "@types/react-dom": "~19",

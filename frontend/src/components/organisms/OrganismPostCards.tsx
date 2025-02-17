@@ -4,15 +4,21 @@ import React from 'react'
 import MoleculePostCard from '../molecules/MoleculePostCard'
 import { PostCardMode } from '@/constants/enums'
 import { useRouter } from 'next/navigation'
+import MoleculeEmptyStateCard from '../molecules/MoleculeEmptyStateCard'
 
 interface OrganismPostCardsProps {
   postCards: PostCardProps[]
   mode?: PostCardMode
 }
 
+
 export default function OrganismPostCards(props: OrganismPostCardsProps) {
   const { postCards, mode = PostCardMode.FULL } = props
   const router = useRouter()
+
+  if (postCards.length === 0) {
+    return <MoleculeEmptyStateCard text="No posts yet." />
+  }
 
   return (
     <>

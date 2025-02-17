@@ -8,6 +8,8 @@ import CssBaseline from '@mui/material/CssBaseline'
 import React from 'react'
 import theme from '@/lib/theme'
 import { DeviceProvider } from '@/contexts'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientConfig } from '@/services/clients'
 
 export default function RootLayout({
   children,
@@ -17,10 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <DeviceProvider>{children}</DeviceProvider>
-        </ThemeProvider>
+        <QueryClientProvider client={QueryClientConfig}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <DeviceProvider>{children}</DeviceProvider>
+          </ThemeProvider>
+        </QueryClientProvider>
       </body>
     </html>
   )
