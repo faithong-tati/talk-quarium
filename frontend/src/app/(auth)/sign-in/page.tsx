@@ -3,8 +3,10 @@
 import AtomImage from '@/components/atoms/AtomImage'
 import AtomTypography from '@/components/atoms/AtomTypography'
 import FormSignIn from '@/components/organisms/forms/FormSignIn'
-import { useDevice } from '@/contexts'
+import { useAuth, useDevice } from '@/contexts'
+import { useGetUser } from '@/services/api/users'
 import { Box, styled } from '@mui/material'
+import { redirect } from 'next/navigation'
 import React from 'react'
 
 const StyledBrandBox = styled(Box)`
@@ -19,6 +21,12 @@ const StyledBrandBox = styled(Box)`
 
 export default function page() {
   const { isMobile } = useDevice()
+  const { accessToken } = useAuth()
+  const { isSuccess: isSuccessGetUser } = useGetUser(!!accessToken)
+
+  if (isSuccessGetUser) {
+    redirect('/')
+  }
 
   return (
     <Box

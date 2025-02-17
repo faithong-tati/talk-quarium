@@ -3,7 +3,6 @@
 import { StorageKey } from '@/constants/enums'
 import { decodeJwt, deleteStorage, getStorage } from '@/utils/helpers'
 import dayjs from 'dayjs'
-import { useRouter } from 'next/navigation'
 import React, {
   createContext,
   useContext,
@@ -21,7 +20,6 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
-  const router = useRouter()
 
   useEffect(() => {
     const token = getStorage(StorageKey.ACCESS_TOKEN)
@@ -34,14 +32,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (decodedToken.exp < currentTime) {
           deleteStorage(StorageKey.ACCESS_TOKEN)
           setAccessToken(null)
-          router.push('/sign-in')
+          window.location.reload()
         } else {
           setAccessToken(token)
         }
       } catch (error) {
         setAccessToken(null)
-
-        router.push('/sign-in')
       }
     }
   }, [])

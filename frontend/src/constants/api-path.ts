@@ -8,4 +8,5 @@ export const ApiPath = {
     PASSPORT: '/posts/passport',
   },
   Comments: { BASE: '/comments' },
+  Users: { BASE: '/users' },
 }

@@ -91,12 +91,23 @@ export default function FormSearchPosts() {
       </Box>
 
       {isSuccessGetPublicPosts && (
-        <OrganismPostCards
-          postCards={postsDecorator.getPostsResponse(
-            getPublicPostsResponse?.data,
-          )}
-          mode={PostCardMode.PREVIEW}
-        />
+        <Box
+          sx={{
+            height: isMobile ? 'calc(100vh - 168px)' : 'calc(100vh - 188px)',
+            overflowY: 'auto',
+            borderRadius: '8px',
+            '::-webkit-scrollbar': {
+              display: 'none',
+            },
+          }}
+        >
+          <OrganismPostCards
+            postCards={postsDecorator.getPostsResponse(
+              getPublicPostsResponse?.data,
+            )}
+            mode={PostCardMode.PREVIEW}
+          />
+        </Box>
       )}
     </>
   )

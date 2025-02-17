@@ -62,7 +62,7 @@ export default function page({ params }: PageProps) {
         width: '100vw',
         backgroundColor: 'var(--white)',
         padding: isMobile ? '24px 16px' : '36px 140px',
-        height: '100%',
+        height: isMobile ? 'calc(100vh - 72px)' : 'calc(100vh - 60px)',
       }}
     >
       <IconButton
@@ -72,20 +72,30 @@ export default function page({ params }: PageProps) {
         <StyledBackIcon />
       </IconButton>
 
-      {isSuccessGetPostId && (
-        <MoleculePostCard
-          sx={{ padding: 0 }}
-          mode={PostCardMode.FULL}
-          {...formattedGetPostById}
-        />
-      )}
-
-      <Box display={'flex'} flexDirection={'column'} gap={'24px'}>
-        <AtomButton variant="outlined">Add Comments</AtomButton>
-
-        {isSuccessGetCommentsByPostId && (
-          <OrganismCommentCards commentCards={formattedGetCommentsByPostId} />
+      <Box
+        sx={{
+          height: isMobile ? 'calc(100vh - 72px)' : 'calc(100vh - 60px)',
+          overflowY: 'auto',
+          '::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+      >
+        {isSuccessGetPostId && (
+          <MoleculePostCard
+            sx={{ padding: 0 }}
+            mode={PostCardMode.FULL}
+            {...formattedGetPostById}
+          />
         )}
+
+        <Box display={'flex'} flexDirection={'column'} gap={'24px'} mt={'40px'}>
+          <AtomButton variant="outlined">Add Comments</AtomButton>
+
+          {isSuccessGetCommentsByPostId && (
+            <OrganismCommentCards commentCards={formattedGetCommentsByPostId} />
+          )}
+        </Box>
       </Box>
     </Box>
   )

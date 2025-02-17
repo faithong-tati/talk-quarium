@@ -13,6 +13,7 @@ interface MoleculeListItemsProps {
     path: string
   }[]
   theme?: Theme
+  onClick?: () => void
 }
 
 const StyledBox = styled(Box)`
@@ -31,7 +32,7 @@ const StyledItemBox = styled(Box)`
 `
 
 export default function MoleculeListItems(props: MoleculeListItemsProps) {
-  const { items, theme = Theme.LIGHT } = props
+  const { items, theme = Theme.LIGHT, onClick } = props
   const pathname = usePathname()
   const router = useRouter()
   const isLightTheme = theme === Theme.LIGHT
@@ -43,7 +44,13 @@ export default function MoleculeListItems(props: MoleculeListItemsProps) {
         const isActive = pathname === item.path
 
         return (
-          <StyledItemBox key={index} onClick={() => router.push(item.path)}>
+          <StyledItemBox
+            key={index}
+            onClick={() => {
+              onClick?.()
+              router.push(item.path)
+            }}
+          >
             <Box
               sx={{
                 color: sxColor,
