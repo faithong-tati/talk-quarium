@@ -13,9 +13,12 @@ import AddIcon from '@mui/icons-material/Add'
 import { useDevice } from '@/contexts'
 import { useGetPublicPosts } from '@/services/api/posts'
 import postsDecorator from '@/decorators/posts.decorator'
+import FormCreatePost from './FormCreatePost'
+import { useDialog } from '@/contexts/dialog.context'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
+  const { setOpenDialogCreatePost } = useDialog()
   const [searchText, setSearchText] = useState<string>('')
   const [focusSearchText, setFocusSearchText] = useState<boolean>(false)
   const [selectValue, setSelectValue] = useState<number | string>('')
@@ -86,7 +89,12 @@ export default function FormSearchPosts() {
         )}
 
         {rightComponentDisplayCondition() && (
-          <AtomButton endIcon={<AddIcon />}>Create</AtomButton>
+          <AtomButton
+            onClick={() => setOpenDialogCreatePost(true)}
+            endIcon={<AddIcon />}
+          >
+            Create
+          </AtomButton>
         )}
       </Box>
 
@@ -109,6 +117,8 @@ export default function FormSearchPosts() {
           />
         </Box>
       )}
+
+      <FormCreatePost />
     </>
   )
 }

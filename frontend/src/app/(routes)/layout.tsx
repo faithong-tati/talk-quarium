@@ -4,8 +4,11 @@ import { Box, styled } from '@mui/material'
 import { useDevice } from '@/contexts'
 import MoleculeListItems from '@/components/molecules/MoleculeListItems'
 import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
-import { Theme } from '@/constants/enums'
+import { DialogMode, Theme } from '@/constants/enums'
 import OrganismAppBar from '@/components/organisms/OrganismAppBar'
+import MoleculeDialog from '@/components/molecules/MoleculeDialog'
+import { useDialog } from '@/contexts/dialog.context'
+import AtomTypography from '@/components/atoms/AtomTypography'
 
 const StyledChildBox = styled(Box)`
   background: var(--grey-100) !important;
@@ -39,9 +42,32 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const { isMobile } = useDevice()
+  const {
+    openDialogUnsavedChange,
+    setOpenDialogUnsavedChange,
+    setOpenDialogCreatePost,
+  } = useDialog()
 
   return (
     <Box sx={{ flexGrow: 1 }}>
+      <MoleculeDialog
+        mode={DialogMode.WARNING}
+        open={openDialogUnsavedChange}
+        onClickPrimaryButton={() => {
+          setOpenDialogUnsavedChange(false)
+          setOpenDialogCreatePost(false)
+        }}
+        onClickSecondaryButton={() => setOpenDialogUnsavedChange(false)}
+        onCloseDialog={() => setOpenDialogUnsavedChange(false)}
+        primaryButtonText="Ok"
+        secondaryButtonText="Cancel"
+        title="Unsaved Changes"
+      >
+        <AtomTypography labelVariant="content-4">
+          You have unsaved changes that will be lost. Continue?
+        </AtomTypography>
+      </MoleculeDialog>
+
       <OrganismAppBar />
 
       <StyledChildBox>

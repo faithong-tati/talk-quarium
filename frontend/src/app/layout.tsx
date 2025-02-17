@@ -10,6 +10,7 @@ import theme from '@/lib/theme'
 import { AuthProvider, DeviceProvider } from '@/contexts'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { QueryClientConfig } from '@/services/clients'
+import { DialogProvider } from '@/contexts/dialog.context'
 
 export default function RootLayout({
   children,
@@ -23,7 +24,9 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <CssBaseline />
             <AuthProvider>
-              <DeviceProvider>{children}</DeviceProvider>
+              <DeviceProvider>
+                <DialogProvider>{children}</DialogProvider>
+              </DeviceProvider>
             </AuthProvider>
           </ThemeProvider>
         </QueryClientProvider>
