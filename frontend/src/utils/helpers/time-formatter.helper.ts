@@ -1,4 +1,5 @@
-export const formatIssuedDate = (date: Date): string => {
+export const formatIssuedDate = (input: Date | string): string => {
+  const date = input instanceof Date ? input : new Date(input)
   const diff = Date.now() - date.getTime()
   const seconds = Math.floor(diff / 1000)
 

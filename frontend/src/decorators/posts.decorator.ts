@@ -1,4 +1,4 @@
-import { GetPostsResponse } from '@/constants/types/api/posts'
+import { GetPostResponse, GetPostsResponse } from '@/constants/types/api/posts'
 import { PostCardProps } from '@/constants/types/components'
 
 class PostsDecorator {
@@ -21,6 +21,23 @@ class PostsDecorator {
         updatedAt: item.updatedAt,
       }
     })
+  }
+
+  public getPostById(rawData: GetPostResponse | undefined): PostCardProps {
+    if (!rawData) {
+      return {} as PostCardProps
+    }
+
+    return {
+      id: rawData.id,
+      author: rawData.username,
+      commentsCount: rawData.commentsCount,
+      content: rawData.content,
+      imageUrl: `https://picsum.photos/seed/${rawData.userId}/500/300`,
+      title: rawData.title,
+      topic: rawData.topic,
+      updatedAt: rawData.updatedAt,
+    }
   }
 }
 
