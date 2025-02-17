@@ -11,13 +11,14 @@ interface OrganismPostCardsProps {
   mode?: PostCardMode
 }
 
-
 export default function OrganismPostCards(props: OrganismPostCardsProps) {
   const { postCards, mode = PostCardMode.FULL } = props
   const router = useRouter()
 
   if (postCards.length === 0) {
-    return <MoleculeEmptyStateCard text="No posts yet." />
+    return (
+      <MoleculeEmptyStateCard text1="No posts yet." text2="Be the first!" />
+    )
   }
 
   return (

@@ -7,5 +7,5 @@ export const ApiPath = {
     PUBLIC: '/posts/public',
     PASSPORT: '/posts/passport',
   },
-  Comments: {},
+  Comments: { BASE: '/comments' },
 }

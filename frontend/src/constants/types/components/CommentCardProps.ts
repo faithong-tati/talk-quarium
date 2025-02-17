@@ -1,6 +1,3 @@
-import { Topic } from '@/constants/enums'
-import { SxProps } from '@mui/material'
-
 export interface CommentCardProps {
   id: number
   author: string

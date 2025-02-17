@@ -3,7 +3,8 @@ import React from 'react'
 import AtomTypography from '../atoms/AtomTypography'
 
 interface MoleculeEmptyStateCardProps {
-  text: string
+  text1: string
+  text2?: string
 }
 
 const StyledEmptyStateBox = styled(Box)`
@@ -21,16 +22,19 @@ const StyledEmptyStateBox = styled(Box)`
 `
 
 export default function MoleculeEmptyStateCard({
-  text,
+  text1,
+  text2,
 }: MoleculeEmptyStateCardProps) {
   return (
     <StyledEmptyStateBox>
       <AtomTypography color="--grey-300" labelVariant="title-2">
-        {text}
+        {text1}
       </AtomTypography>
-      <AtomTypography color="--grey-300" labelVariant="title-1">
-        Be the first!
-      </AtomTypography>
+      {text2 && (
+        <AtomTypography color="--grey-300" labelVariant="title-1">
+          {text2}
+        </AtomTypography>
+      )}
     </StyledEmptyStateBox>
   )
 }

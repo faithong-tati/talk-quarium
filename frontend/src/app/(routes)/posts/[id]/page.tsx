@@ -11,6 +11,8 @@ import OrganismCommentCards from '@/components/organisms/OrganismCommentCards'
 import AtomButton from '@/components/atoms/AtomButton'
 import { useGetPostById } from '@/services/api/posts'
 import postsDecorator from '@/decorators/posts.decorator'
+import { useGetCommentsByPostId } from '@/services/api/comments'
+import commentsDecorator from '@/decorators/comments.decorator'
 
 interface PageProps {
   params: Promise<{ id: number }>
@@ -34,11 +36,21 @@ export default function page({ params }: PageProps) {
   // * ================================ API ================================
   const { data: getPostByIdResponse, isSuccess: isSuccessGetPostId } =
     useGetPostById(postId)
+
+  const {
+    data: getCommentsByPostIdResponse,
+    isSuccess: isSuccessGetCommentsByPostId,
+  } = useGetCommentsByPostId({ params: { postId } })
   // * ================================ API ================================
 
   const formattedGetPostById = postsDecorator.getPostById(
     getPostByIdResponse?.data,
   )
+
+  const formattedGetCommentsByPostId =
+    commentsDecorator.getCommentsByPostIdResponse(
+      getCommentsByPostIdResponse?.data,
+    )
 
   return (
     <Box
@@ -71,25 +83,9 @@ export default function page({ params }: PageProps) {
       <Box display={'flex'} flexDirection={'column'} gap={'24px'}>
         <AtomButton variant="outlined">Add Comments</AtomButton>
 
-        <OrganismCommentCards
-          commentCards={[
-            {
-              id: 1,
-              author: 'faithong',
-              content:
-                'hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello hello ',
-              createdAt: new Date(),
-              imageUrl: '',
-            },
-            {
-              id: 2,
-              author: 'faithong',
-              content: 'aa',
-              createdAt: new Date(),
-              imageUrl: '',
-            },
-          ]}
-        />
+        {isSuccessGetCommentsByPostId && (
+          <OrganismCommentCards commentCards={formattedGetCommentsByPostId} />
+        )}
       </Box>
     </Box>
   )

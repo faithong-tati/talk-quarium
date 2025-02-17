@@ -39,7 +39,7 @@ export default function FormSearchPosts() {
   }
 
   // * ================================ API ================================
-  const { data: getPublicPostsResponse, isLoading: isLoadingGetPublicPosts } =
+  const { data: getPublicPostsResponse, isSuccess: isSuccessGetPublicPosts } =
     useGetPublicPosts({ title: searchText, topic: selectValue as Topic })
   // * ================================ API ================================
 
@@ -92,7 +92,7 @@ export default function FormSearchPosts() {
         )}
       </Box>
 
-      {!isLoadingGetPublicPosts && (
+      {isSuccessGetPublicPosts && (
         <OrganismPostCards
           postCards={postsDecorator.getPostsResponse(
             getPublicPostsResponse?.data,

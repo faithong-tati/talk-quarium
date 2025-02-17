@@ -87,6 +87,7 @@ export class CommentsService {
         .leftJoinAndSelect('comment.post', 'post')
         .select(['comment', 'user.id', 'user.username', 'post.id', 'post.title']);
 
+      qb.orderBy('comment.createdAt', 'DESC');
       qb.skip(offset).take(limit);
 
       const response = await qb.getMany();
