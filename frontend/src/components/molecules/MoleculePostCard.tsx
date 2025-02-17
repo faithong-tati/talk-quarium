@@ -31,12 +31,12 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
     author,
     commentsCount,
     content,
-    imageUrl,
     mode = PostCardMode.FULL,
     sx,
     title,
     topic,
     updatedAt,
+    userImageUrl,
   } = props
 
   const isFullMode = mode === PostCardMode.FULL
@@ -45,7 +45,7 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
     <StyledMainBox gap={isFullMode ? '16px' : '8px'} sx={{ ...sx }}>
       <Box display={'flex'} gap={'10px'} alignItems={'center'}>
         <StyledImage
-          src={imageUrl}
+          src={userImageUrl}
           alt="author image"
           width={isFullMode ? 48 : 30}
           height={isFullMode ? 48 : 30}

@@ -50,7 +50,7 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               content={card.content}
               title={card.title}
               topic={card.topic}
-              imageUrl={card.imageUrl}
+              userImageUrl={card.userImageUrl}
               updatedAt={card.updatedAt}
               mode={mode}
             />

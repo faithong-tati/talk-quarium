@@ -15,7 +15,7 @@ class CommentsDecorator {
         author: item.username,
         content: item.content,
         createdAt: item.createdAt,
-        imageUrl: `https://picsum.photos/seed/${item.userId}/500/300`,
+        userImageUrl: item.userImageUrl,
       }
     })
   }

@@ -75,7 +75,7 @@ export class PostsService {
         .createQueryBuilder('post')
         .leftJoinAndSelect('post.user', 'user')
         .leftJoinAndSelect('post.comments', 'comment')
-        .select(['post', 'user.id', 'user.username', 'comment']);
+        .select(['post', 'user.id', 'user.username', 'user.userImageUrl', 'comment']);
 
       if (args?.topic) {
         qb.andWhere('post.topic = :topic', { topic: args.topic });
@@ -89,8 +89,8 @@ export class PostsService {
         qb.andWhere('user.username LIKE :username', { username: `%${args.username}%` });
       }
 
-      if (args?.userId) {
-        const argUserId = Number(args.userId);
+      if (userCtx?.userId) {
+        const argUserId = userCtx?.userId;
 
         if (userIdCtx && argUserId !== userIdCtx) {
           throw new ErrorException(ErrorCode.FORBIDDEN);

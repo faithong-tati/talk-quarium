@@ -30,6 +30,7 @@ export class CommentsDecorator {
       return {
         ...otherCommentData,
         username: user.username,
+        userImageUrl: user.userImageUrl,
       };
     });
 

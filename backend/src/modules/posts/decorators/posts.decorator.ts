@@ -27,6 +27,7 @@ export class PostsDecorator {
       return {
         ...otherPostData,
         username: user.username,
+        userImageUrl: user.userImageUrl,
         commentsCount: comments.length,
       };
     });
@@ -40,6 +41,7 @@ export class PostsDecorator {
     return {
       ...otherPostData,
       username: user.username,
+      userImageUrl: user.userImageUrl,
       commentsCount: comments.length,
     };
   }

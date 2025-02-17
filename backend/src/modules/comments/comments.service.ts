@@ -85,7 +85,14 @@ export class CommentsService {
         .createQueryBuilder('comment')
         .leftJoinAndSelect('comment.user', 'user')
         .leftJoinAndSelect('comment.post', 'post')
-        .select(['comment', 'user.id', 'user.username', 'post.id', 'post.title']);
+        .select([
+          'comment',
+          'user.id',
+          'user.username',
+          'user.userImageUrl',
+          'post.id',
+          'post.title',
+        ]);
 
       qb.orderBy('comment.createdAt', 'DESC');
       qb.skip(offset).take(limit);

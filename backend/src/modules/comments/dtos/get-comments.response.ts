@@ -23,6 +23,12 @@ export class GetCommentsResponseData extends BaseDto {
   userId: number;
 
   @ApiProperty({
+    example: GetCommentsResponseExample.USER_IMAGE_URL,
+    description: 'User image url of the comment',
+  })
+  userImageUrl: string;
+
+  @ApiProperty({
     example: GetCommentsResponseExample.POST_ID,
     description: 'Post ID of the comment',
   })

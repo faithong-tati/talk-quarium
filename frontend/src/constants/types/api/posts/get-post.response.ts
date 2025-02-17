@@ -7,5 +7,6 @@ export interface GetPostResponse extends BaseResponse {
   content: string
   username: string
   userId: number
+  userImageUrl: string
   commentsCount: number
 }

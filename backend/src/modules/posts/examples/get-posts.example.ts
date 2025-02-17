@@ -7,6 +7,7 @@ export const GetPostsResponseExample = {
   TOPIC: Topic.PETS,
   USERNAME: BaseResponseExample.USERNAME,
   USER_ID: 1,
+  USER_IMAGE_URL: BaseResponseExample.USER_IMAGE_URL,
   COMMENTS_COUNT: 1,
 };
 
@@ -23,6 +24,7 @@ export const GetPostsResponseSuccessExample = {
       updatedAt: BaseResponseExample.ISSUED_AT,
       updatedBy: BaseResponseExample.USERNAME,
       userId: 1,
+      userImageUrl: BaseResponseExample.USER_IMAGE_URL,
       username: GetPostsResponseExample.USERNAME,
     },
   ],

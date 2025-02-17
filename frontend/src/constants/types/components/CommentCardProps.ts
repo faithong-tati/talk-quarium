@@ -3,5 +3,5 @@ export interface CommentCardProps {
   author: string
   content: string
   createdAt: Date
-  imageUrl: string
+  userImageUrl: string
 }

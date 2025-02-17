@@ -36,10 +36,4 @@ export class GetPostsPublicRequestDto {
   limit?: number;
 }
 
-export class GetPostsPassportRequestDto extends GetPostsPublicRequestDto {
-  @ApiProperty({
-    description: 'Filtered by userId',
-    required: false,
-  })
-  userId?: number;
-}
+export class GetPostsPassportRequestDto extends GetPostsPublicRequestDto {}

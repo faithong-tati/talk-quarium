@@ -6,8 +6,8 @@ export interface PostCardProps {
   author: string
   commentsCount: number
   content: string
-  imageUrl: string
   title: string
   topic: Topic
   updatedAt: Date
+  userImageUrl: string
 }

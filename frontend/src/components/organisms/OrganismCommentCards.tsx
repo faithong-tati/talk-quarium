@@ -25,7 +25,7 @@ export default function OrganismCommentCards(props: OrganismCommentCardsProps) {
             author={card.author}
             content={card.content}
             createdAt={card.createdAt}
-            imageUrl={card.imageUrl}
+            userImageUrl={card.userImageUrl}
           />
         )
       })}

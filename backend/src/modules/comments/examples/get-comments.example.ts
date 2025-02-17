@@ -5,6 +5,7 @@ export const GetCommentsResponseExample = {
   POST_ID: 1,
   USER_ID: 1,
   USERNAME: BaseResponseExample.USERNAME,
+  USER_IMAGE_URL: BaseResponseExample.USER_IMAGE_URL,
 };
 
 export const GetCommentsResponseSuccessExample = {
@@ -18,6 +19,7 @@ export const GetCommentsResponseSuccessExample = {
       updatedAt: BaseResponseExample.USERNAME,
       updatedBy: BaseResponseExample.ISSUED_AT,
       userId: 1,
+      userImageUrl: BaseResponseExample.USER_IMAGE_URL,
       username: BaseResponseExample.USERNAME,
     },
   ],

@@ -17,7 +17,7 @@ export class GetUserResponseDto {
   userId: number;
 
   @ApiProperty({
-    example: GetUserResponseExample.USER_ID,
+    example: GetUserResponseExample.USER_IMAGE_URL,
     description: 'User ID',
   })
   userImageUrl: string;
