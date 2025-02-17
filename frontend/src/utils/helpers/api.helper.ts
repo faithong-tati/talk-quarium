@@ -25,3 +25,6 @@ export const decodeJwt = (token: string): JwtResponse => {
     throw error
   }
 }
+
+export const setDelay = (ms = 3000): Promise<number> =>
+  new Promise((response) => setTimeout(response, ms))

@@ -15,6 +15,10 @@ const StyledTextField = styled(TextField)`
     background-color: transparent;
     height: 44px;
   }
+
+  input {
+    height: 0;
+  }
 `
 
 export default function AtomInput(props: TextFieldProps) {

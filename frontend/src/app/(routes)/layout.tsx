@@ -130,6 +130,7 @@ export default function RootLayout({
             </StyledChildLgBox>
           )}
         </StyledChildBox>
+        {/* TODO: AppBar problem */}
       </AppBar>
     </Box>
   )
