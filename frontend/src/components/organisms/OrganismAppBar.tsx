@@ -1,6 +1,6 @@
 import { DeviceContextType, useAuth, useDevice } from '@/contexts'
 import { AppBar, Box, styled, Toolbar } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import AtomTypography from '../atoms/AtomTypography'
 import MenuIcon from '@mui/icons-material/Menu'
 import MoleculeDrawer from '../molecules/MoleculeDrawer'
@@ -49,14 +49,21 @@ const StyledDrawerBox = styled(Box)`
 
 export default function OrganismAppBar() {
   const { isMobile } = useDevice()
-  const { accessToken } = useAuth()
+  const { accessToken, isAuthenticated, setIsAuthenticated } = useAuth()
   const [open, setOpen] = useState<boolean>(false)
   const toggleDrawer = (newOpen: boolean) => (): void => {
     setOpen(newOpen)
   }
 
-  const { data: getUserResponse, isLoading: isLoadingGetUser } =
-    useGetUser(!!accessToken)
+  const {
+    data: getUserResponse,
+    isLoading: isLoadingGetUser,
+    isSuccess: isSuccessGetUser,
+  } = useGetUser(!!accessToken)
+
+  useEffect(() => {
+    setIsAuthenticated(isSuccessGetUser)
+  }, [isSuccessGetUser])
 
   return (
     <AppBar>
@@ -82,7 +89,7 @@ export default function OrganismAppBar() {
                       <ArrowForwardIcon />
                     </StyledBackIconBox>
                     <MoleculeUserInfo
-                      isAuthenticated={!!getUserResponse?.data}
+                      isAuthenticated={isAuthenticated}
                       isLoading={isLoadingGetUser}
                       username={getUserResponse?.data?.username || ''}
                       userImageUrl={getUserResponse?.data?.userImageUrl || ''}
@@ -98,7 +105,7 @@ export default function OrganismAppBar() {
             </>
           ) : (
             <MoleculeUserInfo
-              isAuthenticated={!!getUserResponse?.data}
+              isAuthenticated={isAuthenticated}
               isLoading={isLoadingGetUser}
               username={getUserResponse?.data?.username || ''}
               userImageUrl={getUserResponse?.data?.userImageUrl || ''}

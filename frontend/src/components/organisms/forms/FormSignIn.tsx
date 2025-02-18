@@ -41,8 +41,6 @@ export default function FormSignIn() {
         setAccessToken(response.data.accessToken)
         setStorage(StorageKey.ACCESS_TOKEN, response.data.accessToken)
       }
-
-      router.push('/')
     } catch (error) {
       setAccessToken(null)
       // TODO: popup error
@@ -103,7 +101,7 @@ export default function FormSignIn() {
         }}
         color="--white"
         labelVariant="content-1"
-        onClick={() => router.push('/home')}
+        onClick={() => router.push('/')}
       >
         Continue as guest
       </AtomTypography>

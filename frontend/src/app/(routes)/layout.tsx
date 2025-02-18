@@ -9,6 +9,7 @@ import OrganismAppBar from '@/components/organisms/OrganismAppBar'
 import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import { useDialog } from '@/contexts/dialog.context'
 import AtomTypography from '@/components/atoms/AtomTypography'
+import { useRouter } from 'next/navigation'
 
 const StyledChildBox = styled(Box)`
   background: var(--grey-100) !important;
@@ -42,10 +43,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const { isMobile } = useDevice()
+  const router = useRouter()
   const {
     openDialogUnsavedChange,
     setOpenDialogUnsavedChange,
     setOpenDialogCreatePost,
+    openDialogMustSignIn,
+    setOpenDialogMustSignin,
   } = useDialog()
 
   return (
@@ -65,6 +69,24 @@ export default function RootLayout({
       >
         <AtomTypography labelVariant="content-4">
           You have unsaved changes that will be lost. Continue?
+        </AtomTypography>
+      </MoleculeDialog>
+
+      <MoleculeDialog
+        mode={DialogMode.WARNING}
+        open={openDialogMustSignIn}
+        onClickPrimaryButton={() => {
+          setOpenDialogMustSignin(false)
+          router.push('/sign-in')
+        }}
+        onClickSecondaryButton={() => setOpenDialogMustSignin(false)}
+        onCloseDialog={() => setOpenDialogMustSignin(false)}
+        primaryButtonText="Ok"
+        secondaryButtonText="Cancel"
+        title="Join us?"
+      >
+        <AtomTypography labelVariant="content-4">
+          Sign-in to enjoy full access!
         </AtomTypography>
       </MoleculeDialog>
 

@@ -10,7 +10,7 @@ import { PostCardMode, Topic } from '@/constants/enums'
 import { TOPIC_OPTIONS } from '@/constants'
 import AtomButton from '@/components/atoms/AtomButton'
 import AddIcon from '@mui/icons-material/Add'
-import { useDevice } from '@/contexts'
+import { useAuth, useDevice } from '@/contexts'
 import { useGetPublicPosts } from '@/services/api/posts'
 import postsDecorator from '@/decorators/posts.decorator'
 import FormCreatePost from './FormCreatePost'
@@ -18,7 +18,8 @@ import { useDialog } from '@/contexts/dialog.context'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
-  const { setOpenDialogCreatePost } = useDialog()
+  const { isAuthenticated } = useAuth()
+  const { setOpenDialogCreatePost, setOpenDialogMustSignin } = useDialog()
   const [searchText, setSearchText] = useState<string>('')
   const [focusSearchText, setFocusSearchText] = useState<boolean>(false)
   const [selectValue, setSelectValue] = useState<number | string>('')
@@ -90,7 +91,15 @@ export default function FormSearchPosts() {
 
         {rightComponentDisplayCondition() && (
           <AtomButton
-            onClick={() => setOpenDialogCreatePost(true)}
+            onClick={() => {
+              if (isAuthenticated) {
+                setOpenDialogCreatePost(true)
+
+                return
+              }
+
+              setOpenDialogMustSignin(true)
+            }}
             endIcon={<AddIcon />}
           >
             Create

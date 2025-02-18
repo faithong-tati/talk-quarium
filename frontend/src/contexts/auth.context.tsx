@@ -13,13 +13,16 @@ import React, {
 
 interface AuthContextType {
   accessToken: string | null
-  setAccessToken: (token: string | null) => void
+  isAuthenticated: boolean
+  setAccessToken: (accessToken: string | null) => void
+  setIsAuthenticated: (isAuthenticated: boolean) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
 
   useEffect(() => {
     const token = getStorage(StorageKey.ACCESS_TOKEN)
@@ -43,7 +46,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   return (
-    <AuthContext.Provider value={{ accessToken, setAccessToken }}>
+    <AuthContext.Provider
+      value={{
+        accessToken,
+        isAuthenticated,
+        setAccessToken,
+        setIsAuthenticated,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
