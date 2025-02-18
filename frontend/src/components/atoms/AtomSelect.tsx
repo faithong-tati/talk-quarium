@@ -1,6 +1,6 @@
-import { SelectCommon } from '@/constants/types'
 import { BaseSelectProps, MenuItem, Select, styled } from '@mui/material'
 import React from 'react'
+import { SelectCommon } from '@/constants/types'
 import AtomTypography from './AtomTypography'
 
 interface AtomSelectProps extends BaseSelectProps {

@@ -1,16 +1,16 @@
 'use client'
 
 import { Box, styled } from '@mui/material'
-import { useAuth, useDevice } from '@/contexts'
-import MoleculeListItems from '@/components/molecules/MoleculeListItems'
-import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
-import { ButtonMode, Theme } from '@/constants/enums'
-import OrganismAppBar from '@/components/organisms/OrganismAppBar'
-import MoleculeDialog from '@/components/molecules/MoleculeDialog'
-import { useDialog } from '@/contexts/dialog.context'
-import AtomTypography from '@/components/atoms/AtomTypography'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
+import AtomTypography from '@/components/atoms/AtomTypography'
+import MoleculeDialog from '@/components/molecules/MoleculeDialog'
+import MoleculeListItems from '@/components/molecules/MoleculeListItems'
+import OrganismAppBar from '@/components/organisms/OrganismAppBar'
+import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
+import { ButtonMode, Theme } from '@/constants/enums'
+import { useAuth, useDevice } from '@/contexts'
+import { useDialog } from '@/contexts/dialog.context'
 
 const StyledChildBox = styled(Box)`
   background: var(--grey-100) !important;

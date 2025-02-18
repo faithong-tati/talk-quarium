@@ -1,21 +1,21 @@
 'use client'
 
-import { useAuth, useDevice } from '@/contexts'
-import { Box, IconButton, styled } from '@mui/material'
-import React, { use, useEffect } from 'react'
-import MoleculePostCard from '@/components/molecules/MoleculePostCard'
-import { PostCardMode } from '@/constants/enums'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
+import { Box, IconButton, styled } from '@mui/material'
 import { redirect, useRouter } from 'next/navigation'
-import OrganismCommentCards from '@/components/organisms/OrganismCommentCards'
+import { enqueueSnackbar } from 'notistack'
+import React, { use, useEffect } from 'react'
 import AtomButton from '@/components/atoms/AtomButton'
-import { useGetPostById } from '@/services/api/posts'
+import MoleculePostCard from '@/components/molecules/MoleculePostCard'
+import FormCreateComment from '@/components/organisms/forms/FormCreateComment'
+import OrganismCommentCards from '@/components/organisms/OrganismCommentCards'
+import { PostCardMode } from '@/constants/enums'
+import { useAuth, useDevice } from '@/contexts'
+import { useDialog } from '@/contexts/dialog.context'
+import commentsDecorator from '@/decorators/comments.decorator'
 import postsDecorator from '@/decorators/posts.decorator'
 import { useGetCommentsByPostId } from '@/services/api/comments'
-import commentsDecorator from '@/decorators/comments.decorator'
-import { enqueueSnackbar } from 'notistack'
-import FormCreateComment from '@/components/organisms/forms/FormCreateComment'
-import { useDialog } from '@/contexts/dialog.context'
+import { useGetPostById } from '@/services/api/posts'
 
 interface PageProps {
   params: Promise<{ id: number }>
@@ -30,7 +30,7 @@ const StyledBackIcon = styled(ArrowBackIcon)`
   padding: 12px;
 `
 
-export default function page({ params }: PageProps) {
+export default function Page({ params }: PageProps) {
   const resolvedParams = use(params)
   const { isMobile } = useDevice()
   const { isAuthenticated } = useAuth()
@@ -38,7 +38,6 @@ export default function page({ params }: PageProps) {
   const router = useRouter()
   const { openDialogCreateComment, setOpenDialogCreateComment } = useDialog()
   const postId = resolvedParams.id
-
   // * ================================ API ================================
   const {
     data: getPostByIdResponse,

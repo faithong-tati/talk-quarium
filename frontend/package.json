@@ -2,11 +2,12 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --ext .ts,.tsx --fix --ignore-path .gitignore & prettier --write \"{src,apps,libs,test}/**/*.{css,ts,tsx}\""
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --fix && prettier --write \"src/**/*.{css,ts,tsx}\""
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [

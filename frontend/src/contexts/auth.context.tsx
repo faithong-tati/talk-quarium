@@ -1,15 +1,15 @@
 'use client'
 
-import { StorageKey } from '@/constants/enums'
-import { decodeJwt, deleteStorage, getStorage } from '@/utils/helpers'
 import dayjs from 'dayjs'
 import React, {
+  ReactNode,
   createContext,
   useContext,
-  useState,
   useEffect,
-  ReactNode,
+  useState,
 } from 'react'
+import { StorageKey } from '@/constants/enums'
+import { decodeJwt, deleteStorage, getStorage } from '@/utils/helpers'
 
 interface AuthContextType {
   accessToken: string | null
@@ -40,6 +40,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setAccessToken(token)
         }
       } catch (error) {
+        console.error('[AuthProvider] Unexpected error: ', error)
+
         setAccessToken(null)
       }
     }
@@ -61,8 +63,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const context = useContext(AuthContext)
+
   if (!context) {
     throw new Error('Warning! useAuth() must be used within a AuthProvider')
   }
+
   return context
 }

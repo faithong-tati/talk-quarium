@@ -1,8 +1,8 @@
 import { QueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 import { ApiPath } from '@/constants'
-import { configApiOption, RequestClient } from '@/services/clients'
 import { ResponseDto } from '@/constants/types/api'
 import { GetUserResponse } from '@/constants/types/api/users'
+import { RequestClient, configApiOption } from '@/services/clients'
 
 const getUser = async (): Promise<ResponseDto<GetUserResponse>> => {
   try {

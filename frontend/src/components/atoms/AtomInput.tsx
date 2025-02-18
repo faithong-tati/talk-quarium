@@ -1,11 +1,11 @@
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import {
   InputAdornment,
-  styled,
   TextField,
   TextFieldProps,
+  styled,
 } from '@mui/material'
 import React from 'react'
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 
 const StyledTextField = styled(TextField)`
   width: 100%;

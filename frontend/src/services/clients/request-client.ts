@@ -1,12 +1,11 @@
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import dayjs from 'dayjs'
-import { RequestClientConfig } from './query-client-config'
 import { ApiPath, Environment } from '@/constants'
 import { StorageKey } from '@/constants/enums'
 import { decodeJwt, deleteStorage, getStorage } from '@/utils/helpers'
+import { RequestClientConfig } from './query-client-config'
 
 const configApiOption = {}
-
 const RequestClient = axios.create({
   ...RequestClientConfig,
   baseURL: `${Environment.APP_TALK_QUARIUM_API_BASE_URL}`,

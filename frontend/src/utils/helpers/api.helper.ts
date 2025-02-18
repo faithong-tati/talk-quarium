@@ -1,6 +1,6 @@
+import { jwtDecode } from 'jwt-decode'
 import { identity, pickBy } from 'lodash'
 import { JwtResponse } from '@/constants/types/api/auth'
-import { jwtDecode } from 'jwt-decode'
 
 export const formatRequest = (request: object): string => {
   const cleanedRequest = pickBy(request, identity)

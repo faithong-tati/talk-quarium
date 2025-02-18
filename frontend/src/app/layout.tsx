@@ -2,16 +2,15 @@
 
 import '../styles/globals.css'
 
-import { ThemeProvider } from '@mui/material/styles'
 import CssBaseline from '@mui/material/CssBaseline'
-
-import React from 'react'
-import theme from '@/lib/theme'
-import { AuthProvider, DeviceProvider } from '@/contexts'
+import { ThemeProvider } from '@mui/material/styles'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { QueryClientConfig } from '@/services/clients'
-import { DialogProvider } from '@/contexts/dialog.context'
 import { SnackbarProvider } from 'notistack'
+import React from 'react'
+import { AuthProvider, DeviceProvider } from '@/contexts'
+import { DialogProvider } from '@/contexts/dialog.context'
+import theme from '@/lib/theme'
+import { QueryClientConfig } from '@/services/clients'
 
 export default function RootLayout({
   children,

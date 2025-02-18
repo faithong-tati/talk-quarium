@@ -1,7 +1,7 @@
 'use client'
 
-import React, { createContext, useContext, ReactNode } from 'react'
-import { useTheme, useMediaQuery } from '@mui/material'
+import { useMediaQuery, useTheme } from '@mui/material'
+import React, { ReactNode, createContext, useContext } from 'react'
 
 export interface DeviceContextType {
   isMobile: boolean

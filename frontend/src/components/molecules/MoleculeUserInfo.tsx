@@ -1,11 +1,11 @@
 import { Box, styled } from '@mui/material'
-import React from 'react'
-import AtomTypography from '../atoms/AtomTypography'
-import { deleteStorage } from '@/utils/helpers'
-import { StorageKey } from '@/constants/enums'
-import AtomImage from '../atoms/AtomImage'
 import { useRouter } from 'next/navigation'
+import React from 'react'
+import { StorageKey } from '@/constants/enums'
+import { deleteStorage } from '@/utils/helpers'
 import AtomButton from '../atoms/AtomButton'
+import AtomImage from '../atoms/AtomImage'
+import AtomTypography from '../atoms/AtomTypography'
 
 interface MoleculeUserInfoProps {
   isAuthenticated: boolean

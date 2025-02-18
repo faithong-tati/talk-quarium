@@ -1,21 +1,21 @@
 'use client'
 
-import AtomInput from '@/components/atoms/AtomInput'
-import { Box, InputAdornment } from '@mui/material'
-import React, { useEffect, useState } from 'react'
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
-import AtomSelect from '@/components/atoms/AtomSelect'
-import OrganismPostCards from '../OrganismPostCards'
-import { PostCardMode, Topic } from '@/constants/enums'
-import { TOPIC_OPTIONS } from '@/constants'
-import AtomButton from '@/components/atoms/AtomButton'
 import AddIcon from '@mui/icons-material/Add'
-import { useAuth, useDevice } from '@/contexts'
-import { useGetPublicPosts } from '@/services/api/posts'
-import postsDecorator from '@/decorators/posts.decorator'
-import FormCreatePost from './FormCreatePost'
-import { useDialog } from '@/contexts/dialog.context'
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
+import { Box, InputAdornment } from '@mui/material'
 import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import AtomButton from '@/components/atoms/AtomButton'
+import AtomInput from '@/components/atoms/AtomInput'
+import AtomSelect from '@/components/atoms/AtomSelect'
+import { TOPIC_OPTIONS } from '@/constants'
+import { PostCardMode, Topic } from '@/constants/enums'
+import { useAuth, useDevice } from '@/contexts'
+import { useDialog } from '@/contexts/dialog.context'
+import postsDecorator from '@/decorators/posts.decorator'
+import { useGetPublicPosts } from '@/services/api/posts'
+import OrganismPostCards from '../OrganismPostCards'
+import FormCreatePost from './FormCreatePost'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
@@ -28,6 +28,7 @@ export default function FormSearchPosts() {
     openDialogDeletePost,
     openDialogUpdatePost,
   } = useDialog()
+
   const [title, setTitle] = useState<string>('')
   const [focusTitle, setFocusTitle] = useState<boolean>(false)
   const [topic, setTopic] = useState<number | string>('')
@@ -52,7 +53,7 @@ export default function FormSearchPosts() {
     isSuccess: isSuccessGetPublicPosts,
     refetch: refetchGetPublicPosts,
   } = useGetPublicPosts({
-    title: title,
+    title,
     topic: topic as Topic,
     mode: pathname === '/our-blog' && isAuthenticated ? 'private' : 'public',
   })

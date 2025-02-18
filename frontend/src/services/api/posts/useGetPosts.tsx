@@ -5,9 +5,9 @@ import {
   useQuery,
 } from '@tanstack/react-query'
 import { ApiPath } from '@/constants'
-import { configApiOption, RequestClient } from '@/services/clients'
-import { GetPostsRequest, GetPostsResponse } from '@/constants/types/api/posts'
 import { ResponseDto } from '@/constants/types/api'
+import { GetPostsRequest, GetPostsResponse } from '@/constants/types/api/posts'
+import { RequestClient, configApiOption } from '@/services/clients'
 import { formatRequest } from '@/utils/helpers'
 
 const getPublicPosts = async (
@@ -18,6 +18,7 @@ const getPublicPosts = async (
     const formattedRequest = formatRequest(otherRequest)
     const apiPath =
       mode === 'public' ? ApiPath.Posts.PUBLIC : ApiPath.Posts.PASSPORT
+
     const apiUrl = `${apiPath}/${formattedRequest}`
 
     return await RequestClient.get(apiUrl)

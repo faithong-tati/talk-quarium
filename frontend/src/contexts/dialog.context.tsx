@@ -1,11 +1,11 @@
 'use client'
 
 import React, {
+  Dispatch,
+  ReactNode,
   createContext,
   useContext,
   useState,
-  ReactNode,
-  Dispatch,
 } from 'react'
 
 interface DialogContextType {

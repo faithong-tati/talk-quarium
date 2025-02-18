@@ -1,3 +1,4 @@
+import CloseIcon from '@mui/icons-material/Close'
 import {
   Dialog,
   DialogActions,
@@ -7,11 +8,10 @@ import {
   styled,
 } from '@mui/material'
 import React, { ReactNode } from 'react'
+import { ButtonMode } from '@/constants/enums'
+import { useDevice } from '@/contexts'
 import AtomButton from '../atoms/AtomButton'
 import AtomTypography from '../atoms/AtomTypography'
-import CloseIcon from '@mui/icons-material/Close'
-import { useDevice } from '@/contexts'
-import { ButtonMode } from '@/constants/enums'
 
 interface MoleculeDialogProps extends DialogProps {
   children: ReactNode

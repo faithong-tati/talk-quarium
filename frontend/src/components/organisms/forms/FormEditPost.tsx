@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { useDialog } from '@/contexts/dialog.context'
-import { useDevice } from '@/contexts'
-import MoleculeDialog from '@/components/molecules/MoleculeDialog'
-import { TOPIC_OPTIONS } from '@/constants'
-import { FormField, FormGeneratorRef } from '@/constants/types'
-import FormGenerator from '@/components/organisms/forms/FormGenerator'
-import { InputType, Topic } from '@/constants/enums'
-import { useGetPostById, useUpdatePost } from '@/services/api/posts'
 import { useSnackbar } from 'notistack'
+import React, { useEffect, useRef, useState } from 'react'
+import MoleculeDialog from '@/components/molecules/MoleculeDialog'
+import FormGenerator from '@/components/organisms/forms/FormGenerator'
+import { TOPIC_OPTIONS } from '@/constants'
+import { InputType, Topic } from '@/constants/enums'
+import { FormField, FormGeneratorRef } from '@/constants/types'
+import { useDevice } from '@/contexts'
+import { useDialog } from '@/contexts/dialog.context'
+import { useGetPostById, useUpdatePost } from '@/services/api/posts'
 
 interface FormEditPostProps {
   id: number
@@ -90,8 +90,10 @@ export default function FormEditPost({ id }: FormEditPostProps) {
   const onCloseDialog = () => {
     if (formRef.current?.isDirty) {
       setOpenDialogUnsavedChange(true)
+
       return
     }
+
     setOpenDialogUpdatePost(false)
   }
 

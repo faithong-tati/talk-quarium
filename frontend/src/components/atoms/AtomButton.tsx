@@ -1,6 +1,6 @@
-import { ButtonMode } from '@/constants/enums'
-import { Button, ButtonProps, styled, SxProps } from '@mui/material'
+import { Button, ButtonProps, SxProps, styled } from '@mui/material'
 import React from 'react'
+import { ButtonMode } from '@/constants/enums'
 
 interface AtomButtonProps extends ButtonProps {
   buttonMode?: ButtonMode
@@ -25,6 +25,7 @@ export default function AtomButton(props: AtomButtonProps) {
     sx,
     ...otherProps
   } = props
+
   const sxProps = (): SxProps<any> => {
     const colorConfig = {
       [ButtonMode.SUCCESS]: '--success',

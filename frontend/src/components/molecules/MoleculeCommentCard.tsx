@@ -1,9 +1,9 @@
 import { Box, styled } from '@mui/material'
 import React from 'react'
-import AtomImage from '../atoms/AtomImage'
-import AtomTypography from '../atoms/AtomTypography'
 import { CommentCardProps } from '@/constants/types/components/CommentCardProps'
 import { formatIssuedDate } from '@/utils/helpers'
+import AtomImage from '../atoms/AtomImage'
+import AtomTypography from '../atoms/AtomTypography'
 
 const StyledImage = styled(AtomImage)`
   border-radius: 100%;

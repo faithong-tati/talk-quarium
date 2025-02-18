@@ -1,13 +1,12 @@
 import { QueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 import { ApiPath } from '@/constants'
-import { configApiOption, RequestClient } from '@/services/clients'
-
 import { ResponseDto } from '@/constants/types/api'
-import { formatRequest } from '@/utils/helpers'
 import {
   GetCommentsByPostIdRequest,
   GetCommentsByPostIdResponse,
 } from '@/constants/types/api/comments'
+import { RequestClient, configApiOption } from '@/services/clients'
+import { formatRequest } from '@/utils/helpers'
 
 const getCommentsByPostID = async (
   request: GetCommentsByPostIdRequest,

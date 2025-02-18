@@ -1,5 +1,4 @@
 import { Topic } from '@/constants/enums'
-import { SxProps } from '@mui/material'
 
 export interface PostCardProps {
   id: number

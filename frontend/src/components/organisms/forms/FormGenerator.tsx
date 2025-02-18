@@ -1,15 +1,15 @@
+import { Box } from '@mui/material'
 import React, {
   forwardRef,
-  useImperativeHandle,
   useEffect,
+  useImperativeHandle,
   useRef,
 } from 'react'
-import { useForm, Controller } from 'react-hook-form'
-import { Box } from '@mui/material'
+import { Controller, useForm } from 'react-hook-form'
 import AtomInput from '@/components/atoms/AtomInput'
 import AtomSelect from '@/components/atoms/AtomSelect'
-import { FormField, FormGeneratorRef } from '@/constants/types'
 import { InputType } from '@/constants/enums'
+import { FormField, FormGeneratorRef } from '@/constants/types'
 
 interface FormGeneratorProps {
   fields: FormField[]
@@ -36,13 +36,14 @@ const FormGenerator = forwardRef<FormGeneratorRef, FormGeneratorProps>(
     useEffect(() => {
       const { topic, title, content } = values
       const prevValues = prevValuesRef.current
+
       if (
         topic !== prevValues.topic ||
         title !== prevValues.title ||
         content !== prevValues.content
       ) {
         prevValuesRef.current = values
-        onValuesChange && onValuesChange(values)
+        onValuesChange?.(values)
       }
     }, [values, onValuesChange])
 
@@ -118,5 +119,7 @@ const FormGenerator = forwardRef<FormGeneratorRef, FormGeneratorProps>(
     )
   },
 )
+
+FormGenerator.displayName = 'FormGenerator'
 
 export default FormGenerator

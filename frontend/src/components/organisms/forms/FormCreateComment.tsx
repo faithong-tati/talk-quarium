@@ -1,13 +1,13 @@
+import { Box } from '@mui/material'
+import { useSnackbar } from 'notistack'
 import React, { useEffect, useRef, useState } from 'react'
-import { useDialog } from '@/contexts/dialog.context'
-import { useDevice } from '@/contexts'
+import AtomButton from '@/components/atoms/AtomButton'
 import MoleculeDialog from '@/components/molecules/MoleculeDialog'
-import { FormField, FormGeneratorRef } from '@/constants/types'
 import FormGenerator from '@/components/organisms/forms/FormGenerator'
 import { InputType } from '@/constants/enums'
-import { useSnackbar } from 'notistack'
-import AtomButton from '@/components/atoms/AtomButton'
-import { Box } from '@mui/material'
+import { FormField, FormGeneratorRef } from '@/constants/types'
+import { useDevice } from '@/contexts'
+import { useDialog } from '@/contexts/dialog.context'
 import { useCreateComment } from '@/services/api/comments'
 
 interface FormCreateCommentProps {
@@ -61,8 +61,10 @@ export default function FormCreateComment({ postId }: FormCreateCommentProps) {
   const onCloseDialog = () => {
     if (formRef.current?.isDirty) {
       setOpenDialogUnsavedChange(true)
+
       return
     }
+
     setOpenDialogCreateComment(false)
   }
 

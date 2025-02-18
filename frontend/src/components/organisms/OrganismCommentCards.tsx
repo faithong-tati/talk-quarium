@@ -1,6 +1,6 @@
-import { CommentCardProps } from '@/constants/types/components/CommentCardProps'
 import { Box } from '@mui/material'
 import React from 'react'
+import { CommentCardProps } from '@/constants/types/components/CommentCardProps'
 import MoleculeCommentCard from '../molecules/MoleculeCommentCard'
 import MoleculeEmptyStateCard from '../molecules/MoleculeEmptyStateCard'
 

@@ -1,12 +1,12 @@
-import { PostCardMode } from '@/constants/enums'
-import { Box, styled, SxProps } from '@mui/material'
+import { Box, SxProps, styled } from '@mui/material'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
-import AtomImage from '../atoms/AtomImage'
-import AtomTypography from '../atoms/AtomTypography'
-import AtomChip from '../atoms/AtomChip'
+import { PostCardMode } from '@/constants/enums'
 import { PostCardProps } from '@/constants/types/components'
 import { formatIssuedDate } from '@/utils/helpers'
-import { usePathname, useRouter } from 'next/navigation'
+import AtomChip from '../atoms/AtomChip'
+import AtomImage from '../atoms/AtomImage'
+import AtomTypography from '../atoms/AtomTypography'
 
 interface MoleculePostCardProps extends PostCardProps {
   mode?: PostCardMode

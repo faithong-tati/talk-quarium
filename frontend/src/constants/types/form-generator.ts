@@ -1,6 +1,6 @@
 import { SxProps } from '@mui/material'
-import { SelectCommon } from './select-common'
 import { InputType } from '../enums'
+import { SelectCommon } from './select-common'
 
 export interface FormField {
   name: string

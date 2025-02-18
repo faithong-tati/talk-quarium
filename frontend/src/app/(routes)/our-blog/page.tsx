@@ -1,12 +1,12 @@
 'use client'
 
-import { useDevice } from '@/contexts'
 import { Box } from '@mui/material'
 import React from 'react'
-import { DRAWER_WIDTH } from '@/constants'
 import FormSearchPosts from '@/components/organisms/forms/FormSearchPosts'
+import { DRAWER_WIDTH } from '@/constants'
+import { useDevice } from '@/contexts'
 
-export default function page() {
+export default function Page() {
   const { isMobile } = useDevice()
 
   return (

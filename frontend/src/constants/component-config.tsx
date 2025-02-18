@@ -1,5 +1,5 @@
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import EditCalendarOutlinedIcon from '@mui/icons-material/EditCalendarOutlined'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 
 export const MENU_ITEMS = [
   {

@@ -1,9 +1,8 @@
 import { QueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
 import { ApiPath } from '@/constants'
-import { configApiOption, RequestClient } from '@/services/clients'
-
 import { ResponseDto } from '@/constants/types/api'
 import { GetPostResponse } from '@/constants/types/api/posts'
+import { RequestClient, configApiOption } from '@/services/clients'
 
 const getPostById = async (
   id: number,
