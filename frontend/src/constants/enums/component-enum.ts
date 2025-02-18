@@ -3,7 +3,7 @@ export enum PostCardMode {
   FULL = 'full',
 }
 
-export enum DialogMode {
+export enum ButtonMode {
   ERROR = 'error',
   SUCCESS = 'success',
   WARNING = 'warning',

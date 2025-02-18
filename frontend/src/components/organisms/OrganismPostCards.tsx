@@ -2,7 +2,7 @@ import { PostCardProps } from '@/constants/types/components'
 import { Box, Divider } from '@mui/material'
 import React, { useState } from 'react'
 import MoleculePostCard from '../molecules/MoleculePostCard'
-import { DialogMode, PostCardMode } from '@/constants/enums'
+import { ButtonMode, PostCardMode } from '@/constants/enums'
 import MoleculeEmptyStateCard from '../molecules/MoleculeEmptyStateCard'
 import MoleculeDialog from '../molecules/MoleculeDialog'
 import AtomTypography from '../atoms/AtomTypography'
@@ -92,7 +92,7 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               primaryButtonText="Delete"
               secondaryButtonText="Cancel"
               title={`Please confirm if you wish to delete the post`}
-              mode={DialogMode.ERROR}
+              mode={ButtonMode.ERROR}
               enableCloseIcon={false}
             >
               <AtomTypography>

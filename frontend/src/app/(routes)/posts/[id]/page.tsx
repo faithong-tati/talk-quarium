@@ -1,8 +1,8 @@
 'use client'
 
-import { useDevice } from '@/contexts'
+import { useAuth, useDevice } from '@/contexts'
 import { Box, IconButton, styled } from '@mui/material'
-import React, { use } from 'react'
+import React, { use, useEffect } from 'react'
 import MoleculePostCard from '@/components/molecules/MoleculePostCard'
 import { PostCardMode } from '@/constants/enums'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
@@ -14,6 +14,8 @@ import postsDecorator from '@/decorators/posts.decorator'
 import { useGetCommentsByPostId } from '@/services/api/comments'
 import commentsDecorator from '@/decorators/comments.decorator'
 import { enqueueSnackbar } from 'notistack'
+import FormCreateComment from '@/components/organisms/forms/FormCreateComment'
+import { useDialog } from '@/contexts/dialog.context'
 
 interface PageProps {
   params: Promise<{ id: number }>
@@ -31,7 +33,10 @@ const StyledBackIcon = styled(ArrowBackIcon)`
 export default function page({ params }: PageProps) {
   const resolvedParams = use(params)
   const { isMobile } = useDevice()
+  const { isAuthenticated } = useAuth()
+  const { setOpenDialogMustSignin } = useDialog()
   const router = useRouter()
+  const { openDialogCreateComment, setOpenDialogCreateComment } = useDialog()
   const postId = resolvedParams.id
 
   // * ================================ API ================================
@@ -44,6 +49,7 @@ export default function page({ params }: PageProps) {
   const {
     data: getCommentsByPostIdResponse,
     isSuccess: isSuccessGetCommentsByPostId,
+    refetch: refetchGetCommentsByPostId,
   } = useGetCommentsByPostId({ params: { postId } })
   // * ================================ API ================================
 
@@ -64,6 +70,12 @@ export default function page({ params }: PageProps) {
     }, 100)
   }
 
+  useEffect(() => {
+    if (!openDialogCreateComment) {
+      refetchGetCommentsByPostId()
+    }
+  }, [openDialogCreateComment])
+
   return (
     <Box
       display={'flex'}
@@ -71,7 +83,7 @@ export default function page({ params }: PageProps) {
       gap={'40px'}
       sx={{
         margin: isMobile ? '-16px' : '-32px',
-        width: '100vw',
+        width: isMobile ? '100vw' : `calc(100vw - 248px)`,
         backgroundColor: 'var(--white)',
         padding: isMobile ? '24px 16px' : '36px 140px',
         height: isMobile ? 'calc(100vh - 72px)' : 'calc(100vh - 60px)',
@@ -102,7 +114,24 @@ export default function page({ params }: PageProps) {
         )}
 
         <Box display={'flex'} flexDirection={'column'} gap={'24px'} mt={'40px'}>
-          <AtomButton variant="outlined">Add Comments</AtomButton>
+          {(isMobile || !openDialogCreateComment) && (
+            <AtomButton
+              variant="outlined"
+              onClick={() => {
+                if (isAuthenticated) {
+                  setOpenDialogCreateComment(true)
+
+                  return
+                }
+
+                setOpenDialogMustSignin(true)
+              }}
+            >
+              Add Comments
+            </AtomButton>
+          )}
+
+          <FormCreateComment postId={postId} />
 
           {isSuccessGetCommentsByPostId && (
             <OrganismCommentCards commentCards={formattedGetCommentsByPostId} />

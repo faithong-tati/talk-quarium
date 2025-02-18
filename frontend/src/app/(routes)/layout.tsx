@@ -4,7 +4,7 @@ import { Box, styled } from '@mui/material'
 import { useAuth, useDevice } from '@/contexts'
 import MoleculeListItems from '@/components/molecules/MoleculeListItems'
 import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
-import { DialogMode, Theme } from '@/constants/enums'
+import { ButtonMode, Theme } from '@/constants/enums'
 import OrganismAppBar from '@/components/organisms/OrganismAppBar'
 import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import { useDialog } from '@/contexts/dialog.context'
@@ -50,6 +50,7 @@ export default function RootLayout({
   const {
     openDialogMustSignIn,
     openDialogUnsavedChange,
+    setOpenDialogCreateComment,
     setOpenDialogCreatePost,
     setOpenDialogMustSignin,
     setOpenDialogUnsavedChange,
@@ -67,12 +68,13 @@ export default function RootLayout({
   return (
     <Box sx={{ flexGrow: 1 }}>
       <MoleculeDialog
-        mode={DialogMode.WARNING}
+        mode={ButtonMode.WARNING}
         open={openDialogUnsavedChange}
         onClickPrimaryButton={() => {
           setOpenDialogUnsavedChange(false)
           setOpenDialogCreatePost(false)
           setOpenDialogUpdatePost(false)
+          setOpenDialogCreateComment(false)
         }}
         onClickSecondaryButton={() => setOpenDialogUnsavedChange(false)}
         onCloseDialog={() => setOpenDialogUnsavedChange(false)}
@@ -86,7 +88,7 @@ export default function RootLayout({
       </MoleculeDialog>
 
       <MoleculeDialog
-        mode={DialogMode.WARNING}
+        mode={ButtonMode.WARNING}
         open={openDialogMustSignIn}
         onClickPrimaryButton={() => {
           setOpenDialogMustSignin(false)

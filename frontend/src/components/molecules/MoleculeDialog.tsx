@@ -11,7 +11,7 @@ import AtomButton from '../atoms/AtomButton'
 import AtomTypography from '../atoms/AtomTypography'
 import CloseIcon from '@mui/icons-material/Close'
 import { useDevice } from '@/contexts'
-import { DialogMode } from '@/constants/enums'
+import { ButtonMode } from '@/constants/enums'
 
 interface MoleculeDialogProps extends DialogProps {
   children: ReactNode
@@ -21,7 +21,7 @@ interface MoleculeDialogProps extends DialogProps {
   secondaryButtonText: string
   disabledPrimaryButton?: boolean
   enableCloseIcon?: boolean
-  mode?: DialogMode
+  mode?: ButtonMode
   onCloseDialog?: () => void
 }
 
@@ -48,30 +48,18 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
     secondaryButtonText,
     open,
     title,
-    mode = DialogMode.SUCCESS,
+    mode = ButtonMode.SUCCESS,
   } = props
 
   const { isMobile } = useDevice()
   const buttonStyles = () => {
-    const dialogColorMode = {
-      [DialogMode.SUCCESS]: '--success',
-      [DialogMode.WARNING]: '--warning',
-      [DialogMode.ERROR]: '--surface-critical-default',
-    }
-
     return {
       secondary: {
-        button: {
-          border: `1px solid var(${dialogColorMode[mode]}) !important`,
-        },
         text: {
           color: `--text-default-description`,
         },
       },
       primary: {
-        button: {
-          backgroundColor: `var(${dialogColorMode[mode]})`,
-        },
         text: {
           color: '--white',
         },
@@ -118,17 +106,15 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
           gap: isMobile ? '12px' : '10px',
           flexDirection: isMobile
             ? 'row'
-            : [DialogMode.SUCCESS, DialogMode.WARNING].includes(mode)
+            : [ButtonMode.SUCCESS, ButtonMode.WARNING].includes(mode)
               ? 'column'
               : 'column-reverse',
         }}
       >
         <AtomButton
-          sx={{
-            width: '100%',
-            backgroundColor: 'var(--white) !important',
-            border: buttonStyles().secondary.button.border,
-          }}
+          fullWidth
+          variant="outlined"
+          buttonMode={mode}
           onClick={onClickSecondaryButton}
         >
           <AtomTypography
@@ -141,11 +127,11 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
 
         <AtomButton
           sx={{
-            width: '100%',
             ml: '0 !important',
-            backgroundColor: buttonStyles().primary.button.backgroundColor,
           }}
+          fullWidth
           type="submit"
+          buttonMode={mode}
           disabled={disabledPrimaryButton}
           onClick={onClickPrimaryButton}
         >
