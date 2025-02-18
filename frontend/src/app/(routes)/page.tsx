@@ -12,9 +12,7 @@ export default function Page() {
   return (
     <Box
       sx={{
-        width: isMobile
-          ? undefined
-          : `calc(100vw - ${DRAWER_WIDTH * 2 + 80}px)`,
+        width: isMobile ? undefined : `calc(100vw - ${DRAWER_WIDTH * 2}px)`,
       }}
     >
       <FormSearchPosts />

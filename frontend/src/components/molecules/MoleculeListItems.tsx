@@ -78,7 +78,13 @@ export default function MoleculeListItems(props: MoleculeListItemsProps) {
               labelVariant={
                 isActive ? item.labelActiveVariant : item.labelVariant
               }
-              sx={{ color: sxColor }}
+              color={isLightTheme ? '--green-100' : '--green-500'}
+              sx={{
+                opacity:
+                  (!isAuthenticated && item.isRequireAuth) || !isActive
+                    ? 0.5
+                    : 1,
+              }}
             >
               {item.label}
             </AtomTypography>

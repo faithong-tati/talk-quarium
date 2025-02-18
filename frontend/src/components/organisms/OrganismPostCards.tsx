@@ -78,34 +78,31 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               }}
             />
             {index !== postCards.length - 1 && <Divider />}
-
-            <FormEditPost id={selectedCardId || 0} />
-
-            <MoleculeDialog
-              open={openDialogDeletePost}
-              onClickPrimaryButton={async () => {
-                await deletePostApi(selectedCardId || 0)
-
-                setOpenDialogDeletePost(false)
-              }}
-              onClickSecondaryButton={() => setOpenDialogDeletePost(false)}
-              primaryButtonText="Delete"
-              secondaryButtonText="Cancel"
-              title={`Please confirm if you wish\nto delete the post`}
-              mode={ButtonMode.ERROR}
-              enableCloseIcon={false}
-              isSmall
-            >
-              <AtomTypography
-                sx={{ textAlign: 'center' }}
-                labelVariant="content-4"
-              >
-                {`Are you sure you want to delete the post?\nOnce deleted, it cannot be recovered.`}
-              </AtomTypography>
-            </MoleculeDialog>
           </Box>
         )
       })}
+
+      <FormEditPost id={selectedCardId || 0} />
+
+      <MoleculeDialog
+        open={openDialogDeletePost}
+        onClickPrimaryButton={async () => {
+          await deletePostApi(selectedCardId || 0)
+
+          setOpenDialogDeletePost(false)
+        }}
+        onClickSecondaryButton={() => setOpenDialogDeletePost(false)}
+        primaryButtonText="Delete"
+        secondaryButtonText="Cancel"
+        title={`Please confirm if you wish\nto delete the post`}
+        mode={ButtonMode.ERROR}
+        enableCloseIcon={false}
+        isSmall
+      >
+        <AtomTypography sx={{ textAlign: 'center' }} labelVariant="content-4">
+          {`Are you sure you want to delete the post?\nOnce deleted, it cannot be recovered.`}
+        </AtomTypography>
+      </MoleculeDialog>
     </>
   )
 }

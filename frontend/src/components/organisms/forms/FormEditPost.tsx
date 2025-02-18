@@ -61,7 +61,7 @@ export default function FormEditPost({ id }: FormEditPostProps) {
     {
       name: 'content',
       type: InputType.TEXTAREA,
-      placeholder: "What's on your mind...",
+      placeholder: `What's on your mind...`,
       sx: { '& .MuiInputBase-root': { height: 'fit-content' }, rows: 7 },
     },
   ]
