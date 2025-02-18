@@ -9,6 +9,7 @@ import AtomTypography from '../atoms/AtomTypography'
 import { useDeletePost } from '@/services/api/posts'
 import { enqueueSnackbar } from 'notistack'
 import { useDialog } from '@/contexts/dialog.context'
+import FormEditPost from './forms/FormEditPost'
 
 interface OrganismPostCardsProps {
   postCards: PostCardProps[]
@@ -17,7 +18,12 @@ interface OrganismPostCardsProps {
 
 export default function OrganismPostCards(props: OrganismPostCardsProps) {
   const { postCards, mode = PostCardMode.FULL } = props
-  const { openDialogDeletePost, setOpenDialogDeletePost } = useDialog()
+  const {
+    openDialogDeletePost,
+    setOpenDialogDeletePost,
+    setOpenDialogUpdatePost,
+  } = useDialog()
+
   const [selectedCardId, setSelectedCardId] = useState<number | null>(null)
   const { mutateAsync: deletePostApi } = useDeletePost({
     onSuccess: () => {
@@ -62,13 +68,19 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               userImageUrl={card.userImageUrl}
               updatedAt={card.updatedAt}
               mode={mode}
-              onClickEditCard={() => console.log('edit')}
+              onClickEditCard={() => {
+                setSelectedCardId(card.id)
+                setOpenDialogUpdatePost(true)
+              }}
               onClickDeleteCard={() => {
                 setSelectedCardId(card.id)
                 setOpenDialogDeletePost(true)
               }}
             />
             {index !== postCards.length - 1 && <Divider />}
+
+            <FormEditPost id={selectedCardId || 0} />
+
             <MoleculeDialog
               open={openDialogDeletePost}
               onClickPrimaryButton={async () => {

@@ -5,3 +5,5 @@ export * from './useDeletePost'
 export * from './useGetPostById'
 
 export * from './useGetPosts'
+
+export * from './useUpdatePost'

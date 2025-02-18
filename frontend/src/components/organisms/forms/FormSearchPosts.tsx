@@ -26,6 +26,7 @@ export default function FormSearchPosts() {
     setOpenDialogMustSignin,
     openDialogCreatePost,
     openDialogDeletePost,
+    openDialogUpdatePost,
   } = useDialog()
   const [title, setTitle] = useState<string>('')
   const [focusTitle, setFocusTitle] = useState<boolean>(false)
@@ -57,10 +58,14 @@ export default function FormSearchPosts() {
   })
 
   useEffect(() => {
-    if (!openDialogCreatePost || !openDialogDeletePost) {
+    if (
+      !openDialogCreatePost ||
+      !openDialogDeletePost ||
+      !openDialogUpdatePost
+    ) {
       refetchGetPublicPosts()
     }
-  }, [openDialogCreatePost, openDialogDeletePost])
+  }, [openDialogCreatePost, openDialogDeletePost, openDialogUpdatePost])
 
   return (
     <>

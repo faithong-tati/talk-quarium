@@ -48,11 +48,12 @@ export default function RootLayout({
   const pathname = usePathname()
   const router = useRouter()
   const {
-    openDialogUnsavedChange,
-    setOpenDialogUnsavedChange,
-    setOpenDialogCreatePost,
     openDialogMustSignIn,
+    openDialogUnsavedChange,
+    setOpenDialogCreatePost,
     setOpenDialogMustSignin,
+    setOpenDialogUnsavedChange,
+    setOpenDialogUpdatePost,
   } = useDialog()
 
   useEffect(() => {
@@ -71,6 +72,7 @@ export default function RootLayout({
         onClickPrimaryButton={() => {
           setOpenDialogUnsavedChange(false)
           setOpenDialogCreatePost(false)
+          setOpenDialogUpdatePost(false)
         }}
         onClickSecondaryButton={() => setOpenDialogUnsavedChange(false)}
         onCloseDialog={() => setOpenDialogUnsavedChange(false)}

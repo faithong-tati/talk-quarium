@@ -35,8 +35,11 @@ export default function page({ params }: PageProps) {
   const postId = resolvedParams.id
 
   // * ================================ API ================================
-  const { data: getPostByIdResponse, isSuccess: isSuccessGetPostId, isLoading } =
-    useGetPostById(postId)
+  const {
+    data: getPostByIdResponse,
+    isSuccess: isSuccessGetPostId,
+    isLoading: isLoadingGetPostById,
+  } = useGetPostById(postId)
 
   const {
     data: getCommentsByPostIdResponse,
@@ -53,7 +56,7 @@ export default function page({ params }: PageProps) {
       getCommentsByPostIdResponse?.data,
     )
 
-  if (!isLoading && !isSuccessGetPostId) {
+  if (!isLoadingGetPostById && !isSuccessGetPostId) {
     enqueueSnackbar('Post not found :(', { variant: 'error' })
 
     setTimeout(() => {
