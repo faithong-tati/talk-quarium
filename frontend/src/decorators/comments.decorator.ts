@@ -21,4 +21,6 @@ class CommentsDecorator {
   }
 }
 
-export default new CommentsDecorator()
+const commentsDecorator = new CommentsDecorator()
+
+export default commentsDecorator

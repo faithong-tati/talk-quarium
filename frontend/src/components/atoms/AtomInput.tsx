@@ -7,13 +7,17 @@ import {
 } from '@mui/material'
 import React from 'react'
 
-const StyledTextField = styled(TextField)`
+export const StyledTextField = styled(TextField)`
   width: 100%;
 
-  & .MuiInputBase-root {
+  & .MuiOutlinedInput-root {
     border-radius: 8px;
     background-color: transparent;
     height: 44px;
+  }
+
+  & .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+    border-color: var(--success) !important;
   }
 
   input {
@@ -24,6 +28,7 @@ const StyledTextField = styled(TextField)`
 export default function AtomInput(props: TextFieldProps) {
   return (
     <StyledTextField
+      variant="outlined"
       slotProps={{
         input: {
           ...(props.type === 'search' && {

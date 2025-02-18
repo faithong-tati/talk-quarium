@@ -6,8 +6,8 @@ import React, {
   useRef,
 } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import AtomAutocomplete from '@/components/atoms/AtomAutocomplete'
 import AtomInput from '@/components/atoms/AtomInput'
-import AtomSelect from '@/components/atoms/AtomSelect'
 import { InputType } from '@/constants/enums'
 import { FormField, FormGeneratorRef } from '@/constants/types'
 
@@ -70,11 +70,14 @@ const FormGenerator = forwardRef<FormGeneratorRef, FormGeneratorProps>(
                     name={field.name}
                     control={control}
                     render={({ field: controllerField }) => (
-                      <AtomSelect
+                      <AtomAutocomplete
                         {...controllerField}
                         placeholder={field.placeholder || ''}
                         options={field.options || []}
                         sx={field.sx}
+                        onChange={(_event, newValue) =>
+                          controllerField.onChange(newValue)
+                        }
                       />
                     )}
                   />

@@ -41,4 +41,6 @@ class PostsDecorator {
   }
 }
 
-export default new PostsDecorator()
+const postsDecorator = new PostsDecorator()
+
+export default postsDecorator

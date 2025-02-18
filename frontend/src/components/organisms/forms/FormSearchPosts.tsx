@@ -5,9 +5,9 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import { Box, InputAdornment } from '@mui/material'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import AtomAutocomplete from '@/components/atoms/AtomAutocomplete'
 import AtomButton from '@/components/atoms/AtomButton'
 import AtomInput from '@/components/atoms/AtomInput'
-import AtomSelect from '@/components/atoms/AtomSelect'
 import { TOPIC_OPTIONS } from '@/constants'
 import { PostCardMode, Topic } from '@/constants/enums'
 import { useAuth, useDevice } from '@/contexts'
@@ -104,12 +104,12 @@ export default function FormSearchPosts() {
         )}
 
         {rightComponentDisplayCondition() && (
-          <AtomSelect
+          <AtomAutocomplete
             sx={{ mt: 2, width: '40%', height: '40px' }}
             placeholder="Community"
             options={TOPIC_OPTIONS}
             value={topic}
-            onChange={(e: any) => setTopic(e.target.value)}
+            onChange={(_event, newValue) => setTopic(newValue)}
           />
         )}
 

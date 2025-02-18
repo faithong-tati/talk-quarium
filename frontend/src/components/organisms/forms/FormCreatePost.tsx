@@ -38,7 +38,7 @@ export default function FormCreatePost() {
     {
       name: 'topic',
       type: InputType.SELECT,
-      placeholder: 'Community',
+      placeholder: 'Choose a community',
       options: TOPIC_OPTIONS,
       sx: { mt: 2, width: isMobile ? '100%' : '30%', height: '40px' },
     },
