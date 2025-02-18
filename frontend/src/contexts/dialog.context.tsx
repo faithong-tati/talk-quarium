@@ -10,9 +10,11 @@ import React, {
 
 interface DialogContextType {
   openDialogCreatePost: boolean
+  openDialogDeletePost: boolean
   openDialogMustSignIn: boolean
   openDialogUnsavedChange: boolean
   setOpenDialogCreatePost: Dispatch<React.SetStateAction<boolean>>
+  setOpenDialogDeletePost: Dispatch<React.SetStateAction<boolean>>
   setOpenDialogMustSignin: Dispatch<React.SetStateAction<boolean>>
   setOpenDialogUnsavedChange: Dispatch<React.SetStateAction<boolean>>
 }
@@ -25,13 +27,18 @@ export function DialogProvider({ children }: { children: ReactNode }) {
   const [openDialogCreatePost, setOpenDialogCreatePost] =
     useState<boolean>(false)
 
+  const [openDialogDeletePost, setOpenDialogDeletePost] =
+    useState<boolean>(false)
+
   return (
     <DialogContext.Provider
       value={{
         openDialogCreatePost,
+        openDialogDeletePost,
         openDialogMustSignIn,
         openDialogUnsavedChange,
         setOpenDialogCreatePost,
+        setOpenDialogDeletePost,
         setOpenDialogMustSignin,
         setOpenDialogUnsavedChange,
       }}

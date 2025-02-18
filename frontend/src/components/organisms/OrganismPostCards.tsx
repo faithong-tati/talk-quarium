@@ -1,10 +1,14 @@
 import { PostCardProps } from '@/constants/types/components'
 import { Box, Divider } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import MoleculePostCard from '../molecules/MoleculePostCard'
-import { PostCardMode } from '@/constants/enums'
-import { useRouter } from 'next/navigation'
+import { DialogMode, PostCardMode } from '@/constants/enums'
 import MoleculeEmptyStateCard from '../molecules/MoleculeEmptyStateCard'
+import MoleculeDialog from '../molecules/MoleculeDialog'
+import AtomTypography from '../atoms/AtomTypography'
+import { useDeletePost } from '@/services/api/posts'
+import { enqueueSnackbar } from 'notistack'
+import { useDialog } from '@/contexts/dialog.context'
 
 interface OrganismPostCardsProps {
   postCards: PostCardProps[]
@@ -13,7 +17,16 @@ interface OrganismPostCardsProps {
 
 export default function OrganismPostCards(props: OrganismPostCardsProps) {
   const { postCards, mode = PostCardMode.FULL } = props
-  const router = useRouter()
+  const { openDialogDeletePost, setOpenDialogDeletePost } = useDialog()
+  const [selectedCardId, setSelectedCardId] = useState<number | null>(null)
+  const { mutateAsync: deletePostApi } = useDeletePost({
+    onSuccess: () => {
+      enqueueSnackbar('Delete post successfully :)', { variant: 'success' })
+    },
+    onError: () => {
+      enqueueSnackbar('Delete post failed :(', { variant: 'error' })
+    },
+  })
 
   if (postCards.length === 0) {
     return (
@@ -28,11 +41,7 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
         const isLast = index === postCards.length - 1
 
         return (
-          <Box
-            sx={{ cursor: 'pointer' }}
-            key={index}
-            onClick={() => router.push(`/posts/${card.id}`)}
-          >
+          <Box sx={{ cursor: 'pointer' }} key={index}>
             <MoleculePostCard
               sx={{
                 ...(isFirst && {
@@ -53,9 +62,32 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               userImageUrl={card.userImageUrl}
               updatedAt={card.updatedAt}
               mode={mode}
+              onClickEditCard={() => console.log('edit')}
+              onClickDeleteCard={() => {
+                setSelectedCardId(card.id)
+                setOpenDialogDeletePost(true)
+              }}
             />
-
             {index !== postCards.length - 1 && <Divider />}
+            <MoleculeDialog
+              open={openDialogDeletePost}
+              onClickPrimaryButton={async () => {
+                await deletePostApi(selectedCardId || 0)
+
+                setOpenDialogDeletePost(false)
+              }}
+              onClickSecondaryButton={() => setOpenDialogDeletePost(false)}
+              primaryButtonText="Delete"
+              secondaryButtonText="Cancel"
+              title={`Please confirm if you wish to delete the post`}
+              mode={DialogMode.ERROR}
+              enableCloseIcon={false}
+            >
+              <AtomTypography>
+                Are you sure you want to delete the post? Once deleted, it
+                cannot be recovered.
+              </AtomTypography>
+            </MoleculeDialog>
           </Box>
         )
       })}

@@ -6,13 +6,14 @@ import React, { use } from 'react'
 import MoleculePostCard from '@/components/molecules/MoleculePostCard'
 import { PostCardMode } from '@/constants/enums'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import OrganismCommentCards from '@/components/organisms/OrganismCommentCards'
 import AtomButton from '@/components/atoms/AtomButton'
 import { useGetPostById } from '@/services/api/posts'
 import postsDecorator from '@/decorators/posts.decorator'
 import { useGetCommentsByPostId } from '@/services/api/comments'
 import commentsDecorator from '@/decorators/comments.decorator'
+import { enqueueSnackbar } from 'notistack'
 
 interface PageProps {
   params: Promise<{ id: number }>
@@ -34,7 +35,7 @@ export default function page({ params }: PageProps) {
   const postId = resolvedParams.id
 
   // * ================================ API ================================
-  const { data: getPostByIdResponse, isSuccess: isSuccessGetPostId } =
+  const { data: getPostByIdResponse, isSuccess: isSuccessGetPostId, isLoading } =
     useGetPostById(postId)
 
   const {
@@ -51,6 +52,14 @@ export default function page({ params }: PageProps) {
     commentsDecorator.getCommentsByPostIdResponse(
       getCommentsByPostIdResponse?.data,
     )
+
+  if (!isLoading && !isSuccessGetPostId) {
+    enqueueSnackbar('Post not found :(', { variant: 'error' })
+
+    setTimeout(() => {
+      redirect('/')
+    }, 100)
+  }
 
   return (
     <Box

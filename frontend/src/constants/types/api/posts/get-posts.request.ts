@@ -1,5 +1,4 @@
 import { Topic } from '@/constants/enums'
-import { GetPostResponse } from './get-post.response'
 
 export interface GetPostsRequest {
   limit?: number
@@ -7,4 +6,5 @@ export interface GetPostsRequest {
   title?: string
   topic?: Topic
   username?: string
+  mode?: 'public' | 'private'
 }

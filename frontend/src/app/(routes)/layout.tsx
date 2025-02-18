@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, styled } from '@mui/material'
-import { useDevice } from '@/contexts'
+import { useAuth, useDevice } from '@/contexts'
 import MoleculeListItems from '@/components/molecules/MoleculeListItems'
 import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
 import { DialogMode, Theme } from '@/constants/enums'
@@ -9,7 +9,8 @@ import OrganismAppBar from '@/components/organisms/OrganismAppBar'
 import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import { useDialog } from '@/contexts/dialog.context'
 import AtomTypography from '@/components/atoms/AtomTypography'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 const StyledChildBox = styled(Box)`
   background: var(--grey-100) !important;
@@ -43,6 +44,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const { isMobile } = useDevice()
+  const { isAuthenticated } = useAuth()
+  const pathname = usePathname()
   const router = useRouter()
   const {
     openDialogUnsavedChange,
@@ -51,6 +54,14 @@ export default function RootLayout({
     openDialogMustSignIn,
     setOpenDialogMustSignin,
   } = useDialog()
+
+  useEffect(() => {
+    const isAuth = isAuthenticated
+
+    if (!isAuth && ['/our-blog'].includes(pathname)) {
+      router.replace('/')
+    }
+  }, [pathname])
 
   return (
     <Box sx={{ flexGrow: 1 }}>

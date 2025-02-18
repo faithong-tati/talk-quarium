@@ -14,8 +14,11 @@ const getPublicPosts = async (
   request: GetPostsRequest,
 ): Promise<ResponseDto<GetPostsResponse>> => {
   try {
-    const formattedRequest = formatRequest(request)
-    const apiUrl = `${ApiPath.Posts.PUBLIC}/${formattedRequest}`
+    const { mode, ...otherRequest } = request
+    const formattedRequest = formatRequest(otherRequest)
+    const apiPath =
+      mode === 'public' ? ApiPath.Posts.PUBLIC : ApiPath.Posts.PASSPORT
+    const apiUrl = `${apiPath}/${formattedRequest}`
 
     return await RequestClient.get(apiUrl)
   } catch (error) {

@@ -17,11 +17,12 @@ interface MoleculeDialogProps extends DialogProps {
   children: ReactNode
   onClickPrimaryButton: () => void
   onClickSecondaryButton: () => void
-  onCloseDialog: () => void
   primaryButtonText: string
   secondaryButtonText: string
   disabledPrimaryButton?: boolean
+  enableCloseIcon?: boolean
   mode?: DialogMode
+  onCloseDialog?: () => void
 }
 
 const StyledDialog = styled(Dialog)`
@@ -39,6 +40,7 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
   const {
     children,
     disabledPrimaryButton = false,
+    enableCloseIcon = true,
     onClickPrimaryButton,
     onClickSecondaryButton,
     onCloseDialog,
@@ -54,7 +56,7 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
     const dialogColorMode = {
       [DialogMode.SUCCESS]: '--success',
       [DialogMode.WARNING]: '--warning',
-      [DialogMode.ERROR]: '--surface-default-default',
+      [DialogMode.ERROR]: '--surface-critical-default',
     }
 
     return {
@@ -85,7 +87,7 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
         },
       }}
       open={open}
-      onClose={onCloseDialog}
+      onClose={() => onCloseDialog?.()}
     >
       <DialogTitle>
         <AtomTypography color="--blue-gray-900" labelVariant="title-1">
@@ -93,18 +95,20 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
         </AtomTypography>
       </DialogTitle>
 
-      <CloseIcon
-        onClick={onCloseDialog}
-        sx={{
-          width: '24px',
-          height: '24px',
-          position: 'absolute',
-          right: 12,
-          top: 12,
-          color: 'var(--green-500)',
-          cursor: 'pointer',
-        }}
-      />
+      {enableCloseIcon && (
+        <CloseIcon
+          onClick={() => onCloseDialog?.()}
+          sx={{
+            width: '24px',
+            height: '24px',
+            position: 'absolute',
+            right: 12,
+            top: 12,
+            color: 'var(--green-500)',
+            cursor: 'pointer',
+          }}
+        />
+      )}
 
       <DialogContent>{children}</DialogContent>
 

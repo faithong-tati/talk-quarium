@@ -15,14 +15,17 @@ import { useGetPublicPosts } from '@/services/api/posts'
 import postsDecorator from '@/decorators/posts.decorator'
 import FormCreatePost from './FormCreatePost'
 import { useDialog } from '@/contexts/dialog.context'
+import { usePathname } from 'next/navigation'
 
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
+  const pathname = usePathname()
   const { isAuthenticated } = useAuth()
   const {
     setOpenDialogCreatePost,
     setOpenDialogMustSignin,
     openDialogCreatePost,
+    openDialogDeletePost,
   } = useDialog()
   const [title, setTitle] = useState<string>('')
   const [focusTitle, setFocusTitle] = useState<boolean>(false)
@@ -47,13 +50,17 @@ export default function FormSearchPosts() {
     data: getPublicPostsResponse,
     isSuccess: isSuccessGetPublicPosts,
     refetch: refetchGetPublicPosts,
-  } = useGetPublicPosts({ title: title, topic: topic as Topic })
+  } = useGetPublicPosts({
+    title: title,
+    topic: topic as Topic,
+    mode: pathname === '/our-blog' && isAuthenticated ? 'private' : 'public',
+  })
 
   useEffect(() => {
-    if (!openDialogCreatePost) {
+    if (!openDialogCreatePost || !openDialogDeletePost) {
       refetchGetPublicPosts()
     }
-  }, [openDialogCreatePost])
+  }, [openDialogCreatePost, openDialogDeletePost])
 
   return (
     <>

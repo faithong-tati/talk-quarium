@@ -3,6 +3,7 @@ import { Box, styled } from '@mui/material'
 import React, { ReactNode } from 'react'
 import AtomTypography from '../atoms/AtomTypography'
 import { usePathname, useRouter } from 'next/navigation'
+import { useAuth } from '@/contexts'
 
 interface MoleculeListItemsProps {
   items: {
@@ -11,6 +12,7 @@ interface MoleculeListItemsProps {
     labelVariant: string
     labelActiveVariant: string
     path: string
+    isRequireAuth: boolean
   }[]
   theme?: Theme
   onClick?: () => void
@@ -33,6 +35,7 @@ const StyledItemBox = styled(Box)`
 
 export default function MoleculeListItems(props: MoleculeListItemsProps) {
   const { items, theme = Theme.LIGHT, onClick } = props
+  const { isAuthenticated } = useAuth()
   const pathname = usePathname()
   const router = useRouter()
   const isLightTheme = theme === Theme.LIGHT
@@ -45,8 +48,18 @@ export default function MoleculeListItems(props: MoleculeListItemsProps) {
 
         return (
           <StyledItemBox
+            sx={{
+              cursor:
+                !isAuthenticated && item.isRequireAuth
+                  ? 'not-allowed'
+                  : 'pointer',
+            }}
             key={index}
             onClick={() => {
+              if (!isAuthenticated) {
+                return
+              }
+
               onClick?.()
               router.push(item.path)
             }}

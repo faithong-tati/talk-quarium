@@ -8,6 +8,7 @@ export const MENU_ITEMS = [
     path: '/',
     labelVariant: 'content-2',
     labelActiveVariant: 'content-3',
+    isRequireAuth: false,
   },
   {
     icon: <EditCalendarOutlinedIcon />,
@@ -15,6 +16,7 @@ export const MENU_ITEMS = [
     path: '/our-blog',
     labelVariant: 'content-2',
     labelActiveVariant: 'content-3',
+    isRequireAuth: true,
   },
 ]
 
