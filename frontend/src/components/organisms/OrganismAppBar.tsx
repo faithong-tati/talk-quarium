@@ -9,6 +9,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward'
 import MoleculeListItems from '../molecules/MoleculeListItems'
 import { useGetUser } from '@/services/api/users'
 import MoleculeUserInfo from '../molecules/MoleculeUserInfo'
+import { useRouter } from 'next/navigation'
 
 const StyledToolbar = styled(Toolbar)`
   background-color: var(--green-500);
@@ -49,6 +50,7 @@ const StyledDrawerBox = styled(Box)`
 
 export default function OrganismAppBar() {
   const { isMobile } = useDevice()
+  const router = useRouter()
   const { accessToken, isAuthenticated, setIsAuthenticated } = useAuth()
   const [open, setOpen] = useState<boolean>(false)
   const toggleDrawer = (newOpen: boolean) => (): void => {
@@ -69,13 +71,21 @@ export default function OrganismAppBar() {
     <AppBar>
       <StyledToolbar>
         <StyledBox isMobile={isMobile}>
-          <AtomTypography color="--white" labelVariant="brand-2">
+          <AtomTypography
+            sx={{ cursor: 'pointer' }}
+            color="--white"
+            labelVariant="brand-2"
+            onClick={() => router.push('/')}
+          >
             TalkQuarium
           </AtomTypography>
 
           {isMobile ? (
             <>
-              <StyledMenuIcon onClick={toggleDrawer(true)} />
+              <StyledMenuIcon
+                sx={{ cursor: 'pointer' }}
+                onClick={toggleDrawer(true)}
+              />
 
               <MoleculeDrawer open={open} onClose={toggleDrawer(false)}>
                 <StyledDrawerBox>
@@ -86,7 +96,7 @@ export default function OrganismAppBar() {
                     marginRight={'33px'}
                   >
                     <StyledBackIconBox onClick={toggleDrawer(false)}>
-                      <ArrowForwardIcon />
+                      <ArrowForwardIcon sx={{ cursor: 'pointer' }} />
                     </StyledBackIconBox>
                     <MoleculeUserInfo
                       isAuthenticated={isAuthenticated}

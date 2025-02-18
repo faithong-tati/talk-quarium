@@ -141,7 +141,7 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
             ml: '0 !important',
             backgroundColor: buttonStyles().primary.button.backgroundColor,
           }}
-          type='submit'
+          type="submit"
           disabled={disabledPrimaryButton}
           onClick={onClickPrimaryButton}
         >

@@ -2,7 +2,7 @@
 
 import AtomInput from '@/components/atoms/AtomInput'
 import { Box, InputAdornment } from '@mui/material'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined'
 import AtomSelect from '@/components/atoms/AtomSelect'
 import OrganismPostCards from '../OrganismPostCards'
@@ -19,16 +19,20 @@ import { useDialog } from '@/contexts/dialog.context'
 export default function FormSearchPosts() {
   const { isMobile } = useDevice()
   const { isAuthenticated } = useAuth()
-  const { setOpenDialogCreatePost, setOpenDialogMustSignin } = useDialog()
-  const [searchText, setSearchText] = useState<string>('')
-  const [focusSearchText, setFocusSearchText] = useState<boolean>(false)
-  const [selectValue, setSelectValue] = useState<number | string>('')
+  const {
+    setOpenDialogCreatePost,
+    setOpenDialogMustSignin,
+    openDialogCreatePost,
+  } = useDialog()
+  const [title, setTitle] = useState<string>('')
+  const [focusTitle, setFocusTitle] = useState<boolean>(false)
+  const [topic, setTopic] = useState<number | string>('')
   const leftComponentDisplayCondition = () => {
     if (!isMobile) {
       return true
     }
 
-    return focusSearchText
+    return focusTitle
   }
 
   const rightComponentDisplayCondition = () => {
@@ -36,19 +40,26 @@ export default function FormSearchPosts() {
       return true
     }
 
-    return !focusSearchText
+    return !focusTitle
   }
 
-  // * ================================ API ================================
-  const { data: getPublicPostsResponse, isSuccess: isSuccessGetPublicPosts } =
-    useGetPublicPosts({ title: searchText, topic: selectValue as Topic })
-  // * ================================ API ================================
+  const {
+    data: getPublicPostsResponse,
+    isSuccess: isSuccessGetPublicPosts,
+    refetch: refetchGetPublicPosts,
+  } = useGetPublicPosts({ title: title, topic: topic as Topic })
+
+  useEffect(() => {
+    if (!openDialogCreatePost) {
+      refetchGetPublicPosts()
+    }
+  }, [openDialogCreatePost])
 
   return (
     <>
       <Box display={'flex'} alignItems={'center'} gap={1} mb={'24px'}>
-        {isMobile && !focusSearchText && (
-          <Box sx={{ mr: 'auto' }} onClick={() => setFocusSearchText(true)}>
+        {isMobile && !focusTitle && (
+          <Box sx={{ mr: 'auto' }} onClick={() => setFocusTitle(true)}>
             <SearchOutlinedIcon
               sx={{ height: '20px', width: '20px', color: 'var(--text)' }}
             />
@@ -63,10 +74,10 @@ export default function FormSearchPosts() {
             type="search"
             slotProps={{
               input: {
-                value: searchText,
+                value: title,
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                  setSearchText(e.target.value),
-                onBlur: (_: any) => !searchText && setFocusSearchText(false),
+                  setTitle(e.target.value),
+                onBlur: (_: any) => !title && setFocusTitle(false),
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchOutlinedIcon
@@ -84,8 +95,8 @@ export default function FormSearchPosts() {
             sx={{ mt: 2, width: '40%', height: '40px' }}
             placeholder="Community"
             options={TOPIC_OPTIONS}
-            value={selectValue}
-            onChange={(e: any) => setSelectValue(e.target.value)}
+            value={topic}
+            onChange={(e: any) => setTopic(e.target.value)}
           />
         )}
 

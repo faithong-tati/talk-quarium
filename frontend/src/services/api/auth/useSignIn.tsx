@@ -1,14 +1,8 @@
-import {
-  QueryOptions,
-  UseQueryResult,
-  useMutation,
-  useQuery,
-} from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { ApiPath } from '@/constants'
 import { configApiOption, RequestClient } from '@/services/clients'
 
 import { MutationOptions, ResponseDto } from '@/constants/types/api'
-import { GetPostsResponse } from '@/constants/types/api/posts'
 import { SignInRequest, SignInResponse } from '@/constants/types/api/auth'
 import dayjs from 'dayjs'
 

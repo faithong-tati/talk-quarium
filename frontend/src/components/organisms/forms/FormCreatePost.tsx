@@ -5,10 +5,13 @@ import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import { TOPIC_OPTIONS } from '@/constants'
 import { FormField, FormGeneratorRef } from '@/constants/types'
 import FormGenerator from '@/components/organisms/forms/FormGenerator'
-import { InputType } from '@/constants/enums'
+import { InputType, Topic } from '@/constants/enums'
+import { useCreatePost } from '@/services/api/posts'
+import { useSnackbar } from 'notistack'
 
 export default function FormCreatePost() {
   const { isMobile } = useDevice()
+  const { enqueueSnackbar } = useSnackbar()
   const {
     openDialogCreatePost,
     setOpenDialogCreatePost,
@@ -20,6 +23,15 @@ export default function FormCreatePost() {
     topic: '',
     title: '',
     content: '',
+  })
+
+  const { mutateAsync: createPostApi } = useCreatePost({
+    onSuccess: () => {
+      enqueueSnackbar('Create post successfully :)', { variant: 'success' })
+    },
+    onError: () => {
+      enqueueSnackbar('Create post failed :(', { variant: 'error' })
+    },
   })
 
   const formFields: FormField[] = [
@@ -50,8 +62,15 @@ export default function FormCreatePost() {
     content: '',
   }
 
-  const onSubmit = (data: any) => {
-    console.log('Form submitted', data)
+  const onSubmit = async (data: any) => {
+    const { content, title, topic } = data
+
+    await createPostApi({
+      content,
+      title,
+      topic: topic as Topic,
+    })
+
     setOpenDialogCreatePost(false)
   }
 

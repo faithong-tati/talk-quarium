@@ -1,4 +1,9 @@
-import { QueryOptions, UseQueryResult, useQuery } from '@tanstack/react-query'
+import {
+  QueryOptions,
+  UseQueryResult,
+  keepPreviousData,
+  useQuery,
+} from '@tanstack/react-query'
 import { ApiPath } from '@/constants'
 import { configApiOption, RequestClient } from '@/services/clients'
 import { GetPostsRequest, GetPostsResponse } from '@/constants/types/api/posts'
@@ -27,6 +32,7 @@ export const useGetPublicPosts = (
   return useQuery({
     queryKey: ['useGetPublicPosts', request],
     queryFn: async () => await getPublicPosts(request),
+    placeholderData: keepPreviousData,
     ...configApiOption,
     ...queryOptions,
   })

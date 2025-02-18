@@ -11,6 +11,7 @@ import { AuthProvider, DeviceProvider } from '@/contexts'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { QueryClientConfig } from '@/services/clients'
 import { DialogProvider } from '@/contexts/dialog.context'
+import { SnackbarProvider } from 'notistack'
 
 export default function RootLayout({
   children,
@@ -25,7 +26,17 @@ export default function RootLayout({
             <CssBaseline />
             <AuthProvider>
               <DeviceProvider>
-                <DialogProvider>{children}</DialogProvider>
+                <DialogProvider>
+                  <SnackbarProvider
+                    maxSnack={3}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                  >
+                    {children}
+                  </SnackbarProvider>
+                </DialogProvider>
               </DeviceProvider>
             </AuthProvider>
           </ThemeProvider>

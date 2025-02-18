@@ -75,13 +75,16 @@ export class PostsService {
         .createQueryBuilder('post')
         .leftJoinAndSelect('post.user', 'user')
         .leftJoinAndSelect('post.comments', 'comment')
-        .select(['post', 'user.id', 'user.username', 'user.userImageUrl', 'comment']);
+        .select(['post', 'user.id', 'user.username', 'user.userImageUrl', 'comment'])
+        .orderBy('post.createdAt', 'DESC')
+        .skip(args.offset)
+        .take(args.limit);
 
       if (args?.topic) {
         qb.andWhere('post.topic = :topic', { topic: args.topic });
       }
 
-      if (args?.title) {
+      if (args?.title && args.title.trim().length >= 2) {
         qb.andWhere('post.title LIKE :title', { title: `%${args.title}%` });
       }
 
@@ -98,9 +101,6 @@ export class PostsService {
           qb.andWhere('user.id = :userId', { userId: argUserId });
         }
       }
-
-      qb.orderBy('post.createdAt', 'DESC');
-      qb.skip(args.offset).take(args.limit);
 
       const response = await qb.getMany();
       const totalItems = await qb.getCount();

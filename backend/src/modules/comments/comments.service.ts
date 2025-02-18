@@ -92,10 +92,11 @@ export class CommentsService {
           'user.userImageUrl',
           'post.id',
           'post.title',
-        ]);
-
-      qb.orderBy('comment.createdAt', 'DESC');
-      qb.skip(offset).take(limit);
+        ])
+        .where('comment.postId = :postId', { postId })
+        .orderBy('comment.createdAt', 'DESC')
+        .skip(offset)
+        .take(limit);
 
       const response = await qb.getMany();
       const totalItems = await qb.getCount();
