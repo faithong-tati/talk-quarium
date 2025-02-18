@@ -91,13 +91,16 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               onClickSecondaryButton={() => setOpenDialogDeletePost(false)}
               primaryButtonText="Delete"
               secondaryButtonText="Cancel"
-              title={`Please confirm if you wish to delete the post`}
+              title={`Please confirm if you wish\nto delete the post`}
               mode={ButtonMode.ERROR}
               enableCloseIcon={false}
+              isSmall
             >
-              <AtomTypography>
-                Are you sure you want to delete the post? Once deleted, it
-                cannot be recovered.
+              <AtomTypography
+                sx={{ textAlign: 'center' }}
+                labelVariant="content-4"
+              >
+                {`Are you sure you want to delete the post?\nOnce deleted, it cannot be recovered.`}
               </AtomTypography>
             </MoleculeDialog>
           </Box>

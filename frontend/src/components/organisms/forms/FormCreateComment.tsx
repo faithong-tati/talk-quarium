@@ -125,7 +125,7 @@ export default function FormCreateComment({ postId }: FormCreateCommentProps) {
                 >
                   Cancel
                 </AtomButton>
-                <AtomButton fullWidth onClick={() => console.log('post!')}>
+                <AtomButton fullWidth onClick={() => formRef.current?.submit()}>
                   Post
                 </AtomButton>
               </Box>

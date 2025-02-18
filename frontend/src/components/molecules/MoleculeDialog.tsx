@@ -21,6 +21,7 @@ interface MoleculeDialogProps extends DialogProps {
   secondaryButtonText: string
   disabledPrimaryButton?: boolean
   enableCloseIcon?: boolean
+  isSmall?: boolean
   mode?: ButtonMode
   onCloseDialog?: () => void
 }
@@ -41,14 +42,15 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
     children,
     disabledPrimaryButton = false,
     enableCloseIcon = true,
+    isSmall = false,
+    mode = ButtonMode.SUCCESS,
     onClickPrimaryButton,
     onClickSecondaryButton,
     onCloseDialog,
+    open,
     primaryButtonText,
     secondaryButtonText,
-    open,
     title,
-    mode = ButtonMode.SUCCESS,
   } = props
 
   const { isMobile } = useDevice()
@@ -56,7 +58,10 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
     return {
       secondary: {
         text: {
-          color: `--text-default-description`,
+          color:
+            mode === ButtonMode.SUCCESS
+              ? '--success'
+              : '--text-default-description',
         },
       },
       primary: {
@@ -71,14 +76,21 @@ export default function MoleculeDialog(props: MoleculeDialogProps) {
     <StyledDialog
       sx={{
         '& .MuiDialog-paper': {
-          minWidth: isMobile ? '350px' : '600px',
+          minWidth: isMobile ? '350px' : isSmall ? '400px' : '600px',
+          maxWidth: isSmall && !isMobile ? '400px' : '',
         },
       }}
       open={open}
       onClose={() => onCloseDialog?.()}
     >
       <DialogTitle>
-        <AtomTypography color="--blue-gray-900" labelVariant="title-1">
+        <AtomTypography
+          sx={{
+            textAlign: mode === ButtonMode.ERROR ? 'center' : 'left',
+          }}
+          color="--blue-gray-900"
+          labelVariant={mode === ButtonMode.SUCCESS ? 'title-1' : 'title-3'}
+        >
           {title}
         </AtomTypography>
       </DialogTitle>

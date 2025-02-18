@@ -46,7 +46,10 @@ export default function AtomButton(props: AtomButtonProps) {
       color: `var(${colorConfig[buttonMode]})`,
       width: fullWidth ? '100%' : 'fit-content',
       backgroundColor: 'var(--white) !important',
-      border: `1px solid var(${colorConfig[buttonMode]}) !important`,
+      border:
+        buttonMode === ButtonMode.SUCCESS
+          ? `1px solid var(${colorConfig[buttonMode]}) !important`
+          : '1px solid var(--surface-default-default)',
     }
   }
 

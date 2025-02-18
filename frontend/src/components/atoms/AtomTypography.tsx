@@ -19,7 +19,7 @@ export default function AtomTypography(props: AtomTypographyProps) {
   return (
     <Typography
       className={`${labelVariant} ${className}`}
-      sx={{ color: `var(${color})`, ...sx }}
+      sx={{ color: `var(${color})`, whiteSpace: 'pre-wrap', ...sx }}
       {...otherProps}
     >
       {children}

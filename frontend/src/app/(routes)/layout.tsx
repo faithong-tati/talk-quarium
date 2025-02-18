@@ -81,6 +81,7 @@ export default function RootLayout({
         primaryButtonText="Ok"
         secondaryButtonText="Cancel"
         title="Unsaved Changes"
+        isSmall
       >
         <AtomTypography labelVariant="content-4">
           You have unsaved changes that will be lost. Continue?
@@ -99,6 +100,7 @@ export default function RootLayout({
         primaryButtonText="Ok"
         secondaryButtonText="Cancel"
         title="Join us?"
+        isSmall
       >
         <AtomTypography labelVariant="content-4">
           Sign-in to enjoy full access!
