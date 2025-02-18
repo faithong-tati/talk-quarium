@@ -1,8 +1,8 @@
 import { Box, styled } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { StorageKey } from '@/constants/enums'
-import { deleteStorage } from '@/utils/helpers'
+import { deleteStorage, setStorage } from '@/utils/helpers'
 import AtomButton from '../atoms/AtomButton'
 import AtomImage from '../atoms/AtomImage'
 import AtomTypography from '../atoms/AtomTypography'
@@ -20,6 +20,7 @@ const StyledUserImage = styled(AtomImage)`
 
 export default function MoleculeUserInfo(props: MoleculeUserInfoProps) {
   const router = useRouter()
+  const pathname = usePathname()
   const { isAuthenticated, isLoading, userImageUrl, username } = props
 
   if (isLoading) {
@@ -43,6 +44,7 @@ export default function MoleculeUserInfo(props: MoleculeUserInfoProps) {
             labelVariant="content-1"
             onClick={async () => {
               deleteStorage(StorageKey.ACCESS_TOKEN)
+              deleteStorage(StorageKey.PRE_SIGN_IN_PATH)
 
               window.location.reload()
             }}
@@ -62,6 +64,14 @@ export default function MoleculeUserInfo(props: MoleculeUserInfoProps) {
   }
 
   return (
-    <AtomButton onClick={() => router.push('/sign-in')}>Sign In</AtomButton>
+    <AtomButton
+      onClick={() => {
+        setStorage(StorageKey.PRE_SIGN_IN_PATH, pathname)
+
+        router.push('/sign-in')
+      }}
+    >
+      Sign In
+    </AtomButton>
   )
 }

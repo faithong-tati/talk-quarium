@@ -8,9 +8,10 @@ import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import MoleculeListItems from '@/components/molecules/MoleculeListItems'
 import OrganismAppBar from '@/components/organisms/OrganismAppBar'
 import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
-import { ButtonMode, Theme } from '@/constants/enums'
+import { ButtonMode, StorageKey, Theme } from '@/constants/enums'
 import { useAuth, useDevice } from '@/contexts'
 import { useDialog } from '@/contexts/dialog.context'
+import { deleteStorage } from '@/utils/helpers'
 
 const StyledChildBox = styled(Box)`
   background: var(--grey-100) !important;
@@ -58,12 +59,14 @@ export default function RootLayout({
   } = useDialog()
 
   useEffect(() => {
-    const isAuth = isAuthenticated
+    if (isAuthenticated) {
+      deleteStorage(StorageKey.PRE_SIGN_IN_PATH)
+    }
 
-    if (!isAuth && ['/our-blog'].includes(pathname)) {
+    if (!isAuthenticated && ['/our-blog'].includes(pathname)) {
       router.replace('/')
     }
-  }, [pathname])
+  }, [pathname, isAuthenticated])
 
   return (
     <Box sx={{ flexGrow: 1 }}>

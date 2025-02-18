@@ -6,8 +6,10 @@ import React from 'react'
 import AtomImage from '@/components/atoms/AtomImage'
 import AtomTypography from '@/components/atoms/AtomTypography'
 import FormSignIn from '@/components/organisms/forms/FormSignIn'
+import { StorageKey } from '@/constants/enums'
 import { useAuth, useDevice } from '@/contexts'
 import { useGetUser } from '@/services/api/users'
+import { getStorage } from '@/utils/helpers'
 
 const StyledBrandBox = styled(Box)`
   background-color: var(--green-300);
@@ -25,7 +27,9 @@ export default function Page() {
   const { isSuccess: isSuccessGetUser } = useGetUser(!!accessToken)
 
   if (isSuccessGetUser) {
-    redirect('/')
+    const preSignInPath = getStorage(StorageKey.PRE_SIGN_IN_PATH)
+
+    redirect(preSignInPath || '/')
   }
 
   return (

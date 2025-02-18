@@ -56,7 +56,7 @@ export default function MoleculeListItems(props: MoleculeListItemsProps) {
             }}
             key={index}
             onClick={() => {
-              if (!isAuthenticated) {
+              if (!isAuthenticated && item.isRequireAuth) {
                 return
               }
 
