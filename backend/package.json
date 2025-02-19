@@ -1,8 +1,8 @@
 {
-  "name": "backend",
-  "version": "0.0.1",
+  "name": "talk-quarium-backend",
+  "version": "1.0.0",
   "description": "",
-  "author": "",
+  "author": "faithong-tati",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

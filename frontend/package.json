@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "talk-quarium-frontend",
+  "version": "1.0.0",
+  "author": "faithong-tati",
   "private": true,
   "type": "module",
   "scripts": {
