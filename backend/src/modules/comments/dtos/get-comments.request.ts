@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional } from 'class-validator';
 
 export class GetCommentsRequestDto {
   @ApiProperty({
@@ -6,6 +7,7 @@ export class GetCommentsRequestDto {
     required: false,
     default: 0,
   })
+  @IsOptional()
   offset?: number;
 
   @ApiProperty({
@@ -13,5 +15,6 @@ export class GetCommentsRequestDto {
     required: false,
     default: 10,
   })
+  @IsOptional()
   limit?: number;
 }

@@ -1,19 +1,20 @@
 import { useSnackbar } from 'notistack'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import FormGenerator from '@/components/organisms/forms/FormGenerator'
 import { TOPIC_OPTIONS } from '@/constants'
 import { InputType, Topic } from '@/constants/enums'
 import { FormField, FormGeneratorRef } from '@/constants/types'
+import { PostCardProps } from '@/constants/types/components'
 import { useDevice } from '@/contexts'
 import { useDialog } from '@/contexts/dialog.context'
 import { useGetPostById, useUpdatePost } from '@/services/api/posts'
 
 interface FormEditPostProps {
-  id: number
+  defaultValues: PostCardProps
 }
 
-export default function FormEditPost({ id }: FormEditPostProps) {
+export default function FormEditPost({ defaultValues }: FormEditPostProps) {
   const { isMobile } = useDevice()
   const { enqueueSnackbar } = useSnackbar()
   const {
@@ -23,18 +24,8 @@ export default function FormEditPost({ id }: FormEditPostProps) {
   } = useDialog()
 
   const formRef = useRef<FormGeneratorRef>(null)
-  const [formValues, setFormValues] = useState({
-    topic: '',
-    title: '',
-    content: '',
-  })
-
-  const {
-    data: getPostByIdResponse,
-    isSuccess: isSuccessGetPostId,
-    isLoading: isLoadingGetPostById,
-  } = useGetPostById(id)
-
+  const [formValues, setFormValues] = useState<PostCardProps>(defaultValues)
+  const { isSuccess: isSuccessGetPostId } = useGetPostById(defaultValues?.id)
   const { mutateAsync: updatePostApi } = useUpdatePost({
     onSuccess: () => {
       enqueueSnackbar('Update post successfully :)', { variant: 'success' })
@@ -66,17 +57,17 @@ export default function FormEditPost({ id }: FormEditPostProps) {
     },
   ]
 
-  const defaultValues = {
-    topic: getPostByIdResponse?.data?.topic as Topic,
-    title: getPostByIdResponse?.data?.title || '',
-    content: getPostByIdResponse?.data?.content || '',
+  const $defaultValues = {
+    topic: defaultValues?.topic as Topic,
+    title: defaultValues?.title || '',
+    content: defaultValues?.content || '',
   }
 
   const onSubmit = async (data: any) => {
     const { content, title, topic } = data
 
     await updatePostApi({
-      query: { id },
+      query: { id: defaultValues.id },
       body: {
         content,
         title,
@@ -97,24 +88,10 @@ export default function FormEditPost({ id }: FormEditPostProps) {
     setOpenDialogUpdatePost(false)
   }
 
-  useEffect(() => {
-    if (
-      !isLoadingGetPostById &&
-      isSuccessGetPostId &&
-      getPostByIdResponse?.data
-    ) {
-      setFormValues({
-        content: getPostByIdResponse.data.content,
-        title: getPostByIdResponse.data.title,
-        topic: getPostByIdResponse.data.topic,
-      })
-    }
-  }, [isLoadingGetPostById, isSuccessGetPostId, getPostByIdResponse])
-
   const disablePrimary = !(
-    formValues.topic &&
-    formValues.title &&
-    formValues.content
+    formValues?.topic &&
+    formValues?.title &&
+    formValues?.content
   )
 
   return (
@@ -134,7 +111,7 @@ export default function FormEditPost({ id }: FormEditPostProps) {
         <FormGenerator
           ref={formRef}
           fields={formFields}
-          defaultValues={defaultValues}
+          defaultValues={$defaultValues}
           onSubmit={onSubmit}
           onValuesChange={setFormValues}
         />

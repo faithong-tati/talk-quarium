@@ -38,7 +38,6 @@ export default function Page({ params }: PageProps) {
   const router = useRouter()
   const { openDialogCreateComment, setOpenDialogCreateComment } = useDialog()
   const postId = resolvedParams.id
-  // * ================================ API ================================
   const {
     data: getPostByIdResponse,
     isSuccess: isSuccessGetPostId,
@@ -50,7 +49,6 @@ export default function Page({ params }: PageProps) {
     isSuccess: isSuccessGetCommentsByPostId,
     refetch: refetchGetCommentsByPostId,
   } = useGetCommentsByPostId({ params: { postId } })
-  // * ================================ API ================================
 
   const formattedGetPostById = postsDecorator.getPostById(
     getPostByIdResponse?.data,

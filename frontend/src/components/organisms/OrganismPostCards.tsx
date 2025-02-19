@@ -24,7 +24,7 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
     setOpenDialogUpdatePost,
   } = useDialog()
 
-  const [selectedCardId, setSelectedCardId] = useState<number | null>(null)
+  const [selectedCard, setSelectedCard] = useState<PostCardProps>()
   const { mutateAsync: deletePostApi } = useDeletePost({
     onSuccess: () => {
       enqueueSnackbar('Delete post successfully :)', { variant: 'success' })
@@ -69,11 +69,11 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               updatedAt={card.updatedAt}
               mode={mode}
               onClickEditCard={() => {
-                setSelectedCardId(card.id)
+                setSelectedCard(card)
                 setOpenDialogUpdatePost(true)
               }}
               onClickDeleteCard={() => {
-                setSelectedCardId(card.id)
+                setSelectedCard(card)
                 setOpenDialogDeletePost(true)
               }}
             />
@@ -82,12 +82,12 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
         )
       })}
 
-      <FormEditPost id={selectedCardId || 0} />
+      <FormEditPost defaultValues={selectedCard as PostCardProps} />
 
       <MoleculeDialog
         open={openDialogDeletePost}
         onClickPrimaryButton={async () => {
-          await deletePostApi(selectedCardId || 0)
+          await deletePostApi(selectedCard?.id || 0)
 
           setOpenDialogDeletePost(false)
         }}

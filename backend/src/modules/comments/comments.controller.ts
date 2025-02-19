@@ -25,13 +25,14 @@ import {
 @ApiTags('comments')
 @Controller({
   version: ['1'],
+  path: 'comments',
 })
 export class CommentsController {
   constructor(private commentsService: CommentsService) {}
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Post('comments/:postId')
+  @Post('/:postId')
   @ApiOperation({ summary: 'Create comment in TalkQuarium' })
   @ApiOkResponse({
     description: 'Create comment successfully',
@@ -55,7 +56,7 @@ export class CommentsController {
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }
 
-  @Get('comments/:postId')
+  @Get('/:postId')
   @ApiOperation({ summary: 'Get comments by post in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get comments by post successfully',

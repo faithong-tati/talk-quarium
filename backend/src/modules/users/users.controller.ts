@@ -18,13 +18,14 @@ import { UsersService } from './users.service';
 @ApiTags('users')
 @Controller({
   version: ['1'],
+  path: 'users',
 })
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get('users')
+  @Get()
   @ApiOperation({ summary: 'Get user in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get user successfully',

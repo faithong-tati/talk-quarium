@@ -41,13 +41,14 @@ import { PostsService } from './posts.service';
 @ApiTags('posts')
 @Controller({
   version: ['1'],
+  path: 'posts',
 })
 export class PostsController {
   constructor(private postsService: PostsService) {}
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @HttpPost('posts')
+  @HttpPost()
   @ApiOperation({ summary: 'Create post in TalkQuarium' })
   @ApiOkResponse({
     description: 'Post created successfully',
@@ -66,7 +67,7 @@ export class PostsController {
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }
 
-  @Get('posts/public')
+  @Get('/public')
   @ApiOperation({ summary: 'Get public posts in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get public posts successfully',
@@ -86,7 +87,7 @@ export class PostsController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Get('posts/passport')
+  @Get('/passport')
   @ApiOperation({ summary: 'Get personalized posts in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get personalized posts successfully',
@@ -105,7 +106,7 @@ export class PostsController {
     return getResponseStatus(ErrorCode.SUCCESS, response);
   }
 
-  @Get('posts/:id')
+  @Get('/:id')
   @ApiOperation({ summary: 'Get post by id in TalkQuarium' })
   @ApiOkResponse({
     description: 'Get post by id successfully',
@@ -123,7 +124,7 @@ export class PostsController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Put('posts/:id')
+  @Put('/:id')
   @ApiOperation({ summary: 'Update post by id in TalkQuarium' })
   @ApiOkResponse({
     description: 'Update post by id successfully',
@@ -145,7 +146,7 @@ export class PostsController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Delete('posts/:id')
+  @Delete('/:id')
   @ApiOperation({ summary: 'Delete post by id in TalkQuarium' })
   @ApiOkResponse({
     description: 'Delete post by id successfully',

@@ -10,6 +10,8 @@ import AtomTypography from '../atoms/AtomTypography'
 import MoleculeDrawer from '../molecules/MoleculeDrawer'
 import MoleculeListItems from '../molecules/MoleculeListItems'
 import MoleculeUserInfo from '../molecules/MoleculeUserInfo'
+import { deleteStorage } from '@/utils/helpers'
+import { StorageKey } from '@/constants/enums'
 
 const StyledToolbar = styled(Toolbar)`
   background-color: var(--green-500);
@@ -65,6 +67,11 @@ export default function OrganismAppBar() {
 
   useEffect(() => {
     setIsAuthenticated(isSuccessGetUser)
+
+    if (!isSuccessGetUser) {
+      deleteStorage(StorageKey.ACCESS_TOKEN)
+      deleteStorage(StorageKey.PRE_SIGN_IN_PATH)
+    }
   }, [isSuccessGetUser])
 
   return (

@@ -26,9 +26,7 @@ export default function FormSignIn() {
   const router = useRouter()
   const [username, setUsername] = useState<string>('')
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  // * ================================ API ================================
   const { mutateAsync: signInApi } = useSignIn()
-  // * ================================ API ================================
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       setIsLoading(true)

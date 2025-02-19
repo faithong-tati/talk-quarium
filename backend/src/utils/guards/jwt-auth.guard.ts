@@ -14,10 +14,16 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
         throw new ErrorException(ErrorCode.TOKEN_EXPIRED);
       }
 
-      if (info.name === 'JsonWebTokenError' && info.message === 'invalid signature') {
+      if (info && info.name === 'JsonWebTokenError' && info.message === 'invalid signature') {
         console.error('[JwtAuthGuard][handleRequest] Expected error: ', info);
 
         throw new ErrorException(ErrorCode.JWT_INVALID_SIGNATURE);
+      }
+
+      if (info && info.message === 'No auth token') {
+        console.error('[JwtAuthGuard][handleRequest] Expected error: ', info);
+
+        throw new ErrorException(ErrorCode.INVALID_DATA, undefined, '[authToken] is required');
       }
 
       console.error('[JwtAuthGuard][handleRequest] Unexpected error: ', info);
