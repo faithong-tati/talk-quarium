@@ -27,7 +27,7 @@ export class AuthService {
     } catch (error) {
       console.error('[AuthService][signIn] Unexpected error: ', error);
 
-      throw new ErrorException(ErrorCode.UNAUTHORIZED);
+      throw new ErrorException(ErrorCode.SERVER_ERROR);
     }
   }
 
@@ -55,7 +55,7 @@ export class AuthService {
     } catch (error) {
       console.error('[AuthService][validateAuth] Unexpected error: ', error);
 
-      throw new ErrorException(ErrorCode.UNAUTHORIZED);
+      throw new ErrorException(ErrorCode.SERVER_ERROR);
     }
   }
 }

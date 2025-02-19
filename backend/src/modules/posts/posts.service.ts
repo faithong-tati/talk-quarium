@@ -70,7 +70,6 @@ export class PostsService {
     userCtx?: UserDto,
   ): Promise<GetPostsResponseDto> {
     try {
-      const userIdCtx = userCtx?.userId;
       const qb = this.postsRepository
         .createQueryBuilder('post')
         .leftJoinAndSelect('post.user', 'user')
@@ -93,13 +92,7 @@ export class PostsService {
       }
 
       if (userCtx?.userId) {
-        const argUserId = userCtx?.userId;
-
-        if (userIdCtx && argUserId !== userIdCtx) {
-          throw new ErrorException(ErrorCode.FORBIDDEN);
-        } else {
-          qb.andWhere('user.id = :userId', { userId: argUserId });
-        }
+        qb.andWhere('user.id = :userId', { userId: userCtx.userId });
       }
 
       const response = await qb.getMany();
@@ -107,12 +100,6 @@ export class PostsService {
 
       return PostsDecorator.getPostsResponse(response, totalItems);
     } catch (error) {
-      if (error instanceof ErrorException) {
-        console.error('[PostsService][getPosts] Expected error:', error);
-
-        throw error;
-      }
-
       console.error('[PostsService][getPosts] Unexpected error: ', error);
 
       throw new ErrorException(ErrorCode.SERVER_ERROR, 'get posts failed');
