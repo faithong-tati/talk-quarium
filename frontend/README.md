@@ -1,36 +1,147 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Frontend - Next.js 15
 
-## Getting Started
+This directory contains the **frontend application** built with **Next.js 15**, following a **component-based architecture with Atomic Design**.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 Features
+- **Latest Next.js 15**: Utilizing the App Router for improved performance and flexibility.
+- **Atomic Design Pattern**: UI components structured for reusability and maintainability.
+- **Context API**: Global state management.
+- **React Hook Form**: Provides a form generator and validation.
+- **Form Generator**: A dynamic form builder leveraging `react-hook-form` and MUI components for effortless form handling.
+- **TanStack React Query**: Efficient API data fetching and caching.
+- **MUI & Emotion**: Material UI components with Emotion styling.
+- **Environment Variables**: `.env` file is included for configuration.
+
+---
+
+## 🛠 Installation
+
+Ensure you have the following installed:
+- **Node.js** (>= 20.x)
+- **npm** or **Yarn**
+
+### 1️⃣ Clone the repository
+```sh
+$ git clone https://github.com/faithong-tati/talk-quarium.git
+$ cd frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Using **npm**:
+```sh
+$ npm install
+```
+or using **Yarn**:
+```sh
+$ yarn install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3️⃣ Set up environment variables
+A `.env` file is already included in the project (not ignored in Git). Ensure it has the correct configuration:
+```
+NEXT_PUBLIC_TALK_QUARIUM_API_BASE_URL=http://127.0.0.1:4000
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🚀 Running the Application
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Development Mode
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```sh
+$ npm run dev
+```
+Or
+```sh
+$ yarn dev
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔍 Linting & Formatting
+To run ESLint and Prettier checks:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```sh
+$ npm run lint
+```
+Or
+```sh
+$ yarn lint
+```
+
+---
+
+## 📂 Folder Structure
+```
+frontend/
+│-- src/
+│   │-- app/          # Next.js App Router
+│   │-- components/   # UI components (Atomic Design)
+│   │-- constants/    # Shared constants, enums, types
+│   │-- contexts/     # Global state management (Context API)
+│   │-- decorators/   # Response formatters
+│   │-- lib/          # Utility libraries
+│   │-- service/      # API integration hooks
+│   │-- styles/       # Global and component styles
+│   │-- utils/        # General helper functions
+│-- .env             # Environment variables (already included)
+│-- package.json     # Project dependencies and scripts
+```
+
+---
+
+## 📜 Form Generator
+The **Form Generator** is a reusable component leveraging **React Hook Form** and MUI components to dynamically render forms. It allows easy form creation by passing an array of field configurations.
+
+### 🛠 How It Works
+- Uses `react-hook-form` for form state management and validation.
+- Supports different field types: `input`, `textarea`, and `select`.
+- Watches for field changes and triggers callbacks for real-time data handling.
+- Uses **MUI components** (`AtomInput`, `AtomAutocomplete`) for UI consistency.
+
+### 📄 Example Usage
+```tsx
+<FormGenerator
+  fields=[
+    { name: "title", type: InputType.INPUT, placeholder: "Enter title" },
+    { name: "content", type: InputType.TEXTAREA, placeholder: "Enter content" },
+    { name: "topic", type: InputType.SELECT, options: ["Food", "Health"] }
+  ]
+  defaultValues={{ title: "", content: "", topic: "Food" }}
+  onSubmit={(data) => console.log(data)}
+/>
+```
+
+---
+
+## 📜 Package.json Highlights
+Your **frontend** uses the following key dependencies:
+
+### 🔥 **Core Dependencies**
+- **Next.js 15** (`next`, `react`, `react-dom`): Provides SSR, routing, and optimized performance.
+- **React Hook Form** (`react-hook-form`): Lightweight and efficient form management with validation.
+- **TanStack React Query** (`@tanstack/react-query`): Optimized data fetching and state synchronization.
+- **Axios** (`axios`): HTTP client for API communication.
+- **Day.js** (`dayjs`): Minimal date/time library for formatting and manipulation.
+- **JWT Decode** (`jwt-decode`): Decodes JWT tokens for authentication handling.
+- **Lodash** (`lodash`): Utility library for functional programming.
+- **MUI & Emotion** (`@mui/material`, `@emotion/react`, `@emotion/styled`): Component-based styling and UI framework.
+- **Notistack** (`notistack`): Snackbar notification handling.
+
+### 🔍 **Development & Testing**
+- **Linting & Formatting:**
+  - `eslint`, `prettier`, `eslint-config-next`, `eslint-plugin-react`, `eslint-plugin-import`
+- **TypeScript Support:**
+  - `typescript`, `@types/react`, `@types/node`, `@typescript-eslint/eslint-plugin`
+- **Performance & Optimization:**
+  - `eslint-plugin-sonarjs`, `eslint-plugin-sort-class-members`, `eslint-plugin-unused-imports`
+
+---
+
+## 📬 Contact
+Have questions or need support? Reach out! 🚀  
+📧 **Email:** [faithong.tati@gmail.com](mailto:faithong.tati@gmail.com)
+

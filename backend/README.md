@@ -1,75 +1,139 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+# 🚀 Backend - NestJS
 
-[travis-image]: https://api.travis-ci.org/nestjs/nest.svg?branch=master
-[travis-url]: https://travis-ci.org/nestjs/nest
-[linux-image]: https://img.shields.io/travis/nestjs/nest/master.svg?label=linux
-[linux-url]: https://travis-ci.org/nestjs/nest
+This directory contains the **backend API** built using **NestJS**, following a **modular folder structure**.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="blank">Node.js</a> framework for building efficient and scalable server-side applications, heavily inspired by <a href="https://angular.io" target="blank">Angular</a>.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore"><img src="https://img.shields.io/npm/dm/@nestjs/core.svg" alt="NPM Downloads" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://api.travis-ci.org/nestjs/nest.svg?branch=master" alt="Travis" /></a>
-<a href="https://travis-ci.org/nestjs/nest"><img src="https://img.shields.io/travis/nestjs/nest/master.svg?label=linux" alt="Linux" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#5" alt="Coverage" /></a>
-<a href="https://gitter.im/nestjs/nestjs?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge"><img src="https://badges.gitter.im/nestjs/nestjs.svg" alt="Gitter" /></a>
-<a href="https://opencollective.com/nest#backer"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec"><img src="https://img.shields.io/badge/Donate-PayPal-dc3d53.svg"/></a>
-  <a href="https://twitter.com/nestframework"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## 📌 Features
+- **Authentication:** Simple username-based sign-in.
+- **CRUD Operations:** Users can create, read, update, and delete posts and comments.
+- **Role-Based Restrictions:** Users can only modify or delete their own posts/comments.
+- **Database Integration:** Uses TypeORM with **SQLite** (no need for a database port).
+- **SQLite Database is Synced:** The database schema is automatically synchronized without requiring migrations.
+- **Environment Variables:** `.env` file is already included in the project.
+- **Swagger API Documentation:** Available at **[http://127.0.0.1:4000/api](http://127.0.0.1:4000/api)**.
+- **Unit Testing:** Includes Jest test coverage for all services, ensuring stability and correctness of features.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+---
 
-## Installation
+## 🛠 Installation
 
-```bash
+Ensure you have the following installed:
+- **Node.js** (>= 20.x)
+- **npm** or **Yarn**
+
+### 1️⃣ Clone the repository
+```sh
+$ git clone https://github.com/faithong-tati/talk-quarium.git
+$ cd backend
+```
+
+### 2️⃣ Install dependencies
+
+Using **npm**:
+```sh
 $ npm install
 ```
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+Or using **Yarn**:
+```sh
+$ yarn install
 ```
 
-## Test
+### 3️⃣ Set up environment variables
+A `.env` file is already included in the project (not ignored in Git). Ensure it has the correct configuration:
+```
+APP_HOSTNAME=127.0.0.1
+APP_PORT=4000
+JWT_SECRET=<jwt-secret-key>
+```
 
-```bash
-# unit tests
-$ npm run test
+### 4️⃣ Database Configuration
+Since **SQLite is synchronized automatically**, you don’t need to run migrations. The schema will be generated automatically based on your entities.
 
-# e2e tests
-$ npm run test:e2e
+---
 
-# test coverage
+## 🚀 Running the Server
+
+### Development Mode
+```sh
+$ npm run start:dev
+```
+Or
+```sh
+$ yarn start:dev
+```
+
+---
+
+## 🧪 Unit Testing
+Unit tests are implemented using **Jest** to ensure the reliability and correctness of core services. 
+- **Service Tests:** Cover business logic and edge cases.
+- **Repository Mocks:** Uses in-memory mock repositories for testing without affecting the real database.
+- **Error Handling:** Validates responses for expected and unexpected errors.
+- **Test Coverage:** Can be checked using:
+
+```sh
 $ npm run test:cov
 ```
+Or
+```sh
+$ yarn test:cov
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🔍 Linting & Formatting
+To run ESLint and Prettier checks:
 
-## Stay in touch
+```sh
+$ npm run lint
+```
+Or
+```sh
+$ yarn lint
+```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## 📂 Folder Structure
 
-Nest is [MIT licensed](LICENSE).
+```
+backend/
+│-- src/
+│   │-- modules/   # Modular feature-based folders (auth, users, posts, comments)
+│   │-- common/    # Shared constants, decorators, base dtos, base entities, base examples
+│   │-- utils/     # Provide exceptions, filters, guards, helpers
+│   │-- main.ts    # Entry point of the application
+│-- .env           # Environment variables (already included)
+│-- package.json   # Project dependencies and scripts
+```
+
+---
+
+### 🔥 **Essential Backend Packages**
+- **NestJS Modules:** 
+  - `@nestjs/core`, `@nestjs/common`, `@nestjs/typeorm`, `@nestjs/jwt`, `@nestjs/passport` for building modular backend services.
+- **Database & ORM:**
+  - `typeorm`, `sqlite3` for handling database interactions with SQLite.
+- **Validation & Transformation:**
+  - `class-validator`, `class-transformer` for data validation and transformation.
+- **API Documentation:**
+  - `@nestjs/swagger`, `swagger-ui-express` for generating interactive API documentation.
+
+### 🔍 **Development & Testing Packages**
+- **Testing:**
+  - `jest`, `supertest`, `ts-jest` for writing unit and integration tests.
+- **Linting & Formatting:**
+  - `eslint`, `prettier`, `eslint-plugin-import` for code quality enforcement.
+- **TypeScript & Build Tools:**
+  - `typescript`, `ts-node`, `tsconfig-paths` for TypeScript support.
+- **Debugger & Utilities:**
+  - `source-map-support`, `dotenv` for better debugging and environment configuration.
+
+
+---
+
+## 📬 Contact
+Have questions or need support? Reach out! 🚀  
+📧 **Email:** [faithong.tati@gmail.com](mailto:faithong.tati@gmail.com)
+

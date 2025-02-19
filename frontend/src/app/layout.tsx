@@ -19,6 +19,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>TalkQuarium</title>
+        <link rel="icon" href="/images/brand-image.png" />
+      </head>
       <body>
         <QueryClientProvider client={QueryClientConfig}>
           <ThemeProvider theme={theme}>
