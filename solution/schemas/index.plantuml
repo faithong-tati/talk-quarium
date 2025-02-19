@@ -1,4 +1,4 @@
-@startuml talk-quarium schemas
+@startuml talk-quarium-schemas
 skinparam linetype ortho
 
 !include users.plantuml

@@ -1,0 +1,59 @@
+@startjson create-post
+{
+  "path": "/posts",
+  "httpMethod": "POST",
+  "header": {
+    "authorization": "string"
+  }
+  ,
+  "body": {
+    "topic": "enum(History|Food|Pets|Health|Fashion|Exercise|Others)",
+    "title": "string",
+    "content": "string"
+  }
+  ,
+  "response": {
+    "successful": "boolean",
+    "errorCode": "string",
+    "message": "string",
+    "data": {
+      "id": "number",
+      "content": "string",
+      "createdAt": "string",
+      "createdBy": "datetime(6)",
+      "title": "string",
+      "topic": "enum(History|Food|Pets|Health|Fashion|Exercise|Others)",
+      "postId": "number",
+      "updatedAt": "string",
+      "updatedBy": "datetime(6)",
+      "userId": "number"
+    }
+  }
+  ,
+  "errorCode": [
+  {
+    "code": "00",
+    "message": "Success",
+    "httpStatus": "200"
+  }
+  ,
+  {
+    "code": "03",
+    "message": "Server Error",
+    "httpStatus": "500"
+  }
+  ,
+  {
+    "code": "06",
+    "message": "Invalid data",
+    "httpStatus": "400"
+  }
+  ,
+  {
+    "code": "10",
+    "message": "Unauthorized",
+    "httpStatus": "401"
+  }
+  ]
+}
+@endjson

@@ -3,6 +3,7 @@ entity users {
   * id: int4(32) <<PK>>
   --
   * username: varchar(255)
+  * userImageUrl: varchar(255)
   --
   * created_at: datetime(6)
   * updated_at: datetime(6)

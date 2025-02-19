@@ -1,0 +1,57 @@
+@startjson get-post-by-id
+{
+  "path": "/posts/:id",
+  "httpMethod": "GET"
+  ,
+  "param": {
+    "id": "number"
+  }
+  ,
+  "response": {
+    "successful": "boolean",
+    "errorCode": "string",
+    "message": "string",
+    "data":
+    {
+      "id": "number",
+      "commentsCount": "number",
+      "content": "string",
+      "createdAt": "string",
+      "createdBy": "datetime(6)",
+      "title": "string",
+      "topic": "enum(History|Food|Pets|Health|Fashion|Exercise|Others)",
+      "updatedAt": "string",
+      "updatedBy": "datetime(6)",
+      "userId": "number",
+      "username": "string",
+      "userImageUrl": "string"
+    }
+  }
+  ,
+  "errorCode": [
+  {
+    "code": "00",
+    "message": "Success",
+    "httpStatus": "200"
+  }
+  ,
+  {
+    "code": "03",
+    "message": "Server Error",
+    "httpStatus": "500"
+  }
+  ,
+  {
+    "code": "06",
+    "message": "Invalid data",
+    "httpStatus": "400"
+  }
+  ,
+  {
+    "code": "10",
+    "message": "Unauthorized",
+    "httpStatus": "401"
+  }
+  ]
+}
+@endjson

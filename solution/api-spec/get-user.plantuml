@@ -1,0 +1,47 @@
+@startjson get-user
+{
+  "path": "/users",
+  "httpMethod": "GET",
+  "header": {
+    "authorization": "string"
+  }
+  ,
+  "response": {
+    "successful": "boolean",
+    "errorCode": "string",
+    "message": "string",
+    "data": {
+      "userId": "number",
+      "username": "string",
+      "userImageUrl": "string"
+    }
+  }
+  ,
+  "errorCode": [
+  {
+    "code": "00",
+    "message": "Success",
+    "httpStatus": "200"
+  }
+  ,
+  {
+    "code": "03",
+    "message": "Server Error",
+    "httpStatus": "500"
+  }
+  ,
+  {
+    "code": "06",
+    "message": "Invalid data",
+    "httpStatus": "400"
+  }
+  ,
+  {
+    "code": "10",
+    "message": "Unauthorized",
+    "httpStatus": "401"
+  }
+  ]
+}
+
+@endjson

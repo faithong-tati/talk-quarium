@@ -1,0 +1,47 @@
+@startjson sign-in
+{
+  "path": "/sign-in",
+  "httpMethod": "POST",
+  "body": {
+    "username": "string"
+  }
+  ,
+  "response": {
+    "successful": "boolean",
+    "errorCode": "string",
+    "message": "string",
+    "data": {
+      "accessToken": "string",
+      "userId": "number",
+      "username": "string"
+    }
+  }
+  ,
+  "errorCode": [
+  {
+    "code": "00",
+    "message": "Success",
+    "httpStatus": "200"
+  }
+  ,
+  {
+    "code": "03",
+    "message": "Server Error",
+    "httpStatus": "500"
+  }
+  ,
+  {
+    "code": "06",
+    "message": "Invalid data",
+    "httpStatus": "400"
+  }
+  ,
+  {
+    "code": "10",
+    "message": "Unauthorized",
+    "httpStatus": "401"
+  }
+  ]
+}
+
+@endjson
