@@ -68,6 +68,7 @@ export default function OrganismPostCards(props: OrganismPostCardsProps) {
               userImageUrl={card.userImageUrl}
               updatedAt={card.updatedAt}
               mode={mode}
+              userId={card.userId}
               onClickEditCard={() => {
                 setSelectedCard(card)
                 setOpenDialogUpdatePost(true)

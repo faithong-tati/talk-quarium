@@ -4,14 +4,14 @@ import { AppBar, Box, Toolbar, styled } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { DRAWER_WIDTH, MENU_ITEMS } from '@/constants'
+import { StorageKey } from '@/constants/enums'
 import { DeviceContextType, useAuth, useDevice } from '@/contexts'
 import { useGetUser } from '@/services/api/users'
+import { deleteStorage } from '@/utils/helpers'
 import AtomTypography from '../atoms/AtomTypography'
 import MoleculeDrawer from '../molecules/MoleculeDrawer'
 import MoleculeListItems from '../molecules/MoleculeListItems'
 import MoleculeUserInfo from '../molecules/MoleculeUserInfo'
-import { deleteStorage } from '@/utils/helpers'
-import { StorageKey } from '@/constants/enums'
 
 const StyledToolbar = styled(Toolbar)`
   background-color: var(--green-500);
@@ -53,7 +53,9 @@ const StyledDrawerBox = styled(Box)`
 export default function OrganismAppBar() {
   const { isMobile } = useDevice()
   const router = useRouter()
-  const { accessToken, isAuthenticated, setIsAuthenticated } = useAuth()
+  const { accessToken, isAuthenticated, setIsAuthenticated, setUserId } =
+    useAuth()
+
   const [open, setOpen] = useState<boolean>(false)
   const toggleDrawer = (newOpen: boolean) => (): void => {
     setOpen(newOpen)
@@ -63,16 +65,19 @@ export default function OrganismAppBar() {
     data: getUserResponse,
     isLoading: isLoadingGetUser,
     isSuccess: isSuccessGetUser,
+    isError: isErrorGetUSer,
   } = useGetUser(!!accessToken)
 
   useEffect(() => {
     setIsAuthenticated(isSuccessGetUser)
 
-    if (!isSuccessGetUser) {
+    if (isErrorGetUSer) {
       deleteStorage(StorageKey.ACCESS_TOKEN)
       deleteStorage(StorageKey.PRE_SIGN_IN_PATH)
+    } else {
+      setUserId(getUserResponse?.data?.userId || 0)
     }
-  }, [isSuccessGetUser])
+  }, [isSuccessGetUser, isErrorGetUSer])
 
   return (
     <AppBar>

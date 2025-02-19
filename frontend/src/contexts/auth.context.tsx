@@ -2,6 +2,7 @@
 
 import dayjs from 'dayjs'
 import React, {
+  Dispatch,
   ReactNode,
   createContext,
   useContext,
@@ -14,8 +15,10 @@ import { decodeJwt, deleteStorage, getStorage } from '@/utils/helpers'
 interface AuthContextType {
   accessToken: string | null
   isAuthenticated: boolean
-  setAccessToken: (accessToken: string | null) => void
-  setIsAuthenticated: (isAuthenticated: boolean) => void
+  setAccessToken: Dispatch<React.SetStateAction<string | null>>
+  setIsAuthenticated: Dispatch<React.SetStateAction<boolean>>
+  setUserId: Dispatch<React.SetStateAction<number>>
+  userId: number
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -23,6 +26,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined)
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [accessToken, setAccessToken] = useState<string | null>(null)
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
+  const [userId, setUserId] = useState<number>(0)
 
   useEffect(() => {
     const token = getStorage(StorageKey.ACCESS_TOKEN)
@@ -54,6 +58,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated,
         setAccessToken,
         setIsAuthenticated,
+        setUserId,
+        userId,
       }}
     >
       {children}

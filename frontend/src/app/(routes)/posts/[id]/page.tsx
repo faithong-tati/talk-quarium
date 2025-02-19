@@ -6,16 +6,19 @@ import { redirect, useRouter } from 'next/navigation'
 import { enqueueSnackbar } from 'notistack'
 import React, { use, useEffect } from 'react'
 import AtomButton from '@/components/atoms/AtomButton'
+import AtomTypography from '@/components/atoms/AtomTypography'
+import MoleculeDialog from '@/components/molecules/MoleculeDialog'
 import MoleculePostCard from '@/components/molecules/MoleculePostCard'
 import FormCreateComment from '@/components/organisms/forms/FormCreateComment'
+import FormEditPost from '@/components/organisms/forms/FormEditPost'
 import OrganismCommentCards from '@/components/organisms/OrganismCommentCards'
-import { PostCardMode } from '@/constants/enums'
+import { ButtonMode, PostCardMode } from '@/constants/enums'
 import { useAuth, useDevice } from '@/contexts'
 import { useDialog } from '@/contexts/dialog.context'
 import commentsDecorator from '@/decorators/comments.decorator'
 import postsDecorator from '@/decorators/posts.decorator'
 import { useGetCommentsByPostId } from '@/services/api/comments'
-import { useGetPostById } from '@/services/api/posts'
+import { useDeletePost, useGetPostById } from '@/services/api/posts'
 
 interface PageProps {
   params: Promise<{ id: number }>
@@ -34,14 +37,37 @@ export default function Page({ params }: PageProps) {
   const resolvedParams = use(params)
   const { isMobile } = useDevice()
   const { isAuthenticated } = useAuth()
-  const { setOpenDialogMustSignin } = useDialog()
+  const {
+    openDialogDeletePost,
+    openDialogUpdatePost,
+    setOpenDialogDeletePost,
+    setOpenDialogMustSignin,
+  } = useDialog()
+
   const router = useRouter()
-  const { openDialogCreateComment, setOpenDialogCreateComment } = useDialog()
+  const {
+    openDialogCreateComment,
+    setOpenDialogCreateComment,
+    setOpenDialogUpdatePost,
+  } = useDialog()
+
   const postId = resolvedParams.id
+  const { mutateAsync: deletePostApi } = useDeletePost({
+    onSuccess: () => {
+      enqueueSnackbar('Delete post successfully :)', { variant: 'success' })
+
+      router.push('/')
+    },
+    onError: () => {
+      enqueueSnackbar('Delete post failed :(', { variant: 'error' })
+    },
+  })
+
   const {
     data: getPostByIdResponse,
     isSuccess: isSuccessGetPostId,
     isLoading: isLoadingGetPostById,
+    refetch: refetchGetPostById,
   } = useGetPostById(postId)
 
   const {
@@ -68,10 +94,11 @@ export default function Page({ params }: PageProps) {
   }
 
   useEffect(() => {
-    if (!openDialogCreateComment) {
+    if (!openDialogCreateComment || !openDialogUpdatePost) {
       refetchGetCommentsByPostId()
+      refetchGetPostById()
     }
-  }, [openDialogCreateComment])
+  }, [openDialogCreateComment, openDialogUpdatePost])
 
   return (
     <Box
@@ -107,6 +134,8 @@ export default function Page({ params }: PageProps) {
             sx={{ padding: 0 }}
             mode={PostCardMode.FULL}
             {...formattedGetPostById}
+            onClickEditCard={() => setOpenDialogUpdatePost(true)}
+            onClickDeleteCard={() => setOpenDialogDeletePost(true)}
           />
         )}
 
@@ -135,6 +164,30 @@ export default function Page({ params }: PageProps) {
           )}
         </Box>
       </Box>
+
+      <FormEditPost
+        defaultValues={postsDecorator.getPostById(getPostByIdResponse?.data)}
+      />
+
+      <MoleculeDialog
+        open={openDialogDeletePost}
+        onClickPrimaryButton={async () => {
+          await deletePostApi(getPostByIdResponse?.data?.id || 0)
+
+          setOpenDialogDeletePost(false)
+        }}
+        onClickSecondaryButton={() => setOpenDialogDeletePost(false)}
+        primaryButtonText="Delete"
+        secondaryButtonText="Cancel"
+        title={`Please confirm if you wish\nto delete the post`}
+        mode={ButtonMode.ERROR}
+        enableCloseIcon={false}
+        isSmall
+      >
+        <AtomTypography sx={{ textAlign: 'center' }} labelVariant="content-4">
+          {`Are you sure you want to delete the post?\nOnce deleted, it cannot be recovered.`}
+        </AtomTypography>
+      </MoleculeDialog>
     </Box>
   )
 }

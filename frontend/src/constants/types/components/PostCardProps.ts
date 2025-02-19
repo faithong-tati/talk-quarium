@@ -8,5 +8,6 @@ export interface PostCardProps {
   title: string
   topic: Topic
   updatedAt: Date
+  userId: number
   userImageUrl: string
 }

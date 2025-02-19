@@ -19,6 +19,7 @@ class PostsDecorator {
         title: item.title,
         topic: item.topic,
         updatedAt: item.updatedAt,
+        userId: item.userId,
       }
     })
   }
@@ -37,6 +38,7 @@ class PostsDecorator {
       title: rawData.title,
       topic: rawData.topic,
       updatedAt: rawData.updatedAt,
+      userId: rawData.userId,
     }
   }
 }

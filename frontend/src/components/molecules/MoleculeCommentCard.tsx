@@ -24,7 +24,11 @@ export default function MoleculeCommentCard(props: CommentCardProps) {
         <AtomTypography color="--text" labelVariant="content-4">
           {author}
         </AtomTypography>
-        <AtomTypography color="--grey-300" labelVariant="content-1">
+        <AtomTypography
+          sx={{ paddingTop: '4px' }}
+          color="--grey-300"
+          labelVariant="content-1"
+        >
           {formatIssuedDate(createdAt)}
         </AtomTypography>
       </Box>

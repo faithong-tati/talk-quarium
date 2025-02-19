@@ -3,6 +3,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import React from 'react'
 import { PostCardMode } from '@/constants/enums'
 import { PostCardProps } from '@/constants/types/components'
+import { useAuth } from '@/contexts'
 import { formatIssuedDate } from '@/utils/helpers'
 import AtomChip from '../atoms/AtomChip'
 import AtomImage from '../atoms/AtomImage'
@@ -40,6 +41,7 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
     title,
     topic,
     updatedAt,
+    userId,
     userImageUrl,
     onClickDeleteCard,
     onClickEditCard,
@@ -47,7 +49,9 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
 
   const router = useRouter()
   const pathname = usePathname()
-  const editMode = pathname === '/our-blog'
+  const { userId: authUserId } = useAuth()
+  const isOwner = userId === authUserId
+  const editMode = isOwner || pathname === '/our-blog'
   const isFullMode = mode === PostCardMode.FULL
 
   return (
@@ -71,14 +75,18 @@ export default function MoleculePostCard(props: MoleculePostCardProps) {
             {author}
           </AtomTypography>
           {isFullMode && (
-            <AtomTypography color="--grey-300" labelVariant="content-1">
+            <AtomTypography
+              sx={{ paddingTop: '4px' }}
+              color="--grey-300"
+              labelVariant="content-1"
+            >
               {formatIssuedDate(updatedAt)}
             </AtomTypography>
           )}
         </Box>
 
         {editMode && (
-          <Box display={'flex'} gap={'15px'}>
+          <Box display={'flex'} gap={'15px'} sx={{ cursor: 'pointer' }}>
             <Box onClick={onClickEditCard}>
               <AtomImage
                 src="/icons/edit.svg"
